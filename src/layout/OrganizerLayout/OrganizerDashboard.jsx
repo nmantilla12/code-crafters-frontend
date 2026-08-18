@@ -1,28 +1,46 @@
-import React from 'react';
-import EventForm from './EventForm'; // Importa tu formulario recién creado
-import eventsData from '../../data/events.json'; // Importa tu JSON de eventos
+import React, { useState } from 'react';
+import EventForm from './EventForm';
+import initialEvents from '../../data/events.json'; // Tu archivo json inicial
 
 const OrganizerDashboard = () => {
-  return (
-    <div className="organizer-dashboard" style={{ padding: '20px' }}>
-      <h2>Panel de Control del Organizador</h2>
-      
-      {/* Sección del Formulario */}
-      <section style={{ marginBottom: '40px' }}>
-        <EventForm />
-      </section>
+  const [events, setEvents] = useState(initialEvents);
+  const [successMessage, setSuccessMessage] = useState('');
 
-      {/* Sección para listar los eventos de tu JSON */}
-      <section>
-        <h3>Eventos Actuales (desde events.json)</h3>
-        <ul>
-          {eventsData.map((event) => (
-            <li key={event.id} style={{ marginBottom: '10px' }}>
-              <strong>{event.title}</strong> - {event.date} ({event.location})
-            </li>
+  const handleAddEvent = (newEvent) => {
+    // Añadimos un ID único y la estructura necesaria
+    const eventWithId = {
+      id: Date.now(),
+      ...newEvent
+    };
+
+    setEvents([eventWithId, ...events]);
+    
+    // Feedback visual de éxito
+    setSuccessMessage('¡Evento creado con éxito!');
+    setTimeout(() => setSuccessMessage(''), 4000); // Se oculta a los 4 segundos
+  };
+
+  return (
+    <div className="organizer-dashboard">
+      <h2 className="organizer-dashboard__title">Panel del Organizador</h2>
+      
+      {/* Mensaje de éxito global para el flujo */}
+      {successMessage && <div className="alert-success">{successMessage}</div>}
+
+      <div className="organizer-dashboard__content">
+        <EventForm onAddEvent={handleAddEvent} />
+        
+        {/* Listado de eventos creados para ver el flujo completo */}
+        <div className="organizer-dashboard__list">
+          <h3>Mis Eventos ({events.length})</h3>
+          {events.map((event) => (
+            <div key={event.id} className="event-card-mini">
+              <h4>{event.title}</h4>
+              <span>{event.date} - {event.location}</span>
+            </div>
           ))}
-        </ul>
-      </section>
+        </div>
+      </div>
     </div>
   );
 };

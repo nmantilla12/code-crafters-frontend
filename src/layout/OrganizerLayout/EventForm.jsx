@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-// Si tienes estilos SASS, puedes importarlos aquí
-// import './EventForm.scss'; 
+// Si tienes estilos SASS, puedes importarlos aquí:
+// import '../../styles/main.scss'; 
 
-const EventForm = () => {
+const EventForm = ({ onAddEvent }) => {
   // Estado inicial que coincide con las llaves de tu JSON
   const [formData, setFormData] = useState({
     title: '',
@@ -18,7 +18,7 @@ const EventForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     
-    // Limpiar error al escribir
+    // Limpiar error dinámicamente al escribir en el campo
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -26,10 +26,10 @@ const EventForm = () => {
 
   const validate = () => {
     let tempErrors = {};
-    if (!formData.title) tempErrors.title = "El título es obligatorio";
-    if (!formData.category) tempErrors.category = "La categoría es obligatoria";
+    if (!formData.title.trim()) tempErrors.title = "El título es obligatorio";
+    if (!formData.category.trim()) tempErrors.category = "La categoría es obligatoria";
     if (!formData.date) tempErrors.date = "La fecha es obligatoria";
-    if (!formData.location) tempErrors.location = "La ubicación es obligatoria";
+    if (!formData.location.trim()) tempErrors.location = "La ubicación es obligatoria";
     
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -37,31 +37,88 @@ const EventForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Comprobación del bucle de validación ("¿Datos completos?")
     if (validate()) {
-      console.log("Formulario válido, enviando datos:", formData);
-      // Aquí más adelante conectaremos con tu events.json
+      console.log("Formulario válido, publicando evento:", formData);
+      
+      if (onAddEvent) {
+        onAddEvent(formData);
+      }
+      
+      // Limpiar formulario tras enviar con éxito
+      setFormData({
+        title: '',
+        category: '',
+        date: '',
+        location: '',
+        description: ''
+      });
+      setErrors({});
+    } else {
+      console.log("Datos incompletos, manteniendo al usuario en el formulario");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="event-form">
-      <h3>Crear nuevo evento</h3>
+      <h3 className="event-form__title">Crear nuevo evento</h3>
       
-      <input name="title" placeholder="Título" onChange={handleChange} />
-      {errors.title && <span>{errors.title}</span>}
+      <div className="event-form__group">
+        <input 
+          className={`event-form__input ${errors.title ? 'event-form__input--error' : ''}`}
+          name="title" 
+          placeholder="Título" 
+          value={formData.title}
+          onChange={handleChange} 
+        />
+        {errors.title && <span className="event-form__error">{errors.title}</span>}
+      </div>
 
-      <input name="category" placeholder="Categoría" onChange={handleChange} />
-      {errors.category && <span>{errors.category}</span>}
+      <div className="event-form__group">
+        <input 
+          className={`event-form__input ${errors.category ? 'event-form__input--error' : ''}`}
+          name="category" 
+          placeholder="Categoría" 
+          value={formData.category}
+          onChange={handleChange} 
+        />
+        {errors.category && <span className="event-form__error">{errors.category}</span>}
+      </div>
 
-      <input type="date" name="date" onChange={handleChange} />
-      {errors.date && <span>{errors.date}</span>}
+      <div className="event-form__group">
+        <input 
+          className={`event-form__input ${errors.date ? 'event-form__input--error' : ''}`}
+          type="date" 
+          name="date" 
+          value={formData.date}
+          onChange={handleChange} 
+        />
+        {errors.date && <span className="event-form__error">{errors.date}</span>}
+      </div>
 
-      <input name="location" placeholder="Ubicación" onChange={handleChange} />
-      {errors.location && <span>{errors.location}</span>}
+      <div className="event-form__group">
+        <input 
+          className={`event-form__input ${errors.location ? 'event-form__input--error' : ''}`}
+          name="location" 
+          placeholder="Ubicación" 
+          value={formData.location}
+          onChange={handleChange} 
+        />
+        {errors.location && <span className="event-form__error">{errors.location}</span>}
+      </div>
 
-      <textarea name="description" placeholder="Descripción" onChange={handleChange} />
+      <div className="event-form__group">
+        <textarea 
+          className="event-form__textarea"
+          name="description" 
+          placeholder="Descripción" 
+          value={formData.description}
+          onChange={handleChange} 
+        />
+      </div>
 
-      <button type="submit">Guardar Evento</button>
+      <button className="event-form__button" type="submit">Guardar Evento</button>
     </form>
   );
 };

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Global AI Summit 2026",
+    "category": "IA & Machine Learning",
+    "date": "15 Oct, 2026",
+    "location": "Online",
+    "description": "Únete a la conferencia más grande sobre inteligencia artificial generativa, LLMs y el futuro del desarrollo de software.",
+    "status": "Publicado",
+    "spotsLeft": 145
+  },
+  {
+    "id": 2,
+    "title": "React Next-Gen Patterns",
+    "category": "Frontend Masters",
+    "date": "22 Oct, 2026",
+    "location": "Madrid, España",
+    "description": "Taller intensivo sobre Server Components, acciones de servidor y arquitectura avanzada en React.",
+    "status": "Publicado",
+    "spotsLeft": 30
+  },
+  {
+    "id": 3,
+    "title": "Web3 Hackathon: DeFi",
+    "category": "Web3 / Blockchain",
+    "date": "05 Nov, 2026",
+    "location": "Barcelona, España",
+    "description": "Construye protocolos financieros descentralizados en 48 horas. Grandes premios en cripto.",
+    "status": "Borrador",
+    "spotsLeft": 100
+  }
+]

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-// Importa tus estilos si lo necesitas:
+// Si tienes estilos SASS, puedes importarlos aquí:
 // import '../../styles/main.scss'; 
 
 const EventForm = ({ onAddEvent }) => {
+  // Estado inicial que coincide con las llaves de tu JSON
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -17,7 +18,7 @@ const EventForm = ({ onAddEvent }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     
-    // Limpiar error al escribir
+    // Limpiar error dinámicamente al escribir en el campo
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -36,11 +37,15 @@ const EventForm = ({ onAddEvent }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Comprobación del bucle de validación ("¿Datos completos?")
     if (validate()) {
-      console.log("Formulario válido, enviando datos:", formData);
+      console.log("Formulario válido, publicando evento:", formData);
+      
       if (onAddEvent) {
         onAddEvent(formData);
       }
+      
       // Limpiar formulario tras enviar con éxito
       setFormData({
         title: '',
@@ -49,6 +54,9 @@ const EventForm = ({ onAddEvent }) => {
         location: '',
         description: ''
       });
+      setErrors({});
+    } else {
+      console.log("Datos incompletos, manteniendo al usuario en el formulario");
     }
   };
 
@@ -58,7 +66,7 @@ const EventForm = ({ onAddEvent }) => {
       
       <div className="event-form__group">
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.title ? 'event-form__input--error' : ''}`}
           name="title" 
           placeholder="Título" 
           value={formData.title}
@@ -69,7 +77,7 @@ const EventForm = ({ onAddEvent }) => {
 
       <div className="event-form__group">
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.category ? 'event-form__input--error' : ''}`}
           name="category" 
           placeholder="Categoría" 
           value={formData.category}
@@ -80,7 +88,7 @@ const EventForm = ({ onAddEvent }) => {
 
       <div className="event-form__group">
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.date ? 'event-form__input--error' : ''}`}
           type="date" 
           name="date" 
           value={formData.date}
@@ -91,7 +99,7 @@ const EventForm = ({ onAddEvent }) => {
 
       <div className="event-form__group">
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.location ? 'event-form__input--error' : ''}`}
           name="location" 
           placeholder="Ubicación" 
           value={formData.location}

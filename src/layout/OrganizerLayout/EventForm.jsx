@@ -35,15 +35,18 @@ const EventForm = ({ onAddEvent }) => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  // Modificamos handleSubmit para recibir el estado ('draft' o 'published')
+  const handleSubmit = (e, status) => {
     e.preventDefault();
     
     // Comprobación del bucle de validación ("¿Datos completos?")
     if (validate()) {
-      console.log("Formulario válido, publicando evento:", formData);
+      // Añadimos el estado (borrador o publicado) a los datos del evento
+      const eventData = { ...formData, status: status };
+      console.log(`Formulario válido, guardando como ${status}:`, eventData);
       
       if (onAddEvent) {
-        onAddEvent(formData);
+        onAddEvent(eventData);
       }
       
       // Limpiar formulario tras enviar con éxito
@@ -61,7 +64,7 @@ const EventForm = ({ onAddEvent }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="event-form">
+    <form className="event-form">
       <h3 className="event-form__title">Crear nuevo evento</h3>
       
       <div className="event-form__group">
@@ -118,7 +121,23 @@ const EventForm = ({ onAddEvent }) => {
         />
       </div>
 
-      <button className="event-form__button" type="submit">Guardar Evento</button>
+      {/* Contenedor de acciones con los dos botones requeridos por la tarea CODE-12 */}
+      <div className="event-form__actions">
+        <button 
+          className="event-form__button event-form__button--draft" 
+          type="button" 
+          onClick={(e) => handleSubmit(e, 'draft')}
+        >
+          Guardar Borrador
+        </button>
+        <button 
+          className="event-form__button event-form__button--publish" 
+          type="button" 
+          onClick={(e) => handleSubmit(e, 'published')}
+        >
+          Publicar Evento
+        </button>
+      </div>
     </form>
   );
 };

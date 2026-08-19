@@ -1,0 +1,67 @@
+.event-list {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #f8fafc;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: #475569; // Subido de tono para cumplir contraste
+  }
+
+  &__status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+
+    &--published {
+      background-color: #dcfce7;
+      color: #14532d; // Verde oscuro accesible
+    }
+
+    &--draft {
+      background-color: #fef9c3;
+      color: #713f12; // Marrón/amarillo oscuro accesible
+    }
+  }
+}

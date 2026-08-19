@@ -1,0 +1,14 @@
+// ==========================================
+// Archivo Principal SASS (main.scss)
+// ==========================================
+
+// 1. Importa tus componentes y secciones ya creados
+@import 'bottom-nav';
+@import 'event-list';
+@import 'metric-card';
+@import 'notifications';
+@import 'support-form';
+@import 'support';
+
+// 2. Importa la estructura específica de la landing
+@import 'landing';

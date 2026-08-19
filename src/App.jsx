@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import OrganizerLayout from './layouts/OrganizerLayout/OrganizerLayout';
-import Dashboard from './pages/Dashboard'; // O la ruta exacta donde tengas tu Dashboard
+import OrganizerLayout from './layouts/OrganizerLayout';
+import Dashboard from './pages/Dashboard';
+import CreateEvent from './pages/CreateEvent';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           
           {/* Vista del Panel de Control */}
           <Route path="dashboard" element={<Dashboard />} />
+          
+          {/* Vista de Creación de Eventos */}
+          <Route path="create-event" element={<CreateEvent />} />
           
         </Route>
       </Routes>

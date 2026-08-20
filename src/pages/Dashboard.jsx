@@ -1,158 +1,68 @@
-import React, { useState } from 'react';
+// src/pages/Dashboard.jsx
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import MetricCard from '../componentes/MetricCard';
-import EventList from '../componentes/EventList';
+import TicketQR from '../componentes/TicketQR';
+import NotificationsCenter from '../componentes/NotificationsCenter';
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  // Estado para almacenar los eventos del panel de forma dinámica
-  const [events, setEvents] = useState(() => {
-    const savedEvents = localStorage.getItem('dashboard_events');
-    if (savedEvents) {
-      return JSON.parse(savedEvents);
-    }
-    return [
-      { 
-        id: 1, 
-        title: 'Taller de React y BEM', 
-        date: '24 Ago 2026', 
-        status: 'Publicado' 
-      },
-      { 
-        id: 2, 
-        title: 'Conferencia de Frontend', 
-        date: '30 Ago 2026', 
-        status: 'Borrador' 
-      },
-    ];
-  });
-
-  // Estado para el buscador en tiempo real
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Función para eliminar un evento por su ID
-  const handleDeleteEvent = (id) => {
-    const updatedEvents = events.filter(event => event.id !== id);
-    setEvents(updatedEvents);
-    localStorage.setItem('dashboard_events', JSON.stringify(updatedEvents));
-  };
-
-  // Filtrar los eventos según el texto introducido en el buscador
-  const filteredEvents = events.filter(event => 
-    event.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
-    <div className="dashboard-page">
+    <div className="dashboard-page" style={{ background: '#0b1120', minHeight: '100vh', padding: '2rem 3rem', color: '#fff' }}>
+      
       {/* 1. Navbar Superior del Panel */}
-      <header className="dashboard-page__navbar">
-        {/* Botón del logo accesible */}
+      <header className="dashboard-page__navbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', borderBottom: '1px solid #1e293b', paddingBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <button 
           type="button" 
           className="dashboard-page__logo-btn" 
           onClick={() => navigate('/')}
-          style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '0', color: 'inherit', font: 'inherit' }}
+          style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '0', color: '#fff', fontSize: '1.2rem', fontWeight: 'bold' }}
         >
           Code Crafters 2026
         </button>
 
-        <nav className="dashboard-page__nav-links">
-          <button 
-            type="button" 
-            onClick={() => navigate('/discover')}
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
-          >
-            Descubrir
-          </button>
-          <button 
-            type="button" 
-            onClick={() => navigate('/events')}
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
-          >
-            Eventos
-          </button>
-          <button 
-            type="button" 
-            className="active"
-            onClick={() => navigate('/organizer/dashboard')}
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
-          >
-            Dashboard
-          </button>
-          <button 
-            type="button" 
-            onClick={() => navigate('/support')}
-            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
-          >
-            Soporte
-          </button>
+        <nav className="dashboard-page__nav-links" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+          <button type="button" onClick={() => navigate('/discover')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>Descubrir</button>
+          <button type="button" onClick={() => navigate('/events')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>Eventos</button>
+          <button type="button" className="active" onClick={() => navigate('/organizer/dashboard')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>Dashboard</button>
+          <button type="button" onClick={() => navigate('/support')} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>Soporte</button>
         </nav>
 
-        <div className="dashboard-page__actions">
-          <button type="button" className="btn-login" onClick={() => navigate('/login')}>
-            Login
-          </button>
-          <button type="button" className="btn-register" onClick={() => navigate('/register')}>
-            Registrarse
-          </button>
+        <div className="dashboard-page__actions" style={{ display: 'flex', gap: '1rem' }}>
+          <button type="button" className="btn-login" onClick={() => navigate('/login')} style={{ background: 'transparent', border: '1px solid #334155', color: '#fff', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Login</button>
+          <button type="button" className="btn-register" onClick={() => navigate('/register')} style={{ background: '#06b6d4', border: 'none', color: '#0f172a', padding: '0.4rem 1rem', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>Registrarse</button>
         </div>
       </header>
 
-      {/* 2. Contenido Principal del Panel */}
+      {/* 2. Contenido Principal del Panel (Mis Actividades y Notificaciones) */}
       <main className="dashboard-page__content">
-        <div className="dashboard-page__header">
-          <div>
-            <h1 className="dashboard-page__title">1. Panel del Organizador</h1>
-            <span className="dashboard-page__subtitle">GESTIÓN CENTRAL DE EVENTOS TECH</span>
-          </div>
-          <button 
-            type="button" 
-            className="dashboard-page__btn-create"
-            onClick={() => navigate('/organizer/create-event')}
-          >
-            + Crear Nuevo Evento
-          </button>
+        <div className="dashboard-page__header" style={{ marginBottom: '2rem' }}>
+          <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>4. Mis Actividades y Notificaciones</h1>
+          <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Gestiona tus eventos registrados, accede a tus tickets y mantente al día con las últimas actualizaciones.</p>
         </div>
         
-        {/* Sección de tarjetas de métricas y acciones rápidas */}
-        <section className="dashboard-page__metrics">
-          <MetricCard />
-          
-          <div className="quick-actions-card">
-            <span className="quick-actions-title">ACCIONES RÁPIDAS</span>
-            <button type="button" className="action-item">Ver Dashboard Analítico 📊</button>
-            <button type="button" className="action-item">Exportar Datos (CSV) 📥</button>
-            <button type="button" className="action-item">Configuración de API ⚙️</button>
+        {/* Layout en dos columnas limpio y modular */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '2rem', alignItems: 'start' }}>
+          <div>
+            <TicketQR />
           </div>
-        </section>
-
-        {/* Sección de listado de eventos activos (incluyendo la barra de búsqueda y los eventos filtrados) */}
-        <section className="dashboard-page__events">
-          <div className="dashboard-page__search-container" style={{ marginBottom: '20px' }}>
-            <input 
-              type="text" 
-              className="dashboard-page__search-input" 
-              placeholder="Buscar evento..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ padding: '10px 15px', borderRadius: '6px', width: '100%', background: '#131b2e', border: '1px solid #1f293d', color: '#fff' }}
-            />
+          <div>
+            <NotificationsCenter />
           </div>
-          <EventList events={filteredEvents} onDelete={handleDeleteEvent} />
-        </section>
+        </div>
       </main>
 
       {/* 3. Footer */}
-      <footer className="dashboard-page__footer">
+      <footer className="dashboard-page__footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5rem', borderTop: '1px solid #1e293b', paddingTop: '1.5rem', color: '#64748b', fontSize: '0.85rem', flexWrap: 'wrap', gap: '1rem' }}>
         <p>© 2026 Code Crafters. Todos los derechos reservados.</p>
-        <div className="footer-links">
-          <a href="#privacidad">Privacidad</a>
-          <a href="#terminos">Términos</a>
-          <a href="#contacto">Contacto</a>
-          <a href="#faq">FAQ</a>
+        <div className="footer-links" style={{ display: 'flex', gap: '1.5rem' }}>
+          <a href="#privacidad" style={{ color: '#64748b', textDecoration: 'none' }}>Privacidad</a>
+          <a href="#terminos" style={{ color: '#64748b', textDecoration: 'none' }}>Términos</a>
+          <a href="#contacto" style={{ color: '#64748b', textDecoration: 'none' }}>Contacto</a>
+          <a href="#faq" style={{ color: '#64748b', textDecoration: 'none' }}>FAQ</a>
         </div>
       </footer>
+
     </div>
   );
 };

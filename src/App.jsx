@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
@@ -7,6 +8,14 @@ import CreateEventForm from './componentes/CreateEventForm';
 import ExploreEvents from './pages/ExploreEvents';
 import EventDetail from './pages/EventDetail';
 
+// Creamos un componente sencillo para que la ruta de soporte no se quede en blanco
+const SupportPage = () => (
+  <div style={{ background: '#0b1120', color: '#fff', minHeight: '100vh', padding: '3rem', textAlign: 'center' }}>
+    <h1>Soporte y Ayuda</h1>
+    <p style={{ color: '#94a3b8', marginTop: '1rem' }}>Estamos aquí para ayudarte. Contacta con soporte@codecrafters.com</p>
+  </div>
+);
+
 function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -14,21 +23,18 @@ function App() {
         {/* Ruta principal: Muestra la Landing Page */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* Nuevas vistas principales de la aplicación */}
+        {/* Vistas principales de la aplicación */}
         <Route path="/events" element={<ExploreEvents />} />
         <Route path="/event-detail" element={<EventDetail />} />
-        {/* Opcional: Ruta dinámica para eventos específicos por ID */}
         <Route path="/event/:id" element={<EventDetail />} />
+        
+        {/* Ruta de Support corregida */}
+        <Route path="/support" element={<SupportPage />} />
 
         {/* Rutas del Panel de Organizador bajo un layout dedicado */}
         <Route path="/organizer" element={<OrganizerLayout />}>
-          {/* Redirección por defecto al entrar en /organizer */}
           <Route index element={<Navigate to="dashboard" replace />} />
-          
-          {/* Vista del Panel de Control */}
           <Route path="dashboard" element={<Dashboard />} />
-          
-          {/* Vista de Creación de Eventos */}
           <Route path="create-event" element={<CreateEventForm />} />
         </Route>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const EventItem = ({ title, date, attendees, status, icon }) => {
+const EventItem = ({ id, title, date, attendees, status, icon, onDelete }) => {
   const navigate = useNavigate();
   const statusClass = status.toLowerCase() === 'publicado' ? 'published' : 'draft';
 
@@ -10,8 +10,9 @@ const EventItem = ({ title, date, attendees, status, icon }) => {
   };
 
   const handleDelete = () => {
-    // Lógica o aviso para eliminar el evento
-    console.log(`Eliminar evento: ${title}`);
+    if (onDelete) {
+      onDelete(id);
+    }
   };
 
   return (

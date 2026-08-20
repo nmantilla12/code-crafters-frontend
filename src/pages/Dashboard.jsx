@@ -31,7 +31,7 @@ const Dashboard = () => {
     <div className="dashboard-page">
       {/* 1. Navbar Superior del Panel */}
       <header className="dashboard-page__navbar">
-        {/* Cambiado el div por un botón transparente y accesible */}
+        {/* Botón del logo accesible */}
         <button 
           type="button" 
           className="dashboard-page__logo-btn" 
@@ -42,11 +42,37 @@ const Dashboard = () => {
         </button>
 
         <nav className="dashboard-page__nav-links">
-          <a href="#descubrir">Descubrir</a>
-          <a href="#eventos">Eventos</a>
-          <a href="#dashboard" className="active">Dashboard</a>
-          <a href="#soporte">Soporte</a>
+          <button 
+            type="button" 
+            onClick={() => navigate('/discover')}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
+          >
+            Descubrir
+          </button>
+          <button 
+            type="button" 
+            onClick={() => navigate('/events')}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
+          >
+            Eventos
+          </button>
+          <button 
+            type="button" 
+            className="active"
+            onClick={() => navigate('/organizer/dashboard')}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
+          >
+            Dashboard
+          </button>
+          <button 
+            type="button" 
+            onClick={() => navigate('/support')}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'inherit', font: 'inherit', padding: 0 }}
+          >
+            Soporte
+          </button>
         </nav>
+
         <div className="dashboard-page__actions">
           <button type="button" className="btn-login" onClick={() => navigate('/login')}>
             Login

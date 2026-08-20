@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MetricCard from '../componentes/MetricCard';
 import EventList from '../componentes/EventList';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  // Estado para almacenar los eventos del panel de forma dinámica
+  const [events, setEvents] = useState([
+    { 
+      id: 1, 
+      title: 'Taller de React y BEM', 
+      date: '24 Ago 2026', 
+      status: 'Publicado' 
+    },
+    { 
+      id: 2, 
+      title: 'Conferencia de Frontend', 
+      date: '30 Ago 2026', 
+      status: 'Borrador' 
+    },
+  ]);
+
+  // Función para eliminar un evento por su ID
+  const handleDeleteEvent = (id) => {
+    setEvents(events.filter(event => event.id !== id));
+  };
 
   return (
     <div className="dashboard-page">
@@ -64,9 +85,9 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Sección de listado de eventos activos */}
+        {/* Sección de listado de eventos activos (pasándole eventos y la función de borrado) */}
         <section className="dashboard-page__events">
-          <EventList />
+          <EventList events={events} onDelete={handleDeleteEvent} />
         </section>
       </main>
 

@@ -9,77 +9,136 @@ const CreateEventForm = () => {
     image: null,
   });
 
+  // Estados para la validación y mensajes de éxito
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({
       ...formData,
       [name]: files ? files[0] : value,
     });
+
+    // Limpiamos el error del campo correspondiente al escribir
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: '',
+      });
+    }
   };
 
-  const handleSubmit = (e) => {
+  const validate = () => {
+    let newErrors = {};
+    if (!formData.title.trim()) {
+      newErrors.title = 'El título del evento es obligatorio.';
+    }
+    if (!formData.date) {
+      newErrors.date = 'La fecha del evento es obligatoria.';
+    }
+    if (!formData.modality) {
+      newErrors.modality = 'Debes seleccionar una modalidad.';
+    }
+    if (!formData.locationOrLink.trim()) {
+      newErrors.locationOrLink = 'La ubicación o enlace es obligatoria.';
+    }
+    return newErrors;
+  };
+
+  const handleSubmit = (e, status = 'published') => {
     e.preventDefault();
-    console.log('Datos del evento creados:', formData);
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setSuccessMessage('');
+      return;
+    }
+
+    setErrors({});
+    const eventFinalData = { ...formData, status };
+    console.log(`Evento ${status === 'published' ? 'publicado' : 'guardado como borrador'}:`, eventFinalData);
+    
+    setSuccessMessage(
+      status === 'published' 
+        ? '¡Evento publicado con éxito!' 
+        : '¡Evento guardado como borrador correctamente!'
+    );
   };
 
   return (
-    <form className="event-form" onSubmit={handleSubmit}>
+    <form className="event-form" onSubmit={(e) => handleSubmit(e, 'published')} noValidate>
       <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
+      {successMessage && (
+        <div className="event-form__success" role="alert">
+          {successMessage}
+        </div>
+      )}
+
       <div className="event-form__group">
-        <label className="event-form__label" htmlFor="title">Título del Evento</label>
+        <label className="event-form__label" htmlFor="title">
+          Título del Evento <span className="event-form__required">*</span>
+        </label>
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.title ? 'event-form__input--error' : ''}`}
           type="text" 
           id="title" 
           name="title" 
           value={formData.title} 
           onChange={handleChange} 
-          required 
         />
+        {errors.title && <span className="event-form__error-text">{errors.title}</span>}
       </div>
 
       <div className="event-form__group">
-        <label className="event-form__label" htmlFor="date">Fecha</label>
+        <label className="event-form__label" htmlFor="date">
+          Fecha <span className="event-form__required">*</span>
+        </label>
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.date ? 'event-form__input--error' : ''}`}
           type="date" 
           id="date" 
           name="date" 
           value={formData.date} 
           onChange={handleChange} 
-          required 
         />
+        {errors.date && <span className="event-form__error-text">{errors.date}</span>}
       </div>
 
       <div className="event-form__group">
-        <label className="event-form__label" htmlFor="modality">Modalidad</label>
+        <label className="event-form__label" htmlFor="modality">
+          Modalidad <span className="event-form__required">*</span>
+        </label>
         <select 
-          className="event-form__select"
+          className={`event-form__select ${errors.modality ? 'event-form__select--error' : ''}`}
           id="modality" 
           name="modality" 
           value={formData.modality} 
           onChange={handleChange} 
-          required
         >
           <option value="">Selecciona una modalidad</option>
           <option value="presencial">Presencial</option>
           <option value="online">Online</option>
           <option value="hibrido">Híbrido</option>
         </select>
+        {errors.modality && <span className="event-form__error-text">{errors.modality}</span>}
       </div>
 
       <div className="event-form__group">
-        <label className="event-form__label" htmlFor="locationOrLink">Ubicación o Enlace</label>
+        <label className="event-form__label" htmlFor="locationOrLink">
+          Ubicación o Enlace <span className="event-form__required">*</span>
+        </label>
         <input 
-          className="event-form__input"
+          className={`event-form__input ${errors.locationOrLink ? 'event-form__input--error' : ''}`}
           type="text" 
           id="locationOrLink" 
           name="locationOrLink" 
           value={formData.locationOrLink} 
           onChange={handleChange} 
-          required 
         />
+        {errors.locationOrLink && <span className="event-form__error-text">{errors.locationOrLink}</span>}
       </div>
 
       <div className="event-form__group">
@@ -94,10 +153,21 @@ const CreateEventForm = () => {
         />
       </div>
 
-      {/* Botón con type="submit" explícito para evitar alertas del linter */}
-      <button type="submit" className="event-form__submit-btn">
-        Guardar Evento
-      </button>
+      <div className="event-form__actions">
+        <button 
+          type="button" 
+          className="event-form__btn-draft"
+          onClick={(e) => handleSubmit(e, 'draft')}
+        >
+          Guardar como borrador
+        </button>
+        <button 
+          type="submit" 
+          className="event-form__submit-btn"
+        >
+          Publicar evento
+        </button>
+      </div>
     </form>
   );
 };

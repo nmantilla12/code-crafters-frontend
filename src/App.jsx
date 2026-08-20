@@ -1,26 +1,31 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 import OrganizerLayout from './layouts/OrganizerLayout';
 import Dashboard from './pages/Dashboard';
-import CreateEvent from './pages/CreateEvent';
+import CreateEventForm from './componentes/CreateEventForm'; // <-- ¡Fíjate que dice "componentes"!
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        {/* Ruta principal que carga el esqueleto OrganizerLayout */}
-        <Route path="/" element={<OrganizerLayout />}>
-          
-          {/* Redirección automática para que el Dashboard sea la vista por defecto al entrar */}
+        {/* Ruta principal: Muestra la Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* Rutas del Panel de Organizador bajo un layout dedicado */}
+        <Route path="/organizer" element={<OrganizerLayout />}>
+          {/* Redirección por defecto al entrar en /organizer */}
           <Route index element={<Navigate to="dashboard" replace />} />
           
           {/* Vista del Panel de Control */}
           <Route path="dashboard" element={<Dashboard />} />
           
           {/* Vista de Creación de Eventos */}
-          <Route path="create-event" element={<CreateEvent />} />
-          
+          <Route path="create-event" element={<CreateEventForm />} />
         </Route>
+
+        {/* Ruta comodín por si escriben cualquier otra URL, redirige al inicio */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

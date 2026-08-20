@@ -1,91 +1,51 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import TicketQR from './TicketQR';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const EventItem = ({ title, date, status }) => {
-  const [registeredTicket, setRegisteredTicket] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const EventItem = ({ title, date, attendees, status, icon }) => {
+  const navigate = useNavigate();
+  const statusClass = status.toLowerCase() === 'publicado' ? 'published' : 'draft';
 
-  const handleRegister = async () => {
-    setLoading(true);
-    setError(null);
+  const handleManage = () => {
+    navigate('/organizer/manage-event');
+  };
 
-    try {
-      // Simulamos una llamada al servidor con promesa y buenas prácticas de linting (new Error)
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          // Cambia a true si quieres simular que el evento está lleno para pruebas
-          const isFull = false; 
-          if (isFull) {
-            reject(new Error("Lo sentimos, el evento ya está lleno."));
-          } else {
-            resolve();
-          }
-        }, 1200);
-      });
-
-      // 1. Generamos un ID único para el ticket
-      const newTicketId = uuidv4();
-
-      // 2. Creamos el objeto del ticket
-      const ticketData = {
-        id: newTicketId,
-        eventTitle: title,
-        eventDate: date,
-        dateRegistered: new Date().toLocaleDateString()
-      };
-
-      // 3. Recuperamos los tickets anteriores de localStorage (o un array vacío)
-      const existingTickets = JSON.parse(localStorage.getItem('myTickets')) || [];
-
-      // 4. Añadimos el nuevo ticket y lo guardamos
-      const updatedTickets = [...existingTickets, ticketData];
-      localStorage.setItem('myTickets', JSON.stringify(updatedTickets));
-
-      // 5. Actualizamos el estado local para mostrar el QR al instante
-      setRegisteredTicket(ticketData);
-
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleDelete = () => {
+    // Lógica o aviso para eliminar el evento
+    console.log(`Eliminar evento: ${title}`);
   };
 
   return (
     <div className="event-item">
       <div className="event-item__info">
-        <h4 className="event-item__name">{title}</h4>
-        <p className="event-item__date">{date}</p>
-        <span className={`event-item__status event-item__status--${status.toLowerCase()}`}>
-          {status}
-        </span>
+        <span className="event-item__icon" aria-hidden="true">{icon || '📅'}</span>
+        <div>
+          <h4 className="event-item__name">{title}</h4>
+          <p className="event-item__details">
+            📅 {date} &nbsp;&nbsp; 👥 {attendees} &nbsp;&nbsp; 
+            <span className={`event-item__badge event-item__badge--${statusClass}`}>
+              {status}
+            </span>
+          </p>
+        </div>
       </div>
 
-      {/* Mensaje de error si la inscripción falla */}
-      {error && <p className="event-item__error">{error}</p>}
-
-      {/* Si ya está inscrito, mostramos el ticket QR; si no, el botón de inscripción */}
-      {registeredTicket ? (
-        <div className="event-item__ticket-container">
-          <p className="event-item__success-msg">¡Inscripción exitosa!</p>
-          <TicketQR 
-            eventTitle={registeredTicket.eventTitle} 
-            eventDate={registeredTicket.eventDate} 
-            ticketId={registeredTicket.id} 
-          />
-        </div>
-      ) : (
+      <div className="event-item__actions">
         <button 
           type="button" 
-          className="event-item__register-btn" 
-          onClick={handleRegister}
-          disabled={loading}
+          className="event-item__btn-manage" 
+          onClick={handleManage}
         >
-          {loading ? 'Procesando...' : 'Inscribirme'}
+          Gestionar
         </button>
-      )}
+        <button 
+          type="button" 
+          className="event-item__btn-delete" 
+          onClick={handleDelete}
+          title="Eliminar evento"
+        >
+          🗑
+        </button>
+      </div>
     </div>
   );
 };

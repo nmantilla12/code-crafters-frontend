@@ -1,0 +1,125 @@
+// Estilos para la sección de Soporte y Contacto (BEM)
+.support-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__subtitle {
+    font-size: 0.95rem;
+    color: #718096;
+    margin: 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  &__footer-links {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+    text-align: center;
+  }
+
+  &__footer-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin: 0 0 0.75rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__legal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+  }
+
+  &__legal-link {
+    font-size: 0.8rem;
+    color: #4a5568;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #3182ce;
+      text-decoration: underline;
+    }
+  }
+
+  &__separator {
+    color: #cbd5e0;
+    font-size: 0.8rem;
+  }
+}
+
+// Estilos para las tarjetas internas de soporte
+.support-card {
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  &__icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__text {
+    font-size: 0.875rem;
+    color: #4a5568;
+    margin: 0 0 1.25rem 0;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  &__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3182ce;
+    text-decoration: none;
+    align-self: flex-start;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

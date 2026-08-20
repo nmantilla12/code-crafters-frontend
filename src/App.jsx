@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import OrganizerLayout from './layouts/OrganizerLayout';
 import Dashboard from './pages/Dashboard';
-import CreateEventForm from './componentes/CreateEventForm'; // <-- ¡Fíjate que dice "componentes"!
+import CreateEventForm from './componentes/CreateEventForm';
+import ExploreEvents from './pages/ExploreEvents';
+import EventDetail from './pages/EventDetail';
 
 function App() {
   return (
@@ -11,6 +13,12 @@ function App() {
       <Routes>
         {/* Ruta principal: Muestra la Landing Page */}
         <Route path="/" element={<LandingPage />} />
+
+        {/* Nuevas vistas principales de la aplicación */}
+        <Route path="/events" element={<ExploreEvents />} />
+        <Route path="/event-detail" element={<EventDetail />} />
+        {/* Opcional: Ruta dinámica para eventos específicos por ID */}
+        <Route path="/event/:id" element={<EventDetail />} />
 
         {/* Rutas del Panel de Organizador bajo un layout dedicado */}
         <Route path="/organizer" element={<OrganizerLayout />}>

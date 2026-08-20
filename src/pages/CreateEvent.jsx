@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Añadido para la redirección
 import '../styles/event-form.scss'; // Importamos los estilos para que coja todo el color y diseño
 
 const CreateEventForm = () => {
+  const navigate = useNavigate(); // 1. Inicializamos el hook
+
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -56,14 +59,34 @@ const CreateEventForm = () => {
     }
 
     setErrors({});
+    
+    // --- LÓGICA AÑADIDA PARA CONECTAR CON EL DASHBOARD ---
+    const statusText = status === 'published' ? 'Publicado' : 'Borrador';
+    const newEvent = {
+      id: Date.now(),
+      title: formData.title,
+      date: formData.date,
+      status: statusText,
+    };
+
+    const existingEvents = JSON.parse(localStorage.getItem('dashboard_events')) || [];
+    const updatedEvents = [newEvent, ...existingEvents];
+    localStorage.setItem('dashboard_events', JSON.stringify(updatedEvents));
+    // -----------------------------------------------------
+
     const eventFinalData = { ...formData, status };
     console.log(`Evento ${status === 'published' ? 'publicado' : 'guardado como borrador'}:`, eventFinalData);
     
     setSuccessMessage(
       status === 'published' 
-        ? '¡Evento publicado con éxito!' 
-        : '¡Evento guardado como borrador correctamente!'
+        ? '¡Evento publicado con éxito! Redirigiendo...' 
+        : '¡Evento guardado como borrador correctamente! Redirigiendo...'
     );
+
+    // --- AÑADIDO: Redirección automática al Dashboard tras el éxito ---
+    setTimeout(() => {
+      navigate('/organizer/dashboard');
+    }, 1500);
   };
 
   return (

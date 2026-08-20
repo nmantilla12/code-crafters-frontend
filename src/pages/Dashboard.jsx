@@ -7,25 +7,41 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   // Estado para almacenar los eventos del panel de forma dinámica
-  const [events, setEvents] = useState([
-    { 
-      id: 1, 
-      title: 'Taller de React y BEM', 
-      date: '24 Ago 2026', 
-      status: 'Publicado' 
-    },
-    { 
-      id: 2, 
-      title: 'Conferencia de Frontend', 
-      date: '30 Ago 2026', 
-      status: 'Borrador' 
-    },
-  ]);
+  const [events, setEvents] = useState(() => {
+    const savedEvents = localStorage.getItem('dashboard_events');
+    if (savedEvents) {
+      return JSON.parse(savedEvents);
+    }
+    return [
+      { 
+        id: 1, 
+        title: 'Taller de React y BEM', 
+        date: '24 Ago 2026', 
+        status: 'Publicado' 
+      },
+      { 
+        id: 2, 
+        title: 'Conferencia de Frontend', 
+        date: '30 Ago 2026', 
+        status: 'Borrador' 
+      },
+    ];
+  });
+
+  // Estado para el buscador en tiempo real
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Función para eliminar un evento por su ID
   const handleDeleteEvent = (id) => {
-    setEvents(events.filter(event => event.id !== id));
+    const updatedEvents = events.filter(event => event.id !== id);
+    setEvents(updatedEvents);
+    localStorage.setItem('dashboard_events', JSON.stringify(updatedEvents));
   };
+
+  // Filtrar los eventos según el texto introducido en el buscador
+  const filteredEvents = events.filter(event => 
+    event.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="dashboard-page">
@@ -111,9 +127,19 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Sección de listado de eventos activos (pasándole eventos y la función de borrado) */}
+        {/* Sección de listado de eventos activos (incluyendo la barra de búsqueda y los eventos filtrados) */}
         <section className="dashboard-page__events">
-          <EventList events={events} onDelete={handleDeleteEvent} />
+          <div className="dashboard-page__search-container" style={{ marginBottom: '20px' }}>
+            <input 
+              type="text" 
+              className="dashboard-page__search-input" 
+              placeholder="Buscar evento..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ padding: '10px 15px', borderRadius: '6px', width: '100%', background: '#131b2e', border: '1px solid #1f293d', color: '#fff' }}
+            />
+          </div>
+          <EventList events={filteredEvents} onDelete={handleDeleteEvent} />
         </section>
       </main>
 

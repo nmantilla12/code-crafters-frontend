@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import OrganizerLayout from './layouts/OrganizerLayout';
 import Dashboard from './pages/Dashboard';
-import CreateEvent from './pages/CreateEvent';
+import CreateEventForm from './componentes/CreateEventForm'; // <-- ¡Fíjate que dice "componentes"!
 
 function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        {/* Ruta principal: Muestra la Landing Page de Code Crafters 2026 */}
+        {/* Ruta principal: Muestra la Landing Page */}
         <Route path="/" element={<LandingPage />} />
 
         {/* Rutas del Panel de Organizador bajo un layout dedicado */}
@@ -21,7 +21,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           
           {/* Vista de Creación de Eventos */}
-          <Route path="create-event" element={<CreateEvent />} />
+          <Route path="create-event" element={<CreateEventForm />} />
         </Route>
 
         {/* Ruta comodín por si escriben cualquier otra URL, redirige al inicio */}

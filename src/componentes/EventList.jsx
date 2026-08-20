@@ -2,7 +2,6 @@ import React from 'react';
 import EventItem from './EventItem';
 
 const EventList = () => {
-  // Datos simulados de eventos para mostrar en el panel
   const events = [
     { id: 1, title: 'Taller de React y BEM', date: '24 Ago 2026', status: 'Publicado' },
     { id: 2, title: 'Conferencia de Frontend', date: '30 Ago 2026', status: 'Borrador' },

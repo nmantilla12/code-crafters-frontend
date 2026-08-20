@@ -20,7 +20,7 @@ const CreateEventForm = () => {
       [name]: files ? files[0] : value,
     });
 
-    // Limpiamos el error del campo correspondiente al escribir o seleccionar
+    // Limpiamos el error del campo correspondiente al escribir
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -29,7 +29,6 @@ const CreateEventForm = () => {
     }
   };
 
-  // Función de validación de campos obligatorios
   const validate = () => {
     let newErrors = {};
     if (!formData.title.trim()) {
@@ -51,14 +50,12 @@ const CreateEventForm = () => {
     e.preventDefault();
     const validationErrors = validate();
 
-    // Si hay errores, no se borran los datos y se muestran los avisos
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setSuccessMessage('');
       return;
     }
 
-    // Datos correctos
     setErrors({});
     const eventFinalData = { ...formData, status };
     console.log(`Evento ${status === 'published' ? 'publicado' : 'guardado como borrador'}:`, eventFinalData);
@@ -75,14 +72,14 @@ const CreateEventForm = () => {
       <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
       {successMessage && (
-        <div className="event-form__success" role="alert" style={{ color: '#22543d', backgroundColor: '#f0fff4', padding: '0.75rem', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.875rem', textAlign: 'center' }}>
+        <div className="event-form__success" role="alert">
           {successMessage}
         </div>
       )}
 
       <div className="event-form__group">
         <label className="event-form__label" htmlFor="title">
-          Título del Evento <span style={{ color: '#e53e3e' }}>*</span>
+          Título del Evento <span className="event-form__required">*</span>
         </label>
         <input 
           className={`event-form__input ${errors.title ? 'event-form__input--error' : ''}`}
@@ -92,12 +89,12 @@ const CreateEventForm = () => {
           value={formData.title} 
           onChange={handleChange} 
         />
-        {errors.title && <span className="event-form__error-text" style={{ color: '#e53e3e', fontSize: '0.75rem', marginTop: '0.2rem' }}>{errors.title}</span>}
+        {errors.title && <span className="event-form__error-text">{errors.title}</span>}
       </div>
 
       <div className="event-form__group">
         <label className="event-form__label" htmlFor="date">
-          Fecha <span style={{ color: '#e53e3e' }}>*</span>
+          Fecha <span className="event-form__required">*</span>
         </label>
         <input 
           className={`event-form__input ${errors.date ? 'event-form__input--error' : ''}`}
@@ -107,12 +104,12 @@ const CreateEventForm = () => {
           value={formData.date} 
           onChange={handleChange} 
         />
-        {errors.date && <span className="event-form__error-text" style={{ color: '#e53e3e', fontSize: '0.75rem', marginTop: '0.2rem' }}>{errors.date}</span>}
+        {errors.date && <span className="event-form__error-text">{errors.date}</span>}
       </div>
 
       <div className="event-form__group">
         <label className="event-form__label" htmlFor="modality">
-          Modalidad <span style={{ color: '#e53e3e' }}>*</span>
+          Modalidad <span className="event-form__required">*</span>
         </label>
         <select 
           className={`event-form__select ${errors.modality ? 'event-form__select--error' : ''}`}
@@ -126,12 +123,12 @@ const CreateEventForm = () => {
           <option value="online">Online</option>
           <option value="hibrido">Híbrido</option>
         </select>
-        {errors.modality && <span className="event-form__error-text" style={{ color: '#e53e3e', fontSize: '0.75rem', marginTop: '0.2rem' }}>{errors.modality}</span>}
+        {errors.modality && <span className="event-form__error-text">{errors.modality}</span>}
       </div>
 
       <div className="event-form__group">
         <label className="event-form__label" htmlFor="locationOrLink">
-          Ubicación o Enlace <span style={{ color: '#e53e3e' }}>*</span>
+          Ubicación o Enlace <span className="event-form__required">*</span>
         </label>
         <input 
           className={`event-form__input ${errors.locationOrLink ? 'event-form__input--error' : ''}`}
@@ -141,7 +138,7 @@ const CreateEventForm = () => {
           value={formData.locationOrLink} 
           onChange={handleChange} 
         />
-        {errors.locationOrLink && <span className="event-form__error-text" style={{ color: '#e53e3e', fontSize: '0.75rem', marginTop: '0.2rem' }}>{errors.locationOrLink}</span>}
+        {errors.locationOrLink && <span className="event-form__error-text">{errors.locationOrLink}</span>}
       </div>
 
       <div className="event-form__group">
@@ -156,20 +153,17 @@ const CreateEventForm = () => {
         />
       </div>
 
-      {/* Botones de acción para cumplir con publicar o guardar en borrador */}
-      <div className="event-form__actions" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', justifyContent: 'flex-end' }}>
+      <div className="event-form__actions">
         <button 
           type="button" 
           className="event-form__btn-draft"
           onClick={(e) => handleSubmit(e, 'draft')}
-          style={{ padding: '0.75rem 1.25rem', borderRadius: '6px', border: '1px solid #cbd5e0', background: '#fff', cursor: 'pointer', fontWeight: 600 }}
         >
           Guardar como borrador
         </button>
         <button 
           type="submit" 
           className="event-form__submit-btn"
-          style={{ padding: '0.75rem 1.25rem', borderRadius: '6px', border: 'none', background: '#3182ce', color: '#fff', cursor: 'pointer', fontWeight: 600 }}
         >
           Publicar evento
         </button>

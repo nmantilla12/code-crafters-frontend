@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import TicketQR from '../componentes/TicketQR';
 import NotificationsCenter from '../componentes/NotificationsCenter';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateToDashboard = () => {
+    navigate('/organizer/dashboard');
+  };
+
   return (
     <div className="landing-page">
       {/* 1. Navbar Superior */}
@@ -14,13 +21,27 @@ const LandingPage = () => {
           <a href="#support">Support</a>
         </nav>
         <div className="landing-page__actions">
-          <button type="button" className="landing-page__btn-register">Register</button>
-          <span className="landing-page__user-avatar">👤</span>
+          <button 
+            type="button" 
+            className="landing-page__btn-register"
+            onClick={handleNavigateToDashboard}
+          >
+            Register
+          </button>
+          <button 
+            type="button" 
+            className="landing-page__user-avatar-btn" 
+            title="Ir al Panel" 
+            onClick={handleNavigateToDashboard}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.2rem', padding: '0' }}
+          >
+            👤
+          </button>
         </div>
       </header>
 
-      {/* 2. Hero Section (Inspirado en tu diseño de doble ecosistema) */}
-      <section className="hero">
+      {/* 2. Hero Section */}
+      <section className="hero" id="discovery">
         <div className="hero__content">
           <span className="hero__badge">Sistema Operativo para Eventos Tech</span>
           <h1 className="hero__title">El Doble Ecosistema para la Excelencia en Eventos.</h1>
@@ -28,12 +49,19 @@ const LandingPage = () => {
             Una plataforma unificada. Dos experiencias de alto rendimiento. Para organizadores que exigen control absoluto y espectadores que buscan descubrimiento sin fricción.
           </p>
           <div className="hero__buttons">
-            <button type="button" className="hero__btn-primary">Explorar Plataforma ↗</button>
-            <button type="button" className="hero__btn-secondary">Ver Documentación &lt;&gt;</button>
+            <button 
+              type="button" 
+              className="hero__btn-primary"
+              onClick={handleNavigateToDashboard}
+            >
+              Explorar Plataforma ↗
+            </button>
+            <a href="#tickets" className="hero__btn-secondary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
+              Ver Documentación &lt;&gt;
+            </a>
           </div>
         </div>
         <div className="hero__graphic">
-          {/* Aquí puedes integrar una vista previa o tarjeta destacada */}
           <div className="hero__metric-card">
             <p>Live Attendees</p>
             <h3>2,048</h3>
@@ -50,18 +78,22 @@ const LandingPage = () => {
         </div>
 
         <div className="architecture__grid">
-          {/* Columna Organizadores */}
-          <div className="node-card">
+          {/* Columna Organizadores interactiva */}
+          <button 
+            type="button" 
+            className="node-card node-card--interactive" 
+            onClick={handleNavigateToDashboard}
+            style={{ cursor: 'pointer', textAlign: 'left', width: '100%', background: 'inherit', border: 'inherit', color: 'inherit', font: 'inherit' }}
+          >
             <h3>Para Organizadores</h3>
-            <p>Control total sobre la infraestructura del evento y telemetría en tiempo real.</p>
-          </div>
+            <p>Control total sobre la infraestructura del evento y telemetría en tiempo real. (Haz clic para acceder al panel)</p>
+          </button>
 
-          {/* Columna Espectadores (¡Aquí puedes integrar tu TicketQR y Notificaciones!) */}
+          {/* Columna Espectadores */}
           <div className="node-card">
             <h3>Para Espectadores</h3>
             <p>Experiencia fluida, check-in optimizado y control de accesos.</p>
             
-            {/* Integración de tu componente TicketQR ya hecho */}
             <div className="node-card__preview">
               <TicketQR 
                 eventTitle="DevCon 2026" 
@@ -84,8 +116,8 @@ const LandingPage = () => {
         <div className="landing-page__footer-links">
           <a href="#privacy">Privacy Policy</a>
           <a href="#terms">Terms of Service</a>
-          <a href="#github">Github</a>
-          <a href="#discord">Discord</a>
+          <a href="#github" target="_blank" rel="noreferrer">Github</a>
+          <a href="#discord" target="_blank" rel="noreferrer">Discord</a>
         </div>
       </footer>
     </div>

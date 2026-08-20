@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './index.css' // o tus estilos globales
+import './styles/main.scss' // <-- ¡Cámbialo aquí para que cargue tus estilos SASS!
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

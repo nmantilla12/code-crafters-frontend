@@ -1,4 +1,5 @@
 import React from 'react';
+import { LEGAL_LINKS } from '../data/legalLinks';
 
 const SupportSection = () => {
   return (
@@ -36,13 +37,18 @@ const SupportSection = () => {
       <footer className="support-section__footer-links">
         <h4 className="support-section__footer-title">Información Legal</h4>
         <ul className="support-section__legal-list">
-          <li><a href="#privacy" className="support-section__legal-link">Política de Privacidad</a></li>
-          <li><span className="support-section__separator">•</span></li>
-          <li><a href="#terms" className="support-section__legal-link">Términos y Condiciones</a></li>
-          <li><span className="support-section__separator">•</span></li>
-          <li><a href="#cookies" className="support-section__legal-link">Política de Cookies</a></li>
-          <li><span className="support-section__separator">•</span></li>
-          <li><a href="#accessibility" className="support-section__legal-link">Declaración de Accesibilidad</a></li>
+          {LEGAL_LINKS.map((link, index) => (
+            <React.Fragment key={link.id}>
+              <li>
+                <a href={link.href} className="support-section__legal-link">
+                  {link.label}
+                </a>
+              </li>
+              {index < LEGAL_LINKS.length - 1 && (
+                <li><span className="support-section__separator">•</span></li>
+              )}
+            </React.Fragment>
+          ))}
         </ul>
       </footer>
     </section>

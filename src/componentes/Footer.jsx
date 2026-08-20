@@ -1,9 +1,21 @@
 import React from 'react';
+import { COMMUNITY_LINKS } from '../data/legalLinks';
 
 const Footer = () => {
   return (
-    <footer style={{ textAlign: 'center', padding: '1.5rem', color: '#64748b', fontSize: '0.85rem' }}>
-      <p>© 2026 Code Crafters. Todos los derechos reservados.</p>
+    <footer className="footer">
+      <p className="footer__text">© 2026 Code Crafters. Built for the Dev Community.</p>
+      <div className="footer__links">
+        {COMMUNITY_LINKS.map((link) => (
+          <a 
+            key={link.id} 
+            href={link.href} 
+            className="footer__link"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
     </footer>
   );
 };

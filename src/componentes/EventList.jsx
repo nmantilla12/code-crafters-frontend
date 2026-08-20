@@ -1,26 +1,23 @@
 import React from 'react';
 import EventItem from './EventItem';
 
-const EventList = () => {
-  const events = [
-    { id: 1, title: 'Taller de React y BEM', date: '24 Ago 2026', status: 'Publicado' },
-    { id: 2, title: 'Conferencia de Frontend', date: '30 Ago 2026', status: 'Borrador' },
-    { id: 3, title: 'Meetup de JavaScript', date: '05 Sep 2026', status: 'Publicado' },
-  ];
-
+const EventList = ({ events = [], onDelete }) => {
   return (
     <section className="event-list">
       <h3 className="event-list__title">Eventos Recientes</h3>
-      <div className="event-list__container">
-        {events.map((event) => (
-          <EventItem 
-            key={event.id}
-            title={event.title}
-            date={event.date}
-            status={event.status}
-          />
-        ))}
-      </div>
+      {events.length === 0 ? (
+        <p className="event-list__empty">No hay eventos creados todavía.</p>
+      ) : (
+        <div className="event-list__container">
+          {events.map((event) => (
+            <EventItem 
+              key={event.id}
+              event={event}
+              onDelete={onDelete}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

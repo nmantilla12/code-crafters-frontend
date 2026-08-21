@@ -1,10 +1,13 @@
+// src/componentes/EventList.jsx
 import React from 'react';
 import EventItem from './EventItem';
 
+// Ya NO importa eventsData. Recibe 'events' y 'onDelete' desde el padre.
 const EventList = ({ events = [], onDelete }) => {
   return (
     <section className="event-list">
       <h3 className="event-list__title">Eventos Recientes</h3>
+      
       {events.length === 0 ? (
         <p className="event-list__empty">No hay eventos creados todavía.</p>
       ) : (
@@ -12,7 +15,12 @@ const EventList = ({ events = [], onDelete }) => {
           {events.map((event) => (
             <EventItem 
               key={event.id}
-              event={event}
+              id={event.id}
+              title={event.title}
+              date={event.date}
+              attendees={event.attendees}
+              status={event.status}
+              icon={event.icon}
               onDelete={onDelete}
             />
           ))}

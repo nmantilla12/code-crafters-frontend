@@ -1,11 +1,18 @@
 // src/pages/Dashboard.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TicketQR from '../componentes/TicketQR';
-import NotificationsCenter from '../componentes/NotificationsCenter';
+import EventList from '../componentes/EventList';
+import eventsData from '../data/events.json'; // Importamos la fuente de datos limpia y modular
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  
+  // Estado local para manejar los eventos y permitir su eliminación dinámica
+  const [events, setEvents] = useState(eventsData);
+
+  const handleDeleteEvent = (id) => {
+    setEvents(events.filter(event => event.id !== id));
+  };
 
   return (
     <div className="dashboard-page" style={{ background: '#0b1120', minHeight: '100vh', padding: '2rem 3rem', color: '#fff' }}>
@@ -34,21 +41,16 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* 2. Contenido Principal del Panel (Mis Actividades y Notificaciones) */}
+      {/* 2. Contenido Principal del Panel (Lista de Eventos Dinámica) */}
       <main className="dashboard-page__content">
         <div className="dashboard-page__header" style={{ marginBottom: '2rem' }}>
-          <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>4. Mis Actividades y Notificaciones</h1>
-          <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Gestiona tus eventos registrados, accede a tus tickets y mantente al día con las últimas actualizaciones.</p>
+          <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Panel de Control y Gestión</h1>
+          <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Administra los eventos de la plataforma, actualiza estados o elimínalos según sea necesario.</p>
         </div>
         
-        {/* Layout en dos columnas limpio y modular */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '2rem', alignItems: 'start' }}>
-          <div>
-            <TicketQR />
-          </div>
-          <div>
-            <NotificationsCenter />
-          </div>
+        {/* Renderizamos la lista modular pasando los datos del JSON y la función de borrado */}
+        <div style={{ background: '#1e293b', padding: '2rem', borderRadius: '12px', border: '1px solid #334155' }}>
+          <EventList events={events} onDelete={handleDeleteEvent} />
         </div>
       </main>
 

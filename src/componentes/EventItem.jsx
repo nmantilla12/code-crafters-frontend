@@ -1,16 +1,20 @@
+// src/componentes/EventItem.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const EventItem = ({ id, title, date, attendees, status, icon, onDelete }) => {
+const EventItem = ({ id, title, date, attendees, status = 'Borrador', icon, onDelete }) => {
   const navigate = useNavigate();
-  const statusClass = status.toLowerCase() === 'publicado' ? 'published' : 'draft';
+  
+  // Verificamos el estado usando optional chaining para evitar avisos de SonarLint
+  const statusClass = status?.toLowerCase() === 'publicado' ? 'published' : 'draft';
 
   const handleManage = () => {
-    navigate('/organizer/manage-event');
+    // Navegación dinámica pasando el ID del evento para gestionarlo individualmente
+    navigate(`/organizer/manage-event/${id}`);
   };
 
   const handleDelete = () => {
-    if (onDelete) {
+    if (onDelete && id) {
       onDelete(id);
     }
   };

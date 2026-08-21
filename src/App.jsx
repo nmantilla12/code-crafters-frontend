@@ -7,14 +7,7 @@ import Dashboard from './pages/Dashboard';
 import CreateEventForm from './componentes/CreateEventForm';
 import ExploreEvents from './pages/ExploreEvents';
 import EventDetail from './pages/EventDetail';
-
-// Creamos un componente sencillo para que la ruta de soporte no se quede en blanco
-const SupportPage = () => (
-  <div style={{ background: '#0b1120', color: '#fff', minHeight: '100vh', padding: '3rem', textAlign: 'center' }}>
-    <h1>Soporte y Ayuda</h1>
-    <p style={{ color: '#94a3b8', marginTop: '1rem' }}>Estamos aquí para ayudarte. Contacta con soporte@codecrafters.com</p>
-  </div>
-);
+import SupportSection from './componentes/SupportSection'; // <-- Importamos tu componente real
 
 function App() {
   return (
@@ -28,8 +21,12 @@ function App() {
         <Route path="/event-detail" element={<EventDetail />} />
         <Route path="/event/:id" element={<EventDetail />} />
         
-        {/* Ruta de Support corregida */}
-        <Route path="/support" element={<SupportPage />} />
+        {/* Ruta de Support utilizando tu componente completo */}
+        <Route path="/support" element={
+          <div style={{ background: '#0b1120', minHeight: '100vh' }}>
+            <SupportSection />
+          </div>
+        } />
 
         {/* Rutas del Panel de Organizador bajo un layout dedicado */}
         <Route path="/organizer" element={<OrganizerLayout />}>

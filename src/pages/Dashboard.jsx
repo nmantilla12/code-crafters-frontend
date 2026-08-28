@@ -1,11 +1,37 @@
 // src/pages/Dashboard.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TicketQR from '../componentes/TicketQR';
-import NotificationsCenter from '../componentes/NotificationsCenter';
+import EventList from '../componentes/EventList';
+// Importamos tu JSON por defecto por si el localStorage está vacío
+import initialData from '../data/events.json';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  
+  // Estado local para los eventos sincronizados con localStorage
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // --- CARGAR EVENTOS DESDE LOCALSTORAGE O JSON LOCAL ---
+  useEffect(() => {
+    const savedEvents = localStorage.getItem('codeCraftersEvents');
+    
+    if (savedEvents) {
+      setEvents(JSON.parse(savedEvents));
+    } else {
+      // Si es la primera vez, cargamos el JSON y lo guardamos en localStorage
+      setEvents(initialData.events);
+      localStorage.setItem('codeCraftersEvents', JSON.stringify(initialData.events));
+    }
+    setLoading(false);
+  }, []);
+
+  // Función para eliminar un evento y actualizar el almacenamiento local al instante
+  const handleDeleteEvent = (id) => {
+    const updatedEvents = events.filter(event => event.id !== id);
+    setEvents(updatedEvents);
+    localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
+  };
 
   return (
     <div className="dashboard-page" style={{ background: '#0b1120', minHeight: '100vh', padding: '2rem 3rem', color: '#fff' }}>
@@ -34,22 +60,45 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* 2. Contenido Principal del Panel (Mis Actividades y Notificaciones) */}
+      {/* 2. Contenido Principal del Panel */}
       <main className="dashboard-page__content">
-        <div className="dashboard-page__header" style={{ marginBottom: '2rem' }}>
-          <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>4. Mis Actividades y Notificaciones</h1>
-          <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Gestiona tus eventos registrados, accede a tus tickets y mantente al día con las últimas actualizaciones.</p>
+        <div className="dashboard-page__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Panel de Control y Gestión</h1>
+            <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Administra los eventos de la plataforma sincronizados localmente.</p>
+          </div>
+          
+          {/* Botón real de Creación de Eventos */}
+          <button 
+            type="button" 
+            onClick={() => navigate('/organizer/create-event')} 
+            style={{ 
+              background: '#06b6d4', 
+              color: '#0f172a', 
+              border: 'none', 
+              padding: '0.75rem 1.25rem', 
+              borderRadius: '8px', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              transition: 'background 0.2s'
+            }}
+          >
+            + Crear Nuevo Evento
+          </button>
         </div>
         
-        {/* Layout en dos columnas limpio y modular */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '2rem', alignItems: 'start' }}>
-          <div>
-            <TicketQR />
+        {/* Mensaje de carga */}
+        {loading && <p style={{ color: '#06b6d4' }}>Cargando eventos...</p>}
+
+        {/* Renderizamos la lista modular pasando los datos del state */}
+        {!loading && (
+          <div style={{ background: '#1e293b', padding: '2rem', borderRadius: '12px', border: '1px solid #334155' }}>
+            <EventList events={events} onDelete={handleDeleteEvent} />
           </div>
-          <div>
-            <NotificationsCenter />
-          </div>
-        </div>
+        )}
       </main>
 
       {/* 3. Footer */}

@@ -8,8 +8,8 @@ export const LEGAL_LINKS = [
 ];
 
 export const COMMUNITY_LINKS = [
-  { id: 'privacy', label: 'Privacy Policy', href: '#privacy' },
-  { id: 'terms', label: 'Terms of Service', href: '#terms' },
-  { id: 'github', label: 'Github', href: '#github' },
+  { id: 'privacy', label: 'Política de Privacidad', href: '#privacy' },
+  { id: 'terms', label: 'Términos de Uso', href: '#terms' },
+  { id: 'github', label: 'GitHub', href: '#github' },
   { id: 'discord', label: 'Discord', href: '#discord' }
 ];

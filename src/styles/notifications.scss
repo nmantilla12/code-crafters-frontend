@@ -1,27 +1,29 @@
-// Estilos estrictos con BEM para el Centro de Notificaciones
 .notifications-center {
-  max-width: 600px;
+  max-width: 650px;
   margin: 1.5rem auto;
   padding: 1.5rem;
   background-color: #ffffff;
+  border: 2px solid #cbd5e1;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  width: 100%;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.25rem;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 2px solid #cbd5e1;
     padding-bottom: 0.75rem;
     flex-wrap: wrap;
     gap: 0.75rem;
   }
 
   &__title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #333333;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
     margin: 0;
   }
 
@@ -29,36 +31,39 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
   }
 
   &__badge-count {
     background-color: #e2e8f0;
-    color: #4a5568;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.6rem;
+    color: #0f172a;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
     border-radius: 9999px;
   }
 
   &__btn-all {
     background: none;
     border: none;
-    color: #3182ce;
-    font-size: 0.75rem;
-    font-weight: 600;
+    color: #0369a1;
+    font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
     text-decoration: underline;
-    padding: 0;
+    padding: 0.25rem;
 
     &:hover {
-      color: #2b6cb0;
+      color: #0c4a6e;
     }
   }
 
   &__empty {
     text-align: center;
-    color: #718096;
+    color: #334155;
     padding: 2rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
     font-style: italic;
   }
 
@@ -68,27 +73,28 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
   }
 
   &__item {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: 6px;
-    background-color: #f7fafc;
-    border: 1px solid #e2e8f0;
-    transition: background-color 0.2s ease;
+    background-color: #f8fafc;
+    border: 2px solid #cbd5e1;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    box-sizing: border-box;
 
     &--unread {
-      background-color: #ebf8ff;
-      border-color: #bee3f8;
+      background-color: #e0f2fe;
+      border-color: #0284c7;
     }
   }
 
   &__icon {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
   &__content {
@@ -96,37 +102,39 @@
   }
 
   &__item-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #2d3748;
-    margin: 0 0 0.25rem 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.35rem 0;
   }
 
   &__text {
-    font-size: 0.875rem;
-    color: #4a5568;
-    margin: 0 0 0.5rem 0;
-    line-height: 1.4;
+    font-size: 1rem;
+    color: #1e293b;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.5;
   }
 
   &__date {
-    font-size: 0.75rem;
-    color: #a0aec0;
+    font-size: 0.9rem;
+    color: #475569;
+    font-weight: 600;
   }
 
   &__btn-action {
     background: transparent;
-    border: 1px solid #cbd5e0;
-    color: #4a5568;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    border: 2px solid #64748b;
+    color: #0f172a;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 0.5rem 0.75rem;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
 
     &:hover {
-      background-color: #edf2f7;
-      color: #1a202c;
+      background-color: #e2e8f0;
+      border-color: #0f172a;
     }
   }
 }

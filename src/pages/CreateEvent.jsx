@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 1. Añadido para la redirección
-import '../styles/event-form.scss'; // Importamos los estilos para que coja todo el color y diseño
+import { useNavigate } from 'react-router-dom';
+import '../styles/event-form.scss';
 
 const CreateEventForm = () => {
-  const navigate = useNavigate(); // 1. Inicializamos el hook
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -48,7 +48,7 @@ const CreateEventForm = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e, status = 'published') => {
+  const handleSubmit = (e, status = 'Publicado') => {
     e.preventDefault();
     const validationErrors = validate();
 
@@ -60,37 +60,40 @@ const CreateEventForm = () => {
 
     setErrors({});
     
-    // --- LÓGICA AÑADIDA PARA CONECTAR CON EL DASHBOARD ---
-    const statusText = status === 'published' ? 'Publicado' : 'Borrador';
-    const newEvent = {
-      id: Date.now(),
+    // Creamos el objeto del nuevo evento adaptado a tu events.json
+    const newLocalEvent = {
+      id: Date.now().toString(),
       title: formData.title,
+      category: formData.modality === 'online' ? 'Online' : 'General',
       date: formData.date,
-      status: statusText,
+      location: formData.locationOrLink,
+      attendees: "0",
+      status: status,
+      icon: formData.modality === 'online' ? '🌐' : '📍',
+      description: `Modalidad: ${formData.modality} - Creado desde el panel de gestión.`,
+      type: 'standard',
+      registeredUsers: []
     };
 
-    const existingEvents = JSON.parse(localStorage.getItem('dashboard_events')) || [];
-    const updatedEvents = [newEvent, ...existingEvents];
-    localStorage.setItem('dashboard_events', JSON.stringify(updatedEvents));
-    // -----------------------------------------------------
+    // Guardado y persistencia en localStorage
+    const savedEvents = JSON.parse(localStorage.getItem('codeCraftersEvents')) || [];
+    const updatedEvents = [newLocalEvent, ...savedEvents];
+    localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
 
-    const eventFinalData = { ...formData, status };
-    console.log(`Evento ${status === 'published' ? 'publicado' : 'guardado como borrador'}:`, eventFinalData);
-    
     setSuccessMessage(
-      status === 'published' 
+      status === 'Publicado' 
         ? '¡Evento publicado con éxito! Redirigiendo...' 
         : '¡Evento guardado como borrador correctamente! Redirigiendo...'
     );
 
-    // --- AÑADIDO: Redirección automática al Dashboard tras el éxito ---
+    // Redirección automática tras el éxito
     setTimeout(() => {
       navigate('/organizer/dashboard');
     }, 1500);
   };
 
   return (
-    <form className="event-form" onSubmit={(e) => handleSubmit(e, 'published')} noValidate>
+    <form className="event-form" onSubmit={(e) => handleSubmit(e, 'Publicado')} noValidate>
       <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
       {successMessage && (
@@ -179,7 +182,7 @@ const CreateEventForm = () => {
         <button 
           type="button" 
           className="event-form__btn-draft"
-          onClick={(e) => handleSubmit(e, 'draft')}
+          onClick={(e) => handleSubmit(e, 'Borrador')}
         >
           Guardar como borrador
         </button>

@@ -10,6 +10,22 @@ const LandingPage = () => {
     navigate('/organizer/dashboard');
   };
 
+  const handleNavigateToRegister = () => {
+    navigate('/register');
+  };
+
+  const handleNavigateToLogin = () => {
+    navigate('/login');
+  };
+
+  const handleNavigateToExplore = () => {
+    navigate('/events');
+  };
+
+  const handleNavigateToSupport = () => {
+    navigate('/support');
+  };
+
   return (
     <div className="landing-page">
       {/* 1. Navbar Superior */}
@@ -18,21 +34,27 @@ const LandingPage = () => {
         <nav className="landing-page__nav-links">
           <a href="#discovery" className="active">Discovery</a>
           <a href="#tickets">My Tickets</a>
-          <a href="#support">Support</a>
+          <button 
+            type="button" 
+            onClick={handleNavigateToSupport}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8', fontSize: 'inherit', padding: 0 }}
+          >
+            Support
+          </button>
         </nav>
         <div className="landing-page__actions">
           <button 
             type="button" 
             className="landing-page__btn-register"
-            onClick={handleNavigateToDashboard}
+            onClick={handleNavigateToRegister}
           >
             Register
           </button>
           <button 
             type="button" 
             className="landing-page__user-avatar-btn" 
-            title="Ir al Panel" 
-            onClick={handleNavigateToDashboard}
+            title="Iniciar Sesión" 
+            onClick={handleNavigateToLogin}
             style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.2rem', padding: '0' }}
           >
             👤
@@ -52,7 +74,7 @@ const LandingPage = () => {
             <button 
               type="button" 
               className="hero__btn-primary"
-              onClick={handleNavigateToDashboard}
+              onClick={handleNavigateToExplore}
             >
               Explorar Plataforma ↗
             </button>
@@ -78,23 +100,21 @@ const LandingPage = () => {
         </div>
 
         <div className="architecture__grid">
-          {/* Columna Organizadores interactiva */}
           <button 
             type="button" 
             className="node-card node-card--interactive" 
             onClick={handleNavigateToDashboard}
-            style={{ cursor: 'pointer', textAlign: 'left', width: '100%', background: 'inherit', border: 'inherit', color: 'inherit', font: 'inherit' }}
+            style={{ cursor: 'pointer', textAlign: 'left', width: '100%', border: '1px solid #334155', background: '#1e293b', padding: '2rem', borderRadius: '12px', color: 'inherit', font: 'inherit', transition: 'border-color 0.2s' }}
           >
             <h3>Para Organizadores</h3>
-            <p>Control total sobre la infraestructura del evento y telemetría en tiempo real. (Haz clic para acceder al panel)</p>
+            <p style={{ marginTop: '1rem', color: '#94a3b8' }}>Control total sobre la infraestructura del evento y telemetría en tiempo real. (Haz clic para acceder al panel)</p>
           </button>
 
-          {/* Columna Espectadores */}
-          <div className="node-card">
+          <div className="node-card" style={{ background: '#1e293b', border: '1px solid #334155', padding: '2rem', borderRadius: '12px' }}>
             <h3>Para Espectadores</h3>
-            <p>Experiencia fluida, check-in optimizado y control de accesos.</p>
+            <p style={{ marginTop: '1rem', color: '#94a3b8' }}>Experiencia fluida, check-in optimizado y control de accesos.</p>
             
-            <div className="node-card__preview">
+            <div className="node-card__preview" style={{ marginTop: '1.5rem' }}>
               <TicketQR 
                 eventTitle="DevCon 2026" 
                 eventDate="2026-09-15" 
@@ -106,7 +126,7 @@ const LandingPage = () => {
       </section>
 
       {/* 4. Sección del Centro de Notificaciones */}
-      <section className="notifications-section">
+      <section className="notifications-section" style={{ padding: '4rem 2rem', display: 'flex', justifyContent: 'center' }}>
         <NotificationsCenter />
       </section>
 

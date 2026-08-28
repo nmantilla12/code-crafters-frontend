@@ -1,23 +1,22 @@
-// ==========================================
-// Archivo Principal SASS (main.scss)
-// ==========================================
-
-// 0. DECLARACIÓN DE VARIABLES GLOBALES
 $bg-dark: #07090e;
 $bg-card: #0d111a;
-$border-color: #1e2638;
+$border-color: #334155;
 $primary-cyan: #00f0ff;
 $primary-cyan-hover: #00c4d1;
 $text-main: #ffffff;
-$text-muted: #8b9bb4;
+$text-muted: #e2e8f0;
 
-// 1. Importa tus componentes y secciones ya creados
+$font-base: 1rem;
+$font-md: 1.125rem;
+$font-lg: 1.25rem;
+$font-xl: 1.5rem;
+$font-xxl: 2rem;
+
 @import 'bottom-nav';
-@import 'event-list'; // Puedes incluir los estilos del formulario aquí dentro si guardan relación
+@import 'event-list';
 @import 'metric-card';
 @import 'notifications';
 @import 'support-form';
 @import 'support';
 
-// 2. Importa la estructura específica de la landing
 @import 'landing';

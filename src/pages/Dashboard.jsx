@@ -1,17 +1,36 @@
 // src/pages/Dashboard.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventList from '../componentes/EventList';
-import eventsData from '../data/events.json'; // Importamos la fuente de datos limpia y modular
+// Importamos tu JSON por defecto por si el localStorage está vacío
+import initialData from '../data/events.json';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   
-  // Estado local para manejar los eventos y permitir su eliminación dinámica
-  const [events, setEvents] = useState(eventsData);
+  // Estado local para los eventos sincronizados con localStorage
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // --- CARGAR EVENTOS DESDE LOCALSTORAGE O JSON LOCAL ---
+  useEffect(() => {
+    const savedEvents = localStorage.getItem('codeCraftersEvents');
+    
+    if (savedEvents) {
+      setEvents(JSON.parse(savedEvents));
+    } else {
+      // Si es la primera vez, cargamos el JSON y lo guardamos en localStorage
+      setEvents(initialData.events);
+      localStorage.setItem('codeCraftersEvents', JSON.stringify(initialData.events));
+    }
+    setLoading(false);
+  }, []);
+
+  // Función para eliminar un evento y actualizar el almacenamiento local al instante
   const handleDeleteEvent = (id) => {
-    setEvents(events.filter(event => event.id !== id));
+    const updatedEvents = events.filter(event => event.id !== id);
+    setEvents(updatedEvents);
+    localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
   };
 
   return (
@@ -41,17 +60,45 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* 2. Contenido Principal del Panel (Lista de Eventos Dinámica) */}
+      {/* 2. Contenido Principal del Panel */}
       <main className="dashboard-page__content">
-        <div className="dashboard-page__header" style={{ marginBottom: '2rem' }}>
-          <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Panel de Control y Gestión</h1>
-          <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Administra los eventos de la plataforma, actualiza estados o elimínalos según sea necesario.</p>
+        <div className="dashboard-page__header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h1 className="dashboard-page__title" style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Panel de Control y Gestión</h1>
+            <p className="dashboard-page__subtitle" style={{ color: '#94a3b8', fontSize: '0.95rem' }}>Administra los eventos de la plataforma sincronizados localmente.</p>
+          </div>
+          
+          {/* Botón real de Creación de Eventos */}
+          <button 
+            type="button" 
+            onClick={() => navigate('/organizer/create-event')} 
+            style={{ 
+              background: '#06b6d4', 
+              color: '#0f172a', 
+              border: 'none', 
+              padding: '0.75rem 1.25rem', 
+              borderRadius: '8px', 
+              fontWeight: 'bold', 
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              transition: 'background 0.2s'
+            }}
+          >
+            + Crear Nuevo Evento
+          </button>
         </div>
         
-        {/* Renderizamos la lista modular pasando los datos del JSON y la función de borrado */}
-        <div style={{ background: '#1e293b', padding: '2rem', borderRadius: '12px', border: '1px solid #334155' }}>
-          <EventList events={events} onDelete={handleDeleteEvent} />
-        </div>
+        {/* Mensaje de carga */}
+        {loading && <p style={{ color: '#06b6d4' }}>Cargando eventos...</p>}
+
+        {/* Renderizamos la lista modular pasando los datos del state */}
+        {!loading && (
+          <div style={{ background: '#1e293b', padding: '2rem', borderRadius: '12px', border: '1px solid #334155' }}>
+            <EventList events={events} onDelete={handleDeleteEvent} />
+          </div>
+        )}
       </main>
 
       {/* 3. Footer */}

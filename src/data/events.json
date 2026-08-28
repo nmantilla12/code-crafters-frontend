@@ -1,98 +1,108 @@
-[
-  {
-    "id": "1",
-    "title": "Keynote: Arquitectura Web Distribuida",
-    "category": "Arquitectura",
-    "date": "15 Oct, 2026",
-    "location": "Main Stage",
-    "attendees": "2048",
-    "status": "Publicado",
-    "icon": "🚀",
-    "description": "Una inmersión profunda en cómo los micro-frontends y la computación en el borde están redefiniendo las aplicaciones escalables.",
-    "type": "featured"
-  },
-  {
-    "id": "2",
-    "title": "Rust para Desarrolladores Node.js",
-    "category": "Backend",
-    "date": "15 Oct, 2026",
-    "location": "Online",
-    "attendees": "45",
-    "status": "Publicado",
-    "icon": "⚙️",
-    "description": "Aprende a portar módulos críticos de rendimiento de JS a Rust usando WebAssembly.",
-    "type": "standard"
-  },
-  {
-    "id": "3",
-    "title": "Integrando LLMs en tu Pipeline CI/CD",
-    "category": "AI & ML",
-    "date": "15 Oct, 2026",
-    "location": "Madrid, España",
-    "attendees": "60",
-    "status": "Publicado",
-    "icon": "🤖",
-    "description": "Automatización de code reviews y generación de tests usando modelos locales.",
-    "type": "standard"
-  },
-  {
-    "id": "4",
-    "title": "Observabilidad en Sistemas Serverless",
-    "category": "DevOps",
-    "date": "16 Oct, 2026",
-    "location": "Barcelona, España",
-    "attendees": "30",
-    "status": "Publicado",
-    "icon": "📊",
-    "description": "Técnicas avanzadas para tracing y monitoreo en arquitecturas distribuidas complejas.",
-    "type": "standard"
-  },
-  {
-    "id": "5",
-    "title": "Optimización de Renderizado en React 19",
-    "category": "Frontend",
-    "date": "16 Oct, 2026",
-    "location": "Online",
-    "attendees": "25",
-    "status": "Publicado",
-    "icon": "⚛️",
-    "description": "Taller práctico sobre las nuevas primitivas de concurrencia y server components.",
-    "type": "standard"
-  },
-  {
-    "id": "6",
-    "title": "Global AI Summit 2026",
-    "category": "AI & Machine Learning",
-    "date": "15 Oct, 2026",
-    "location": "Online",
-    "attendees": "145",
-    "status": "Publicado",
-    "icon": "🌐",
-    "description": "Únete a la conferencia más grande sobre inteligencia artificial generativa, LLMs y el futuro del desarrollo de software.",
-    "type": "standard"
-  },
-  {
-    "id": "7",
-    "title": "React Next-Gen Patterns",
-    "category": "Frontend",
-    "date": "22 Oct, 2026",
-    "location": "Madrid, España",
-    "attendees": "30",
-    "status": "Publicado",
-    "icon": "⚡",
-    "description": "Taller intensivo sobre Server Components, acciones de servidor y arquitectura avanzada en React.",
-    "type": "standard"
-  },
-  {
-    "id": "8",
-    "title": "Web3 Hackathon: DeFi",
-    "category": "Web3 / Blockchain",
-    "date": "05 Nov, 2026",
-    "location": "Barcelona, España",
-    "attendees": "100",
-    "status": "Borrador",
-    "icon": "⛓️",
-    "description": "Construye protocolos financieros descentralizados en 48 horas. Grandes premios en cripto.",
-    "type": "standard"
-  }
-]
+{
+  "events": [
+    {
+      "id": "1",
+      "title": "Keynote: Arquitectura Web Distribuida",
+      "category": "Arquitectura",
+      "date": "15 Oct, 2026",
+      "location": "Main Stage",
+      "attendees": "2048",
+      "status": "Publicado",
+      "icon": "🚀",
+      "description": "Una inmersión profunda en cómo los micro-frontends y la computación en el borde están redefiniendo las aplicaciones escalables.",
+      "type": "featured",
+      "registeredUsers": []
+    },
+    {
+      "id": "2",
+      "title": "Rust para Desarrolladores Node.js",
+      "category": "Backend",
+      "date": "15 Oct, 2026",
+      "location": "Online",
+      "attendees": "45",
+      "status": "Publicado",
+      "icon": "⚙️",
+      "description": "Aprende a portar módulos críticos de rendimiento de JS a Rust usando WebAssembly.",
+      "type": "standard",
+      "registeredUsers": []
+    },
+    {
+      "id": "3",
+      "title": "Integrando LLMs en tu Pipeline CI/CD",
+      "category": "AI & ML",
+      "date": "15 Oct, 2026",
+      "location": "Madrid, España",
+      "attendees": "60",
+      "status": "Publicado",
+      "icon": "🤖",
+      "description": "Automatización de code reviews y generación de tests usando modelos locales.",
+      "type": "standard",
+      "registeredUsers": []
+    },
+    {
+      "id": "4",
+      "title": "Observabilidad en Sistemas Serverless",
+      "category": "DevOps",
+      "date": "16 Oct, 2026",
+      "location": "Barcelona, España",
+      "attendees": "30",
+      "status": "Publicado",
+      "icon": "📊",
+      "description": "Técnicas avanzadas para tracing y monitoreo en arquitecturas distribuidas complejas.",
+      "type": "standard",
+      "registeredUsers": []
+    },
+    {
+      "id": "5",
+      "title": "Optimización de Renderizado en React 19",
+      "category": "Frontend",
+      "date": "16 Oct, 2026",
+      "location": "Online",
+      "attendees": "25",
+      "status": "Publicado",
+      "icon": "⚛️",
+      "description": "Taller práctico sobre las nuevas primitivas de concurrencia y server components.",
+      "type": "standard",
+      "registeredUsers": []
+    },
+    {
+      "id": "6",
+      "title": "Global AI Summit 2026",
+      "category": "AI & Machine Learning",
+      "date": "15 Oct, 2026",
+      "location": "Online",
+      "attendees": "145",
+      "status": "Publicado",
+      "icon": "🌐",
+      "description": "Únete a la conferencia más grande sobre inteligencia artificial generativa, LLMs y el futuro del desarrollo de software.",
+      "type": "standard",
+      "registeredUsers": []
+    },
+    {
+      "id": "7",
+      "title": "React Next-Gen Patterns",
+      "category": "Frontend",
+      "date": "22 Oct, 2026",
+      "location": "Madrid, España",
+      "attendees": "30",
+      "status": "Publicado",
+      "icon": "⚡",
+      "description": "Taller intensivo sobre Server Components, acciones de servidor y arquitectura avanzada en React.",
+      "type": "standard",
+      "registeredUsers": []
+    },
+    {
+      "id": "8",
+      "title": "Web3 Hackathon: DeFi",
+      "category": "Web3 / Blockchain",
+      "date": "05 Nov, 2026",
+      "location": "Barcelona, España",
+      "attendees": "100",
+      "status": "Borrador",
+      "icon": "⛓️",
+      "description": "Construye protocolos financieros descentralizados en 48 horas. Grandes premios en cripto.",
+      "type": "standard",
+      "registeredUsers": []
+    }
+  ]
+}

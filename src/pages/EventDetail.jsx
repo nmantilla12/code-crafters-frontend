@@ -1,22 +1,34 @@
 // src/pages/EventDetail.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../componentes/Navbar';
 import Footer from '../componentes/Footer';
-import eventsData from '../data/events.json';
+import initialData from '../data/events.json';
 
 const EventDetail = () => {
   const { id } = useParams();
-  const event = eventsData.find((e) => e.id === id);
-
-  // Eliminamos ticketType ya que no se estaba utilizando
+  
+  const [event, setEvent] = useState(null);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
 
+  useEffect(() => {
+    const savedEvents = localStorage.getItem('codeCraftersEvents');
+    const eventsList = savedEvents ? JSON.parse(savedEvents) : initialData.events;
+    const foundEvent = eventsList.find((e) => e.id === id);
+    setEvent(foundEvent);
+  }, [id]);
+
   if (!event) {
-    return <div style={{ color: '#fff', padding: '2rem' }}>Evento no encontrado.</div>;
+    return (
+      <div className="event-detail-page" style={{ background: '#0b1120', color: '#fff', minHeight: '100vh', padding: '2rem' }}>
+        <Navbar />
+        <div style={{ color: '#fff', padding: '4rem 2rem', textAlign: 'center' }}>Evento no encontrado.</div>
+        <Footer />
+      </div>
+    );
   }
 
   const handleSubmit = (e) => {
@@ -25,6 +37,25 @@ const EventDetail = () => {
       alert('Por favor, completa todos los campos y acepta los términos.');
       return;
     }
+
+    const savedEvents = JSON.parse(localStorage.getItem('codeCraftersEvents')) || initialData.events;
+    
+    const updatedEvents = savedEvents.map((ev) => {
+      if (ev.id === id) {
+        const currentRegistered = ev.registeredUsers || [];
+        const newAttendee = { fullName, email, date: new Date().toISOString() };
+        
+        return {
+          ...ev,
+          // Aplicada la buena práctica usando Number.parseInt en lugar del global parseInt
+          attendees: (Number.parseInt(ev.attendees || 0, 10) + 1).toString(),
+          registeredUsers: [...currentRegistered, newAttendee]
+        };
+      }
+      return ev;
+    });
+
+    localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
     setIsRegistered(true);
   };
 
@@ -32,7 +63,7 @@ const EventDetail = () => {
     <div className="event-detail-page" style={{ background: '#0b1120', color: '#fff', minHeight: '100vh', padding: '2rem' }}>
       <Navbar />
       
-      <div className="event-detail__container" style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '3rem', alignItems: 'start', maxWidth: '1200px', margin: '0 auto' }}>
+      <div className="event-detail__container" style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '3rem', alignItems: 'start', maxWidth: '1200px', margin: '2rem auto' }}>
         
         {/* Columna Izquierda: Datos dinámicos del evento */}
         <div>
@@ -43,9 +74,10 @@ const EventDetail = () => {
             <h1 style={{ fontSize: '2.25rem', fontWeight: 'bold', color: '#fff', marginBottom: '1rem' }}>
               {event.title}
             </h1>
-            <div style={{ display: 'flex', gap: '1.5rem', color: '#94a3b8', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '1.5rem', color: '#94a3b8', fontSize: '0.875rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
               <span>📅 {event.date}</span>
               <span>📍 {event.location}</span>
+              <span>👥 Asistentes: {event.attendees || 0}</span>
             </div>
             <p style={{ color: '#cbd5e1', lineHeight: '1.6' }}>{event.description}</p>
           </div>

@@ -17,19 +17,18 @@ El ciclo de vida del proyecto ha sido gestionado bajo metodologías ágiles, gar
 - **Diseño (Figma):** Prototipado y estructuración visual de las interfaces: Landing Page, Panel de Organizador, Explorar Eventos, Detalles del Evento, Mis Actividades y Soporte.
 - **Código (GitHub):** Repositorio central del frontend donde se gestiona la integración de componentes, el control de versiones y el despliegue del proyecto.
 
-## Recursos del Proyecto
+## Guía de Instalación y Ejecución Local
+Si deseas clonar el proyecto y ponerlo en marcha en tu entorno local, sigue estos pasos desde la terminal:
 
-| Recurso | Enlace |
-| :--- | :--- |
-| **Repositorio GitHub** | [code-crafters-frontend](https://github.com/nmantilla12/code-crafters-frontend) |
-| **Tablero de Diseño (Figma)** | [Board CODE CRAFTERS](https://www.figma.com/board/XEAeg3OGJOAzPgIounS9uF/CODE-CRAFTERS?node-id=18-221&t=Xbxgn0YICBOG6sFf-0) |
-| **Gestión de Proyecto (Jira)** | [Jira Backlog](https://nnnmantillam-1776169602738.atlassian.net/jira/software/projects/CODE/boards/134/backlog?|
+```bash
+# 1. Clona el repositorio
+git clone [https://github.com/nmantilla12/code-crafters-frontend.git](https://github.com/nmantilla12/code-crafters-frontend.git)
 
-## Estructura del Ecosistema
-La aplicación sigue un flujo riguroso para ambos perfiles de usuario, permitiendo desde la configuración técnica de eventos hasta la gestión de tickets QR para los asistentes, asegurando una experiencia cohesiva en todo momento.
+# 2. Entra en la carpeta del proyecto
+cd code-crafters-frontend
 
-## Licencia
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+# 3. Instala las dependencias
+npm install
 
----
-© 2026 Nira Mantilla Peña. Todos los derechos reservados.
+# 4. Inicia el servidor de desarrollo
+npm run dev

@@ -1,11 +1,17 @@
+// ==========================================
+// Componente: Bottom Navigation (Modo Oscuro)
+// ==========================================
+
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 72px; // Un poco más de altura para alojar cómodamente la letra grande
-  background-color: #ffffff;
-  border-top: 2px solid #64748b; // Borde superior más marcado para contraste AAA
+  height: 72px;
+  // Usamos los colores oscuros de tus variables globales
+  background-color: $bg-card; 
+  // Usamos el borde fino y elegante definido en el main
+  border-top: 1px solid $border-color; 
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -18,38 +24,46 @@
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: #1e293b; // Gris ultra oscuro (Slate 800) en lugar de #475569 para contraste AAA sobre blanco
-    font-size: 1rem; // ¡16px exactos cumpliendo la norma!
-    font-weight: 600; // Letra semi-negrita para mejorar la legibilidad visual
+    // Texto secundario claro para legibilidad en modo oscuro
+    color: $text-muted; 
+    font-size: $font-base;
+    font-weight: 600;
     gap: 4px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $text-main;
+    }
 
     &--active {
-      color: #0369a1; // Azul oscuro profundo que cumple contraste AAA estricto sobre blanco
+      // Usamos tu color cian principal para el elemento activo
+      color: $primary-cyan; 
       font-weight: 700;
     }
   }
 
   &__icon {
-    font-size: 1.35rem; // Iconos un punto más grandes para mantener la proporción con el texto
+    font-size: 1.35rem;
   }
 
   &__action-btn {
-    width: 52px; // Ligeramente más grande para facilitar la zona táctil (WCAG Target Size)
+    width: 52px;
     height: 52px;
-    background-color: #0e7490; // Azul petróleo oscuro de altísimo contraste con el icono/texto blanco
-    color: #ffffff;
+    // Usamos el cian principal para destacar la acción central
+    background-color: $primary-cyan; 
+    color: $bg-dark; // Contraste óptimo oscuro sobre el botón brillante
     border: none;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(14, 116, 144, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
     margin-top: -20px;
     transition: background-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background-color: #155e75; // Tono más oscuro para el hover
+      background-color: $primary-cyan-hover;
       transform: scale(1.05);
     }
   }

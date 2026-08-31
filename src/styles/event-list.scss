@@ -1,3 +1,7 @@
+// ==========================================
+// Componente: Event List & Event Item
+// ==========================================
+
 .event-list {
   background-color: transparent;
   border: none;
@@ -12,9 +16,9 @@
   max-width: 1200px;
 
   &__title {
-    font-size: 2rem; // Subimos el título principal para destacar con fuerza
+    font-size: $font-xxl;
     font-weight: 700;
-    color: #ffffff;
+    color: $text-main;
     margin: 0 0 1rem 0;
   }
 
@@ -26,10 +30,10 @@
   }
 
   &__loading, &__empty {
-    color: #f1f5f9; // Blanco suave con contraste altísimo (AAA)
+    color: $text-muted;
     text-align: center;
     padding: 2rem;
-    font-size: 1.125rem; // 18px para cumplir holgadamente
+    font-size: $font-md;
   }
 }
 
@@ -39,15 +43,20 @@
   align-items: flex-start;
   flex-direction: column; 
   padding: 1.5rem;
-  border: 2px solid #475569; // Borde más marcado para mayor contraste visual
+  
+  // Usamos el borde blanco fino por defecto de las variables globales
+  border: 1px solid $border-color !important;
   border-radius: 8px;
-  background-color: #0f172a;
+  background-color: $bg-card; // Fondo de tarjeta unificado
   gap: 1.25rem;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 
+  // Al hacer hover cambia al color cian fino que definiste
   &:hover {
-    border-color: #22d3ee; // Cian más brillante y accesible
+    border-color: $primary-cyan !important;
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 240, 255, 0.1);
   }
 
   @media (max-width: 640px) {
@@ -71,22 +80,22 @@
   }
 
   &__title {
-    font-size: 1.25rem; // 20px - Supera los 16px obligatorios con creces
+    font-size: $font-lg;
     font-weight: 700;
-    color: #ffffff; // Blanco puro sobre fondo oscuro (contraste AAA máximo)
+    color: $text-main;
     margin: 0;
   }
 
   &__description {
-    font-size: 1.05rem; // ~16.8px - ¡Por fin supera los 16px exigidos!
-    color: #f1f5f9; // Texto claro de máxima legibilidad
+    font-size: 1.05rem;
+    color: $text-muted;
     margin: 0;
     line-height: 1.5;
   }
 
   &__date {
-    font-size: 1rem; // 16px exactos para la fecha
-    color: #22d3ee; // Cian brillante optimizado para contraste sobre oscuro
+    font-size: $font-base;
+    color: $primary-cyan; // Fecha destacada con el cian principal
     font-weight: 600;
     margin-top: 0.5rem;
   }

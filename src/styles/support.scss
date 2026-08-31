@@ -1,11 +1,17 @@
+// ==========================================
+// Componente: Support Section (Modo Oscuro)
+// ==========================================
+
 .support-section {
+  // Hereda la clase global para el fondo oscuro de tarjeta y borde interactivo
+  @extend .card-border-interactive;
+
   max-width: 950px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #ffffff;
-  border: 2px solid #cbd5e1;
+  background-color: $bg-card !important;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
   width: 100%;
 
@@ -15,15 +21,15 @@
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: $font-xxl;
     font-weight: 800;
-    color: #0f172a;
+    color: $text-main;
     margin: 0 0 0.5rem 0;
   }
 
   &__subtitle {
-    font-size: 1.1rem;
-    color: #1e293b;
+    font-size: $font-md;
+    color: $text-muted;
     margin: 0;
     line-height: 1.5;
   }
@@ -36,15 +42,15 @@
   }
 
   &__footer-links {
-    border-top: 2px solid #cbd5e1;
+    border-top: 1px solid $border-color;
     padding-top: 1.5rem;
     text-align: center;
   }
 
   &__footer-title {
-    font-size: 1.05rem;
+    font-size: $font-base;
     font-weight: 700;
-    color: #0f172a;
+    color: $text-main;
     margin: 0 0 0.75rem 0;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -62,28 +68,28 @@
   }
 
   &__legal-link {
-    font-size: 1rem;
-    color: #0369a1;
+    font-size: $font-base;
+    color: $primary-cyan;
     font-weight: 700;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.2s ease;
 
     &:hover {
-      color: #0c4a6e;
+      color: $primary-cyan-hover;
       text-decoration: underline;
     }
   }
 
   &__separator {
-    color: #64748b;
-    font-size: 1rem;
+    color: $text-muted;
+    font-size: $font-base;
     font-weight: 700;
   }
 }
 
 .support-card {
-  background-color: #f8fafc;
-  border: 2px solid #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border-color;
   border-radius: 6px;
   padding: 1.75rem;
   display: flex;
@@ -93,8 +99,8 @@
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    border-color: #0284c7;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    border-color: $primary-cyan;
   }
 
   &__icon {
@@ -103,29 +109,30 @@
   }
 
   &__title {
-    font-size: 1.25rem;
+    font-size: $font-md;
     font-weight: 700;
-    color: #0f172a;
+    color: $text-main;
     margin: 0 0 0.5rem 0;
   }
 
   &__text {
-    font-size: 1rem;
-    color: #1e293b;
+    font-size: $font-base;
+    color: $text-muted;
     margin: 0 0 1.25rem 0;
     line-height: 1.5;
     flex: 1;
   }
 
   &__link {
-    font-size: 1rem;
+    font-size: $font-base;
     font-weight: 700;
-    color: #0369a1;
+    color: $primary-cyan;
     text-decoration: none;
     align-self: flex-start;
+    transition: color 0.2s ease;
 
     &:hover {
-      color: #0c4a6e;
+      color: $primary-cyan-hover;
       text-decoration: underline;
     }
   }

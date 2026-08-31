@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const BottomNav = () => {
+  const navigate = useNavigate();
+
   return (
     <nav className="bottom-nav">
       <NavLink 
@@ -16,6 +18,7 @@ const BottomNav = () => {
         type="button" 
         className="bottom-nav__action-btn" 
         aria-label="Crear Nuevo Evento"
+        onClick={() => navigate('/organizer/create-event')}
       >
         <span className="bottom-nav__plus">+</span>
       </button>

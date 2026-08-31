@@ -17,7 +17,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Estilos CSS inyectados para asegurar el comportamiento responsive y el menú móvil perfecto */}
       <style>{`
         .navbar-container {
           display: flex;
@@ -75,6 +74,7 @@ const Navbar = () => {
           cursor: pointer;
           padding: 0.5rem;
           transition: color 0.2s ease;
+          text-align: left;
         }
 
         .navbar-link:hover {
@@ -120,12 +120,33 @@ const Navbar = () => {
           justify-content: center;
           font-size: 1.25rem;
           cursor: pointer;
+          padding: 0;
+          transition: border-color 0.2s ease;
+        }
+
+        .navbar-avatar:hover {
+          border-color: #38bdf8;
+        }
+
+        /* Contenedor específico para opciones móviles adicionales */
+        .navbar-mobile-actions {
+          display: none;
+          width: 100%;
+          flex-direction: column;
+          gap: 0.75rem;
+          margin-top: 1rem;
+          padding-top: 1rem;
+          border-top: 1px solid #334155;
         }
 
         /* Diseño Responsive para pantallas medianas y móviles */
         @media (max-width: 900px) {
           .navbar-mobile-toggle {
             display: block;
+          }
+
+          .navbar-actions {
+            display: none;
           }
 
           .navbar-nav {
@@ -141,15 +162,15 @@ const Navbar = () => {
             border-bottom: 2px solid #334155;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             box-sizing: border-box;
-            gap: 1rem;
+            gap: 0.75rem;
           }
 
           .navbar-nav.open {
             display: flex;
           }
 
-          .navbar-actions {
-            display: none; /* Se pueden agrupar o adaptar dentro del menú móvil si se requiere */
+          .navbar-mobile-actions {
+            display: flex;
           }
         }
       `}</style>
@@ -174,7 +195,7 @@ const Navbar = () => {
           {mobileMenuOpen ? '✕' : '☰'}
         </button>
 
-        {/* Navegación Principal */}
+        {/* Navegación Principal (Escritorio y Móvil) */}
         <nav className={`navbar-nav ${mobileMenuOpen ? 'open' : ''}`}>
           <button 
             type="button" 
@@ -197,6 +218,50 @@ const Navbar = () => {
           >
             Soporte
           </button>
+
+          {/* Bloque de Acciones adaptado para mostrarse DENTRO del menú desplegable en móvil */}
+          <div className="navbar-mobile-actions">
+            <button
+              type="button"
+              onClick={() => {
+                handleRoleSwitch();
+                setMobileMenuOpen(false);
+              }}
+              className="navbar-role-btn"
+              style={{ width: '100%', textAlign: 'center' }}
+            >
+              Rol: {userRole === 'organizer' ? 'Organizador' : 'Asistente'}
+            </button>
+
+            <button 
+              type="button" 
+              onClick={() => handleNavClick('/register')} 
+              className="navbar-register-btn"
+              style={{ width: '100%', textAlign: 'center' }}
+            >
+              Registro
+            </button>
+
+            <button 
+              type="button"
+              style={{ 
+                background: 'transparent', 
+                border: 'none', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.75rem', 
+                cursor: 'pointer', 
+                padding: '0.5rem 0',
+                width: '100%'
+              }}
+              onClick={() => handleNavClick('/profile')}
+            >
+              <span className="navbar-avatar" style={{ width: '36px', height: '36px', fontSize: '1rem' }}>
+                👤
+              </span>
+              <span style={{ fontWeight: '700', color: '#cbd5e1' }}>Mi Perfil ({userRole})</span>
+            </button>
+          </div>
         </nav>
 
         {/* Acciones de Usuario, Perfil y Selector de Flujos (Escritorio) */}
@@ -218,13 +283,15 @@ const Navbar = () => {
             Registro
           </button>
 
-          <div 
+          <button 
+            type="button"
             className="navbar-avatar"
             onClick={() => handleNavClick('/profile')}
             title={`Perfil activo (${userRole}): Ver cuenta`}
+            aria-label="Ver perfil de usuario"
           >
             👤
-          </div>
+          </button>
         </div>
       </header>
     </>

@@ -97,15 +97,24 @@ const CreateEventForm = () => {
   return (
     <>
       <style>{`
+        .event-form-page-container {
+          width: 100%;
+          padding: 2rem 1rem;
+          box-sizing: border-box;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
         .event-form {
           background-color: #0f172a;
           color: #ffffff;
           padding: 2.5rem;
           border-radius: 12px;
           border: 2px solid #334155;
-          max-width: 700px;
           width: 100%;
-          margin: 2rem auto;
+          max-width: 850px;
+          margin: 0 auto;
           box-sizing: border-box;
           font-family: system-ui, -apple-system, sans-serif;
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
@@ -227,10 +236,11 @@ const CreateEventForm = () => {
         }
 
         @media (max-width: 640px) {
+          .event-form-page-container {
+            padding: 1rem 0.5rem;
+          }
           .event-form {
             padding: 1.5rem 1rem;
-            margin: 1rem;
-            width: calc(100% - 2rem);
           }
           .event-form__actions {
             flex-direction: column;
@@ -238,110 +248,112 @@ const CreateEventForm = () => {
         }
       `}</style>
 
-      <form className="event-form" onSubmit={(e) => handleSubmit(e, 'Publicado')} noValidate>
-        <h2 className="event-form__title">Crear Nuevo Evento</h2>
+      <div className="event-form-page-container">
+        <form className="event-form" onSubmit={(e) => handleSubmit(e, 'Publicado')} noValidate>
+          <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
-        {successMessage && (
-          <div className="event-form__success" role="alert">
-            {successMessage}
+          {successMessage && (
+            <div className="event-form__success" role="alert">
+              {successMessage}
+            </div>
+          )}
+
+          <div className="event-form__group">
+            <label className="event-form__label" htmlFor="title">
+              Título del Evento <span className="event-form__required">*</span>
+            </label>
+            <input 
+              className={`event-form__input ${errors.title ? 'event-form__input--error' : ''}`}
+              type="text" 
+              id="title" 
+              name="title" 
+              value={formData.title} 
+              onChange={handleChange} 
+              placeholder="Ej: Taller de Arquitectura Web"
+            />
+            {errors.title && <span className="event-form__error-text">{errors.title}</span>}
           </div>
-        )}
 
-        <div className="event-form__group">
-          <label className="event-form__label" htmlFor="title">
-            Título del Evento <span className="event-form__required">*</span>
-          </label>
-          <input 
-            className={`event-form__input ${errors.title ? 'event-form__input--error' : ''}`}
-            type="text" 
-            id="title" 
-            name="title" 
-            value={formData.title} 
-            onChange={handleChange} 
-            placeholder="Ej: Taller de Arquitectura Web"
-          />
-          {errors.title && <span className="event-form__error-text">{errors.title}</span>}
-        </div>
+          <div className="event-form__group">
+            <label className="event-form__label" htmlFor="date">
+              Fecha <span className="event-form__required">*</span>
+            </label>
+            <input 
+              className={`event-form__input ${errors.date ? 'event-form__input--error' : ''}`}
+              type="text" 
+              id="date" 
+              name="date" 
+              value={formData.date} 
+              onChange={handleChange} 
+              placeholder="Ej: 15 Oct, 2026"
+            />
+            {errors.date && <span className="event-form__error-text">{errors.date}</span>}
+          </div>
 
-        <div className="event-form__group">
-          <label className="event-form__label" htmlFor="date">
-            Fecha <span className="event-form__required">*</span>
-          </label>
-          <input 
-            className={`event-form__input ${errors.date ? 'event-form__input--error' : ''}`}
-            type="text" 
-            id="date" 
-            name="date" 
-            value={formData.date} 
-            onChange={handleChange} 
-            placeholder="Ej: 15 Oct, 2026"
-          />
-          {errors.date && <span className="event-form__error-text">{errors.date}</span>}
-        </div>
+          <div className="event-form__group">
+            <label className="event-form__label" htmlFor="modality">
+              Modalidad <span className="event-form__required">*</span>
+            </label>
+            <select 
+              className={`event-form__select ${errors.modality ? 'event-form__select--error' : ''}`}
+              id="modality" 
+              name="modality" 
+              value={formData.modality} 
+              onChange={handleChange} 
+            >
+              <option value="">Selecciona una modalidad</option>
+              <option value="presencial">Presencial</option>
+              <option value="online">Online</option>
+              <option value="hibrido">Híbrido</option>
+            </select>
+            {errors.modality && <span className="event-form__error-text">{errors.modality}</span>}
+          </div>
 
-        <div className="event-form__group">
-          <label className="event-form__label" htmlFor="modality">
-            Modalidad <span className="event-form__required">*</span>
-          </label>
-          <select 
-            className={`event-form__select ${errors.modality ? 'event-form__select--error' : ''}`}
-            id="modality" 
-            name="modality" 
-            value={formData.modality} 
-            onChange={handleChange} 
-          >
-            <option value="">Selecciona una modalidad</option>
-            <option value="presencial">Presencial</option>
-            <option value="online">Online</option>
-            <option value="hibrido">Híbrido</option>
-          </select>
-          {errors.modality && <span className="event-form__error-text">{errors.modality}</span>}
-        </div>
+          <div className="event-form__group">
+            <label className="event-form__label" htmlFor="locationOrLink">
+              Ubicación o Enlace <span className="event-form__required">*</span>
+            </label>
+            <input 
+              className={`event-form__input ${errors.locationOrLink ? 'event-form__input--error' : ''}`}
+              type="text" 
+              id="locationOrLink" 
+              name="locationOrLink" 
+              value={formData.locationOrLink} 
+              onChange={handleChange} 
+              placeholder="Ej: Madrid, España / Enlace Zoom"
+            />
+            {errors.locationOrLink && <span className="event-form__error-text">{errors.locationOrLink}</span>}
+          </div>
 
-        <div className="event-form__group">
-          <label className="event-form__label" htmlFor="locationOrLink">
-            Ubicación o Enlace <span className="event-form__required">*</span>
-          </label>
-          <input 
-            className={`event-form__input ${errors.locationOrLink ? 'event-form__input--error' : ''}`}
-            type="text" 
-            id="locationOrLink" 
-            name="locationOrLink" 
-            value={formData.locationOrLink} 
-            onChange={handleChange} 
-            placeholder="Ej: Madrid, España / Enlace Zoom"
-          />
-          {errors.locationOrLink && <span className="event-form__error-text">{errors.locationOrLink}</span>}
-        </div>
+          <div className="event-form__group">
+            <label className="event-form__label" htmlFor="image">Carga de Imagen o Ícono</label>
+            <input 
+              className="event-form__input-file"
+              type="file" 
+              id="image" 
+              name="image" 
+              accept="image/*"
+              onChange={handleChange} 
+            />
+          </div>
 
-        <div className="event-form__group">
-          <label className="event-form__label" htmlFor="image">Carga de Imagen o Ícono</label>
-          <input 
-            className="event-form__input-file"
-            type="file" 
-            id="image" 
-            name="image" 
-            accept="image/*"
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="event-form__actions">
-          <button 
-            type="button" 
-            className="event-form__btn-draft"
-            onClick={(e) => handleSubmit(e, 'Borrador')}
-          >
-            Guardar como borrador
-          </button>
-          <button 
-            type="submit" 
-            className="event-form__submit-btn"
-          >
-            Publicar evento
-          </button>
-        </div>
-      </form>
+          <div className="event-form__actions">
+            <button 
+              type="button" 
+              className="event-form__btn-draft"
+              onClick={(e) => handleSubmit(e, 'Borrador')}
+            >
+              Guardar como borrador
+            </button>
+            <button 
+              type="submit" 
+              className="event-form__submit-btn"
+            >
+              Publicar evento
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

@@ -1,22 +1,54 @@
+// ==========================================
+// 1. VARIABLES GLOBALES (Obligatorias al inicio)
+// ==========================================
 $bg-dark: #07090e;
 $bg-card: #0d111a;
-$border-color: #334155;
+$border-color: rgba(255, 255, 255, 0.2); 
+$border-color-hover: #00f0ff; 
+
 $primary-cyan: #00f0ff;
 $primary-cyan-hover: #00c4d1;
 $text-main: #ffffff;
 $text-muted: #e2e8f0;
 
-$font-base: 1rem;
-$font-md: 1.125rem;
-$font-lg: 1.25rem;
-$font-xl: 1.5rem;
+// Tamaños de fuente
 $font-xxl: 2rem;
+$font-lg: 1.35rem;
+$font-md: 1.1rem;
+$font-base: 1rem;
 
+// ==========================================
+// 2. IMPORTACIONES (Sin rastro de notificaciones)
+// ==========================================
+@import 'landing';
 @import 'bottom-nav';
 @import 'event-list';
 @import 'metric-card';
-@import 'notifications';
 @import 'support-form';
 @import 'support';
 
-@import 'landing';
+// ==========================================
+// 3. REGLAS GLOBALES Y UTILIDADES
+// ==========================================
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: $bg-dark;
+  color: $text-main;
+  overflow-x: hidden;
+}
+
+.card-border-interactive {
+  border: 1px solid $border-color !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover, 
+  &:focus-within {
+    border: 1px solid $border-color-hover !important;
+  }
+}

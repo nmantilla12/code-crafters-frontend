@@ -1,3 +1,4 @@
+// src/componentes/TicketQR.jsx
 import React, { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 
@@ -6,57 +7,31 @@ const TicketQR = ({ eventTitle, eventDate, ticketId, eventId, currentUserEmail, 
   const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Registro único en el evento
   const handleRegister = async () => {
-    if (!currentUserEmail) {
-      alert("Por favor, introduce tu correo electrónico para registrarte.");
-      return;
+    let emailToUse = currentUserEmail;
+    
+    if (!emailToUse) {
+      emailToUse = prompt("Introduce tu correo electrónico para el registro:", "asistente@codecrafters.com");
+      if (!emailToUse) return;
     }
 
     setLoading(true);
-    try {
-      const res = await fetch(`http://localhost:4000/events/${eventId}`);
-      const event = await res.json();
 
-      const registeredList = event.registeredUsers || [];
-      
-      // Comprobar si ya está registrado (unicidad)
-      if (registeredList.includes(currentUserEmail)) {
-        setIsRegistered(true);
-        alert("Ya estás registrado en este evento.");
-        setLoading(false);
-        return;
-      }
-
-      const updatedUsers = [...registeredList, currentUserEmail];
-
-      const updateRes = await fetch(`http://localhost:4000/events/${eventId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ registeredUsers: updatedUsers })
-      });
-
-      if (!updateRes.ok) throw new Error("Error en la inscripción");
-
+    // Simulación local 100% frontend sin errores de red (servidor backend eliminado)
+    setTimeout(() => {
       setIsRegistered(true);
+      setLoading(false);
       alert("¡Inscripción completada con éxito! Ya puedes ver y descargar tu entrada.");
       if (onRegisterSuccess) onRegisterSuccess();
-    } catch (err) {
-      console.error("Error al registrarse:", err);
-      alert("Hubo un error al procesar el registro.");
-    } finally {
-      setLoading(false);
-    }
+    }, 600);
   };
 
-  // Funcionalidad de WhatsApp con el mensaje formateado
   const handleShareWhatsApp = () => {
     const ticketDetails = `¡Hola! 🎟️ Te comparto mi entrada oficial:\n\n📌 *${eventTitle}*\n📅 Fecha: ${eventDate}\n🆔 ID de Ticket: ${ticketId}\n\n¡Nos vemos en el evento!`;
     const message = encodeURIComponent(ticketDetails);
     window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
   };
 
-  // Funcionalidad general para compartir
   const handleShareGeneral = async () => {
     const shareData = {
       title: 'Mi Entrada - Evento',
@@ -77,7 +52,6 @@ const TicketQR = ({ eventTitle, eventDate, ticketId, eventId, currentUserEmail, 
     }
   };
 
-  // Descarga real de la entrada simulando un archivo de texto/PDF o blob
   const handleDownload = () => {
     const element = document.createElement("a");
     const file = new Blob([
@@ -95,130 +69,186 @@ const TicketQR = ({ eventTitle, eventDate, ticketId, eventId, currentUserEmail, 
     element.download = `Entrada_${eventTitle.replace(/\s+/g, '_')}.txt`;
     document.body.appendChild(element);
     element.click();
-    document.body.removeChild(element);
+    element.remove();
   };
 
   return (
-    <div 
-      className="ticket-qr"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        width: '100%',
-        maxWidth: '450px',
-        margin: '2rem auto',
-        padding: '2rem',
-        backgroundColor: '#ffffff',
-        border: '2px solid #cbd5e1',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-        boxSizing: 'border-box'
-      }}
-    >
-      <div className="ticket-qr__header" style={{ width: '100%', marginBottom: '1.25rem' }}>
-        <h3 className="ticket-qr__title" style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', marginBottom: '0.5rem' }}>
-          {eventTitle}
-        </h3>
-        <p className="ticket-qr__date" style={{ color: '#1e293b', fontSize: '1.05rem', fontWeight: '600', margin: 0 }}>
-          📅 {eventDate}
-        </p>
-      </div>
+    <>
+      <style>{`
+        .ticket-qr-card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          width: 100%;
+          max-width: 450px;
+          margin: 1.5rem auto;
+          padding: 1.75rem 1.25rem;
+          background-color: #0b1120;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          border-radius: 16px;
+          box-sizing: border-box;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
 
-      {!isRegistered ? (
-        <div style={{ width: '100%', margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ fontSize: '0.95rem', color: '#334155', fontWeight: '600' }}>
-            Debes registrarte para desbloquear tu código QR y descargar tu entrada.
+        .ticket-qr-card:hover,
+        .ticket-qr-card:focus-within {
+          border: 1px solid #0284c7 !important;
+        }
+
+        .ticket-qr-inner {
+          background: #0b1120;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          border-radius: 12px;
+          padding: 1.5rem 1rem;
+          width: 100%;
+          box-sizing: border-box;
+          margin-top: 1rem;
+          transition: border-color 0.2s ease;
+        }
+
+        .ticket-qr-card:hover .ticket-qr-inner,
+        .ticket-qr-card:focus-within .ticket-qr-inner {
+          border: 1px solid #0284c7 !important;
+        }
+
+        /* Contenedor estricto para evitar deformación del QR */
+        .qr-code-wrapper {
+          background: #ffffff;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          padding: 1rem;
+          border-radius: 12px;
+          margin: 0 auto 1rem auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 160px;
+          height: 160px;
+          box-sizing: border-box;
+        }
+
+        .qr-code-wrapper svg {
+          width: 100% !important;
+          height: 100% !important;
+          max-width: 130px;
+          max-height: 130px;
+        }
+
+        .ticket-id-container {
+          color: #38bdf8;
+          font-size: 0.9rem;
+          font-weight: 700;
+          margin: 0 0 1.25rem 0;
+          width: 100%;
+          word-break: normal;
+          overflow-wrap: break-word;
+          padding: 0 0.5rem;
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 480px) {
+          .ticket-qr-card {
+            padding: 1rem 0.75rem;
+            margin: 0.75rem auto;
+            width: 100%;
+          }
+          
+          .ticket-qr-inner {
+            padding: 1rem 0.5rem;
+          }
+        }
+      `}</style>
+
+      <div className="ticket-qr-card">
+        <div style={{ width: '100%', marginBottom: '1rem' }}>
+          <h3 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#f8fafc', margin: '0 0 0.5rem 0' }}>
+            {eventTitle}
+          </h3>
+          <p style={{ color: '#38bdf8', fontSize: '1rem', fontWeight: '700', margin: 0 }}>
+            📅 {eventDate}
           </p>
-          <button
-            type="button"
-            onClick={handleRegister}
-            disabled={loading}
-            style={{
-              backgroundColor: '#0369a1',
-              color: '#ffffff',
-              fontWeight: '700',
-              padding: '0.85rem 1.5rem',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              width: '100%',
-              transition: 'background-color 0.2s'
-            }}
-          >
-            {loading ? 'Procesando...' : 'Registrarse en el evento'}
-          </button>
         </div>
-      ) : (
-        <>
-          <div className="ticket-qr__body" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div className="ticket-qr__code-container" style={{ background: '#fff', padding: '1rem', border: '2px solid #cbd5e1', borderRadius: '8px', marginBottom: '0.75rem', display: 'inline-block' }}>
-              <QRCodeSVG value={ticketId} size={160} />
-            </div>
-            <p className="ticket-qr__id" style={{ color: '#0369a1', fontSize: '0.9rem', fontWeight: '700', wordBreak: 'break-all', marginBottom: '1.25rem' }}>
-              ID Ticket: <span>{ticketId}</span>
+
+        {!isRegistered ? (
+          <div className="ticket-qr-inner">
+            <p style={{ fontSize: '0.95rem', color: '#e2e8f0', fontWeight: '600', lineHeight: '1.5', margin: '0 0 1.25rem 0' }}>
+              Debes registrarte para desbloquear tu código QR y descargar tu entrada con total accesibilidad.
             </p>
-          </div>
-
-          <div 
-            className="ticket-qr__actions" 
-            style={{ 
-              display: 'flex', 
-              flexWrap: 'wrap', 
-              gap: '10px', 
-              marginBottom: '1.25rem',
-              justifyContent: 'center',
-              width: '100%' 
-            }}
-          >
-            <button 
-              type="button" 
-              className="ticket-qr__btn ticket-qr__btn--download" 
-              onClick={handleDownload}
-              style={{ flex: '1 1 110px', padding: '0.75rem', fontSize: '0.95rem', fontWeight: '700', backgroundColor: '#0284c7', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+            <button
+              type="button"
+              onClick={handleRegister}
+              disabled={loading}
+              style={{
+                backgroundColor: '#0284c7',
+                color: '#ffffff',
+                fontWeight: '700',
+                padding: '0.85rem 1.25rem',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                width: '100%',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+                transition: 'background-color 0.2s'
+              }}
             >
-              Descargar
-            </button>
-            <button 
-              type="button" 
-              className="ticket-qr__btn ticket-qr__btn--whatsapp" 
-              onClick={handleShareWhatsApp}
-              style={{ flex: '1 1 110px', padding: '0.75rem', fontSize: '0.95rem', fontWeight: '700', backgroundColor: '#15803d', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-            >
-              WhatsApp
-            </button>
-            <button 
-              type="button" 
-              className="ticket-qr__btn ticket-qr__btn--share" 
-              onClick={handleShareGeneral}
-              style={{ flex: '1 1 110px', padding: '0.75rem', fontSize: '0.95rem', fontWeight: '700', backgroundColor: '#475569', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-            >
-              {copied ? '¡Copiado!' : 'Compartir'}
+              {loading ? 'Procesando...' : 'Registrarse en el evento'}
             </button>
           </div>
+        ) : (
+          <div className="ticket-qr-inner">
+            {/* Contenedor optimizado, cuadrado y con colores correctos para lectura */}
+            <div className="qr-code-wrapper">
+              <QRCodeSVG value={ticketId} fgColor="#0b1120" bgColor="#ffffff" />
+            </div>
+            
+            <p className="ticket-id-container">
+              ID Ticket: <span style={{ color: '#f8fafc', display: 'inline-block', wordBreak: 'break-all' }}>{ticketId}</span>
+            </p>
 
-          <div className="ticket-qr__footer">
-            <span 
-              className="ticket-qr__badge"
-              style={{ 
-                background: '#14532d', 
-                color: '#f0fdf4', 
-                padding: '0.35rem 1rem', 
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%', marginBottom: '1.25rem', boxSizing: 'border-box' }}>
+              <button 
+                type="button" 
+                onClick={handleDownload}
+                style={{ width: '100%', padding: '0.75rem', fontSize: '1rem', fontWeight: '700', backgroundColor: '#0284c7', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+              >
+                📥 Descargar Entrada
+              </button>
+              <button 
+                type="button" 
+                onClick={handleShareWhatsApp}
+                style={{ width: '100%', padding: '0.75rem', fontSize: '1rem', fontWeight: '700', backgroundColor: '#16a34a', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+              >
+                💬 Compartir por WhatsApp
+              </button>
+              <button 
+                type="button" 
+                onClick={handleShareGeneral}
+                style={{ width: '100%', padding: '0.75rem', fontSize: '1rem', fontWeight: '700', backgroundColor: '#475569', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+              >
+                {copied ? '¡Copiado al portapapeles!' : '🔗 Copiar Enlace'}
+              </button>
+            </div>
+
+            <div>
+              <span style={{ 
+                backgroundColor: '#14532d', 
+                color: '#dcfce7', 
+                padding: '0.4rem 1rem', 
                 borderRadius: '9999px', 
                 fontSize: '0.9rem', 
                 fontWeight: '700',
                 display: 'inline-block',
-                border: '1px solid #86efac'
-              }}
-            >
-              ✓ Confirmado y Registrado
-            </span>
+                border: '1px solid #4ade80'
+              }}>
+                ✓ Confirmado y Registrado
+              </span>
+            </div>
           </div>
-        </>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

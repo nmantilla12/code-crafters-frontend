@@ -86,13 +86,13 @@ const Register = () => {
         <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>Regístrate para empezar a gestionar tus eventos en Code Crafters.</p>
 
         {errorMessage && (
-          <p style={{ background: '#7f1d1d', color: '#fca5a5', padding: '0.75rem', borderRadius: '6px', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center', margin: '0 0 1rem 0' }}>
+          <p style={{ background: '#7f1d1d', color: '#fca5a5', padding: '0.75rem', borderRadius: '6px', fontSize: '0.85rem', textAlign: 'center', margin: '0 0 1rem 0' }}>
             {errorMessage}
           </p>
         )}
 
         {successMessage ? (
-          <p style={{ background: '#065f46', color: '#ecfdf5', padding: '1rem', borderRadius: '6px', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem', margin: '0 0 1rem 0' }}>
+          <p style={{ background: '#065f46', color: '#ecfdf5', padding: '1rem', borderRadius: '6px', textAlign: 'center', fontWeight: 'bold', margin: '0 0 1rem 0' }}>
             ¡Usuario registrado con éxito! Redirigiendo al panel... 🎉
           </p>
         ) : (

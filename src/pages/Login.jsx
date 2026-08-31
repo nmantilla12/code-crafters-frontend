@@ -62,34 +62,71 @@ const Login = () => {
   };
 
   return (
-    <main className="login-page" style={{ background: '#0b1120', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1.5rem', boxSizing: 'border-box', color: '#fff' }}>
-      <div style={{ background: '#1e293b', padding: '2.5rem', borderRadius: '12px', border: '1px solid #334155', maxWidth: '420px', width: '100%', boxSizing: 'border-box' }}>
+    <main style={{
+      width: '100vw',
+      minHeight: '100vh',
+      backgroundColor: '#0b1120',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '0px',
+      margin: 0,
+      boxSizing: 'border-box',
+      overflowX: 'hidden'
+    }}>
+      <div style={{ 
+        width: '100%', 
+        height: '100%', 
+        minHeight: '100vh',
+        maxWidth: '100%',
+        background: '#1e293b', 
+        padding: '2.5rem 1.5rem', 
+        borderRadius: '0px', 
+        border: 'none', 
+        boxSizing: 'border-box', 
+        boxShadow: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        // Media query simulada en línea: en pantallas medianas/grandes (PC) recupera forma de tarjeta elegante
+        '@media (min-width: 768px)': {
+          maxWidth: '520px',
+          minHeight: 'auto',
+          borderRadius: '16px',
+          border: '2px solid #334155',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)',
+          padding: '2.5rem 2rem',
+        }
+      }} 
+      // Aplicamos un className para manejar fácilmente el comportamiento responsive en CSS si lo prefieres, o mantenemos este estilo inyectado adaptable:
+      className="login-card-container"
+      >
         
         <button 
           type="button" 
           onClick={() => navigate('/')} 
-          style={{ background: 'transparent', border: 'none', color: '#38bdf8', cursor: 'pointer', marginBottom: '1.5rem', padding: 0, fontSize: '0.9rem', fontWeight: '500' }}
+          style={{ background: 'transparent', border: 'none', color: '#38bdf8', cursor: 'pointer', marginBottom: '1.75rem', padding: 0, fontSize: '1.05rem', fontWeight: '700', textDecoration: 'underline' }}
         >
           ← Volver al inicio
         </button>
 
-        <h1 style={{ marginBottom: '0.5rem', fontSize: '1.75rem', fontWeight: 'bold', color: '#fff' }}>Iniciar Sesión</h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>Accede a tu panel de control en Code Crafters.</p>
+        <h1 style={{ marginBottom: '0.6rem', fontSize: '2.2rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.02em' }}>Iniciar Sesión</h1>
+        <p style={{ color: '#cbd5e1', fontSize: '1.05rem', marginBottom: '2rem', lineHeight: '1.5' }}>Accede a tu panel de control en Code Crafters.</p>
 
         {errorMessage && (
-          <p style={{ background: '#7f1d1d', color: '#fca5a5', padding: '0.75rem', borderRadius: '6px', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center', margin: '0 0 1rem 0' }}>
+          <p style={{ background: '#7f1d1d', color: '#fca5a5', padding: '1rem', borderRadius: '8px', fontSize: '0.95rem', marginBottom: '1.5rem', textAlign: 'center', fontWeight: '600', border: '1px solid #991b1b' }}>
             {errorMessage}
           </p>
         )}
 
         {successMessage ? (
-          <p style={{ background: '#065f46', color: '#ecfdf5', padding: '1rem', borderRadius: '6px', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem', margin: '0 0 1rem 0' }}>
+          <p style={{ background: '#065f46', color: '#ecfdf5', padding: '1.25rem', borderRadius: '8px', textAlign: 'center', fontWeight: 'bold', marginBottom: '1.5rem', fontSize: '1.1rem', border: '1px solid #047857' }}>
             ¡Inicio de sesión exitoso! Redirigiendo al panel... 🚀
           </p>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div>
-              <label htmlFor="loginEmail" style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem', color: '#cbd5e1', fontWeight: '500' }}>
+              <label htmlFor="loginEmail" style={{ display: 'block', fontSize: '1rem', marginBottom: '0.5rem', color: '#f1f5f9', fontWeight: '700' }}>
                 Correo electrónico
               </label>
               <input 
@@ -99,13 +136,13 @@ const Login = () => {
                 value={formData.email} 
                 onChange={handleChange} 
                 required
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', background: '#0f172a', border: '1px solid #334155', color: '#fff', boxSizing: 'border-box', fontSize: '0.95rem' }}
+                style={{ width: '100%', padding: '1rem', borderRadius: '8px', background: '#0f172a', border: '2px solid #475569', color: '#ffffff', boxSizing: 'border-box', fontSize: '1rem', outline: 'none' }}
                 placeholder="tu@email.com"
               />
             </div>
 
             <div>
-              <label htmlFor="loginPassword" style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem', color: '#cbd5e1', fontWeight: '500' }}>
+              <label htmlFor="loginPassword" style={{ display: 'block', fontSize: '1rem', marginBottom: '0.5rem', color: '#f1f5f9', fontWeight: '700' }}>
                 Contraseña
               </label>
               <input 
@@ -115,7 +152,7 @@ const Login = () => {
                 value={formData.password} 
                 onChange={handleChange} 
                 required
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', background: '#0f172a', border: '1px solid #334155', color: '#fff', boxSizing: 'border-box', fontSize: '0.95rem' }}
+                style={{ width: '100%', padding: '1rem', borderRadius: '8px', background: '#0f172a', border: '2px solid #475569', color: '#ffffff', boxSizing: 'border-box', fontSize: '1rem', outline: 'none' }}
                 placeholder="••••••••"
               />
             </div>
@@ -123,7 +160,7 @@ const Login = () => {
             <button 
               type="submit" 
               disabled={loading}
-              style={{ background: '#06b6d4', color: '#0f172a', border: 'none', padding: '0.85rem', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', marginTop: '0.5rem', opacity: loading ? 0.7 : 1, fontSize: '0.95rem', transition: 'background 0.2s' }}
+              style={{ background: '#06b6d4', color: '#0f172a', border: 'none', padding: '1.15rem', borderRadius: '8px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer', marginTop: '0.5rem', opacity: loading ? 0.7 : 1, fontSize: '1.1rem', transition: 'background 0.2s', width: '100%' }}
             >
               {loading ? 'Verificando...' : 'Entrar'}
             </button>
@@ -131,6 +168,21 @@ const Login = () => {
         )}
 
       </div>
+
+      {/* Estilo CSS inyectado para asegurar el comportamiento responsivo real en móvil vs pc */}
+      <style>{`
+        @media (min-width: 768px) {
+          .login-card-container {
+            max-width: 520px !important;
+            height: auto !important;
+            min-height: auto !important;
+            border-radius: 16px !important;
+            border: 2px solid #334155 !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+            padding: 2.5rem 2rem !important;
+          }
+        }
+      `}</style>
     </main>
   );
 };

@@ -1,226 +1,194 @@
+// src/componentes/NotificationsCenter.jsx
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const NotificationsCenter = () => {
-  const navigate = useNavigate();
-
-  // Estado inicial con avisos de cambios de sala, recordatorios y flujos interactivos para roles de usuario / organizador
   const [notifications, setNotifications] = useState([
-    { 
-      id: 1, 
-      type: 'room-change', 
-      title: 'Cambio de Sala y Aforo', 
-      message: 'El taller de React ha cambiado al Aula 3 (Planta Baja). Verifica los recursos técnicos actualizados.', 
-      date: 'Hoy, 10:30', 
-      read: false,
-      link: '/#discovery',
-      actionLabel: 'Ver detalles de sala'
-    },
-    { 
-      id: 2, 
-      type: 'reminder', 
-      title: 'Recordatorio de Entrada y QR', 
-      message: 'Tu inscripción para el evento de mañana está confirmada. Ya puedes descargar tu ticket QR oficial.', 
-      date: 'Ayer', 
-      read: true,
-      link: '/#tickets',
-      actionLabel: 'Descargar Ticket QR'
-    },
-    { 
-      id: 3, 
-      type: 'organizer-update', 
-      title: 'Aviso para Organizadores', 
-      message: 'Se ha abierto el panel de control para la gestión de inscripciones y validación de aforo del evento.', 
-      date: 'Hace 2 días', 
-      read: true,
-      link: '/#dashboard',
-      actionLabel: 'Gestionar evento'
-    }
+    { id: 1, text: 'Nuevo evento de arquitectura disponible.', type: 'info', read: false },
+    { id: 2, text: 'Tu entrada ha sido validada correctamente.', type: 'success', read: false }
   ]);
 
-  // Función para marcar una notificación como leída y ejecutar el flujo interactivo correspondiente
-  const handleNotificationClick = (id, link) => {
+  const markAsRead = (id) => {
     setNotifications(
-      notifications.map(notif => 
+      notifications.map((notif) => 
         notif.id === id ? { ...notif, read: true } : notif
       )
     );
-
-    if (link) {
-      if (link.startsWith('/#')) {
-        const sectionId = link.replace('/#', '');
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          navigate('/');
-        }
-      } else {
-        navigate(link);
-      }
-    }
   };
-
-  const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map(notif => ({ ...notif, read: true }))
-    );
-  };
-
-  const hasUnread = notifications.some(n => !n.read);
 
   return (
-    <section 
-      className="notifications-center" 
-      style={{ 
-        background: '#0f172a', 
-        color: '#ffffff', 
-        padding: '2.5rem 1.5rem', 
-        borderRadius: '12px', 
-        maxWidth: '750px', 
-        width: '100%', 
-        boxSizing: 'border-box',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.4)',
-        border: '2px solid #334155',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        margin: '0 auto'
-      }}
-    >
-      {/* Cabecera optimizada con tipografía grande y contraste AAA */}
-      <div 
-        className="notifications-center__header" 
-        style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          gap: '1rem', 
-          marginBottom: '2rem', 
-          borderBottom: '2px solid #334155', 
-          paddingBottom: '1.25rem',
-          alignItems: 'flex-start'
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '1rem' }}>
-          <h3 
-            className="notifications-center__title" 
-            style={{ margin: 0, fontSize: '1.75rem', fontWeight: '800', color: '#f8fafc', letterSpacing: '-0.025em' }}
-          >
-            Centro de Notificaciones y Flujos
-          </h3>
-          
-          <span 
-            className="notifications-center__badge-count" 
-            style={{ 
-              background: '#0284c7', 
-              color: '#ffffff', 
-              padding: '0.35rem 0.85rem', 
-              borderRadius: '999px', 
-              fontSize: '0.9rem', 
-              fontWeight: '700' 
-            }}
-          >
-            {notifications.filter(n => !n.read).length} sin leer
-          </span>
-        </div>
+    <>
+      <style>{`
+        .notifications-wrapper {
+          background-color: #0b0f19;
+          color: #ffffff;
+          padding: 3rem 1.5rem;
+          width: 100%;
+          min-height: 100vh;
+          box-sizing: border-box;
+          font-family: system-ui, -apple-system, sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+        }
 
-        {hasUnread && (
-          <button 
-            type="button" 
-            className="notifications-center__btn-all"
-            onClick={handleMarkAllAsRead}
-            style={{ 
-              background: 'transparent', 
-              border: 'none', 
-              color: '#38bdf8', 
-              cursor: 'pointer', 
-              fontSize: '0.95rem', 
-              fontWeight: '700', 
-              textDecoration: 'underline',
-              padding: 0
-            }}
-          >
-            Marcar todas como leídas
-          </button>
-        )}
-      </div>
+        .notifications-card {
+          background: #111827;
+          border: 1px solid #1f2937;
+          border-radius: 16px;
+          padding: 2rem;
+          width: 100%;
+          max-width: 650px;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+          box-sizing: border-box;
+          transition: border-color 0.2s ease;
+        }
 
-      {notifications.length === 0 ? (
-        <p className="notifications-center__empty" style={{ textAlign: 'center', color: '#cbd5e1', fontSize: '1.05rem', padding: '2rem 0' }}>
-          No tienes notificaciones recientes.
-        </p>
-      ) : (
-        <ul className="notifications-center__list" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          {notifications.map((notif) => (
-            <li 
-              key={notif.id} 
-              className="notifications-center__item"
-              style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: '1rem', 
-                padding: '1.5rem', 
-                borderRadius: '10px', 
-                background: notif.read ? '#1e293b' : '#0f2942', 
-                border: '2px solid',
-                borderColor: notif.read ? '#334155' : '#0284c7',
-                boxSizing: 'border-box',
-                transition: 'transform 0.15s ease, box-shadow 0.15s ease'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', width: '100%' }}>
-                <div className="notifications-center__icon-wrapper" style={{ fontSize: '1.5rem', flexShrink: 0 }} aria-hidden="true">
-                  🔔
-                </div>
-                
-                <div className="notifications-center__content" style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                    <h4 
-                      className="notifications-center__item-title" 
-                      style={{ margin: 0, fontSize: '1.2rem', fontWeight: '700', color: '#f8fafc' }}
-                    >
-                      {notif.title}
-                    </h4>
-                    {!notif.read && (
-                      <span style={{ fontSize: '0.8rem', background: '#0284c7', color: '#ffffff', padding: '0.2rem 0.6rem', borderRadius: '4px', fontWeight: '700', flexShrink: 0 }}>
-                        Nuevo
-                      </span>
-                    )}
-                  </div>
-                  <p className="notifications-center__text" style={{ margin: '0 0 0.75rem 0', fontSize: '1rem', color: '#cbd5e1', lineHeight: '1.5', fontWeight: '400' }}>
-                    {notif.message}
-                  </p>
-                  <span className="notifications-center__date" style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: '500' }}>
-                    {notif.date}
-                  </span>
-                </div>
-              </div>
+        .notifications-card:hover {
+          border-color: #00f0ff;
+        }
 
-              {/* Botón interactivo dinámico adaptado a cada flujo de usuario/organizador */}
-              <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%', borderTop: '1px solid #334155', paddingTop: '1rem' }}>
-                <button
-                  type="button"
-                  onClick={() => handleNotificationClick(notif.id, notif.link)}
-                  style={{
-                    background: '#38bdf8',
-                    color: '#0f172a',
-                    border: 'none',
-                    padding: '0.75rem 1.25rem',
-                    borderRadius: '6px',
-                    fontWeight: '700',
-                    fontSize: '0.95rem',
-                    cursor: 'pointer',
-                    width: '100%',
-                    maxWidth: '260px',
-                    textAlign: 'center'
-                  }}
+        .notifications-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          border-bottom: 1px solid #1f2937;
+          padding-bottom: 1rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .notifications-header h3 {
+          margin: 0;
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: #f8fafc;
+          letter-spacing: -0.025em;
+        }
+
+        .notifications-badge {
+          background: rgba(0, 240, 255, 0.1);
+          color: #00f0ff;
+          border: 1px solid rgba(0, 240, 255, 0.3);
+          font-size: 0.85rem;
+          font-weight: 700;
+          padding: 0.3rem 0.75rem;
+          border-radius: 20px;
+          white-space: nowrap;
+        }
+
+        .notifications-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .notifications-item {
+          background: #0b0f19;
+          border: 1px solid #1f2937;
+          padding: 1rem 1.25rem;
+          border-radius: 10px;
+          font-size: 0.95rem;
+          color: #cbd5e1;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+          box-sizing: border-box;
+          transition: background-color 0.2s ease;
+        }
+
+        .notifications-item.is-read {
+          opacity: 0.6;
+          border-color: #161e2e;
+        }
+
+        .notifications-empty {
+          text-align: center;
+          color: #94a3b8;
+          font-size: 1rem;
+          padding: 2rem 0;
+          margin: 0;
+        }
+
+        .notifications-action-btn {
+          background: #00f0ff;
+          color: #0b0f19;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: background-color 0.2s ease, transform 0.2s ease;
+          white-space: nowrap;
+        }
+
+        .notifications-action-btn:hover {
+          background: #00adb5;
+          transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+          .notifications-wrapper {
+            padding: 1.5rem 1rem;
+          }
+
+          .notifications-card {
+            padding: 1.25rem;
+          }
+
+          .notifications-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+
+          .notifications-action-btn {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      `}</style>
+
+      <div className="notifications-wrapper">
+        <div className="notifications-card card-border-interactive">
+          <div className="notifications-header">
+            <h3>Centro de Notificaciones</h3>
+            <span className="notifications-badge">
+              {notifications.filter(n => !n.read).length} nuevas
+            </span>
+          </div>
+
+          <ul className="notifications-list">
+            {notifications.length === 0 ? (
+              <li className="notifications-empty">No hay notificaciones pendientes.</li>
+            ) : (
+              notifications.map((notif) => (
+                <li 
+                  key={notif.id} 
+                  className={`notifications-item ${notif.read ? 'is-read' : 'is-unread'}`}
                 >
-                  {notif.actionLabel || 'Ver acción'} &rarr;
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
+                  <span>{notif.text}</span>
+                  {!notif.read && (
+                    <button 
+                      type="button" 
+                      className="notifications-action-btn"
+                      onClick={() => markAsRead(notif.id)}
+                    >
+                      Marcar leída
+                    </button>
+                  )}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      </div>
+    </>
   );
 };
 

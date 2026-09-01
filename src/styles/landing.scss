@@ -216,7 +216,7 @@
     }
   }
 
-  // Footer interno
+  // Footer interno (Antiguo mantenido por compatibilidad)
   &__footer {
     border-top: 1px solid $border-color;
     padding: 2.5rem 1.5rem;
@@ -302,7 +302,7 @@
   }
 
   &__btn-primary,
-  &__btn-secondary {
+  & &__btn-secondary {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -408,5 +408,158 @@
 
   &__preview {
     margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+}
+
+// ==========================================
+// Correcciones de Métricas y Estadísticas
+// ==========================================
+
+.metric-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  &__title {
+    color: $text-muted;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-weight: 700;
+    font-size: 0.9rem;
+    
+    &--cyan { color: $primary-cyan; }
+    &--green { color: #00ff66; }
+    &--amber { color: #ffbc00; }
+  }
+}
+
+.stats-preview-section {
+  width: 100%;
+  padding: 3rem 0;
+  border-top: 1px solid $border-color;
+  margin-top: 3rem;
+}
+
+.stats-preview-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .stat-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: $primary-cyan;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.95rem;
+    color: $text-muted;
+  }
+}// ==========================================
+// Footer Component Styles (Optimizado y Minimalista)
+// ==========================================
+
+.footer-container {
+  background: linear-gradient(180deg, #0b132b 0%, $bg-dark 100%);
+  color: $text-main;
+  padding: 2.5rem 1.25rem;
+  border-top: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer__text {
+  margin: 0;
+  font-size: 0.85rem;
+  color: $text-muted;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: nowrap; // Los mantiene siempre en una línea horizontal elegante
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;       // Espaciado compacto ideal para pantallas de 390px
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.footer__link {
+  color: $primary-cyan;
+  text-decoration: none;
+  font-size: 0.8rem;       // Tamaño optimizado para que los 4 quepan holgados
+  font-weight: 600;
+  padding: 0.5rem 0.6rem;  // Padding equilibrado
+  transition: all 0.25s ease;
+  border-radius: 8px;
+  background-color: $bg-card;
+  border: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  white-space: nowrap;     // Evita que las palabras se partan jamás
+
+  &:hover {
+    color: $text-main;
+    background-color: #1e3a8a;
+    border-color: $primary-cyan;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    transform: translateY(-2px);
+  }
+}
+
+// Sobrescribir para pantallas más grandes (Desktop / Tablets >= 768px)
+@media (min-width: 768px) {
+  .footer-container {
+    padding: 3.5rem 2rem;
+    gap: 1.75rem;
+  }
+
+  .footer__text {
+    font-size: $font-base;
+  }
+
+  .footer__links {
+    gap: 1.25rem;
+  }
+
+  .footer__link {
+    font-size: 0.95rem;
+    padding: 0.65rem 0.95rem;
   }
 }

@@ -11,7 +11,7 @@ import CreateEventForm from './componentes/CreateEventForm';
 import ExploreEvents from './pages/ExploreEvents';
 import EventDetail from './pages/EventDetail';
 import SupportSection from './componentes/SupportSection';
-import NotificationsCenter from './componentes/NotificationsCenter'; // Importamos tu componente limpio
+import NotificationsCenter from './componentes/NotificationsCenter';
 
 function App() {
   return (
@@ -29,16 +29,16 @@ function App() {
         <Route path="/event-detail" element={<EventDetail />} />
         <Route path="/event/:id" element={<EventDetail />} />
         
-        {/* Ruta dedicada para probar el Centro de Notificaciones con su diseño moderno */}
+        {/* Ruta dedicada para el Centro de Notificaciones con clase SCSS */}
         <Route path="/notifications" element={
-          <div style={{ background: '#07090e', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem' }}>
+          <div className="app-container app-container--notifications">
             <NotificationsCenter />
           </div>
         } />
 
-        {/* Ruta de Support utilizando tu componente completo */}
+        {/* Ruta de Support con clase SCSS */}
         <Route path="/support" element={
-          <div style={{ background: '#0b1120', minHeight: '100vh' }}>
+          <div className="app-container app-container--support">
             <SupportSection />
           </div>
         } />

@@ -1,0 +1,202 @@
+@import 'variables';
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: $bg-dark;
+  border-bottom: 2px solid $border-color;
+  color: $text-main;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: $font-base;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.navbar-brand {
+  background-color: transparent;
+  border: none;
+  color: $text-main;
+  font-size: $font-lg;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: -0.025em;
+  text-align: left;
+  padding: 0;
+
+  &__highlight {
+    background-color: transparent;
+    color: $primary-cyan;
+  }
+}
+
+.navbar-mobile-toggle {
+  display: none;
+  background-color: $bg-card;
+  color: $text-main;
+  border: 2px solid $border-color;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: $text-main;
+}
+
+.navbar-link {
+  background-color: transparent;
+  border: none;
+  color: $text-muted;
+  font-size: $font-base;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+  text-align: left;
+
+  &:hover {
+    color: $primary-cyan;
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: transparent;
+  color: $text-main;
+}
+
+.navbar-role-btn {
+  background-color: $bg-card;
+  color: $primary-cyan;
+  border: 2px solid $border-color;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  font-size: $font-base;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.navbar-register-btn {
+  background-color: #0284c7;
+  color: $text-main;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 6px;
+  font-size: $font-base;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.navbar-avatar {
+  background-color: $bg-card;
+  border: 2px solid $border-color;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  color: $text-main;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: $primary-cyan;
+  }
+
+  &--small {
+    width: 36px;
+    height: 36px;
+    font-size: $font-base;
+  }
+}
+
+.navbar-mobile-actions {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid $border-color;
+  background-color: transparent;
+  color: $text-main;
+
+  .navbar-role-btn,
+  .navbar-register-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.navbar-profile-mobile-btn {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  width: 100%;
+  text-align: left;
+  color: $text-main;
+}
+
+.navbar-profile-text {
+  background-color: transparent;
+  font-weight: 700;
+  color: $text-muted;
+  font-size: $font-base;
+}
+
+/* Diseño Responsive para pantallas medianas y móviles */
+@media (max-width: 900px) {
+  .navbar-mobile-toggle {
+    display: block;
+  }
+
+  .navbar-actions {
+    display: none;
+  }
+
+  .navbar-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: $bg-dark;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid $border-color;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    gap: 0.75rem;
+
+    &.open {
+      display: flex;
+    }
+  }
+
+  .navbar-mobile-actions {
+    display: flex;
+  }
+}

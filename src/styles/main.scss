@@ -1,6 +1,3 @@
-// ==========================================
-// 1. VARIABLES GLOBALES (Obligatorias al inicio)
-// ==========================================
 $bg-dark: #07090e;
 $bg-card: #0d111a;
 $border-color: rgba(255, 255, 255, 0.2); 
@@ -18,17 +15,24 @@ $font-md: 1.1rem;
 $font-base: 1rem;
 
 // ==========================================
-// 2. IMPORTACIONES (Sin rastro de notificaciones)
+// IMPORTACIONES
 // ==========================================
 @import 'landing';
 @import 'bottom-nav';
-@import 'event-list';
-@import 'metric-card';
-@import 'support-form';
+@import 'createEventform';
+@import 'eventitem';
+@import 'eventlist';
+@import 'footer';
+@import 'metriccard';
+@import 'myactivities';
+@import 'navbar';
+@import 'notifications';
+@import 'supportform';
 @import 'support';
+@import 'ticketqr';
 
 // ==========================================
-// 3. REGLAS GLOBALES Y UTILIDADES
+// REGLAS GLOBALES Y UTILIDADES
 // ==========================================
 *, *::before, *::after {
   box-sizing: border-box;

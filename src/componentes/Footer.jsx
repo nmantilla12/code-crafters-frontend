@@ -1,4 +1,3 @@
-// src/components/Footer.jsx
 import React from 'react';
 import { COMMUNITY_LINKS } from '../data/legalLinks';
 

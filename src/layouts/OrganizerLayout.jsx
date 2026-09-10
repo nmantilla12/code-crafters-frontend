@@ -1,6 +1,6 @@
+// src/layouts/OrganizerLayout.jsx
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import BottomNav from '../componentes/BottomNav';
 
 const OrganizerLayout = () => {
   return (
@@ -8,7 +8,6 @@ const OrganizerLayout = () => {
       <main className="organizer-layout__main">
         <Outlet />
       </main>
-      <BottomNav />
     </div>
   );
 };

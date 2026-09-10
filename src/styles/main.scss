@@ -18,6 +18,7 @@ $font-base: 1rem;
 // IMPORTACIONES
 // ==========================================
 @import 'landing';
+@import 'architecture-section'; // <-- ¡Añadido aquí para que carguen los estilos de las tarjetas!
 @import 'bottom-nav';
 @import 'createEventform';
 @import 'eventitem';

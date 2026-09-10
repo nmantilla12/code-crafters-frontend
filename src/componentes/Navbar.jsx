@@ -60,39 +60,6 @@ const Navbar = () => {
         >
           Soporte
         </button>
-
-        {/* Bloque de Acciones adaptado para mostrarse DENTRO del menú desplegable en móvil */}
-        <div className="navbar-mobile-actions">
-          <button
-            type="button"
-            onClick={() => {
-              handleRoleSwitch();
-              setMobileMenuOpen(false);
-            }}
-            className="navbar-role-btn"
-          >
-            Rol: {userRole === 'organizer' ? 'Organizador' : 'Asistente'}
-          </button>
-
-          <button 
-            type="button" 
-            onClick={() => handleNavClick('/register')} 
-            className="navbar-register-btn"
-          >
-            Registro
-          </button>
-
-          <button 
-            type="button"
-            className="navbar-profile-mobile-btn"
-            onClick={() => handleNavClick('/profile')}
-          >
-            <span className="navbar-avatar navbar-avatar--small">
-              👤
-            </span>
-            <span className="navbar-profile-text">Mi Perfil ({userRole})</span>
-          </button>
-        </div>
       </nav>
 
       {/* Acciones de Usuario, Perfil y Selector de Flujos (Escritorio) */}

@@ -1,7 +1,9 @@
+// src/componentes/EventItem.jsx
 import React from 'react';
 
-const EventItem = ({ event, onRegister, onManage }) => {
+const EventItem = ({ event, onRegister, onManage, onDelete, userRole }) => {
   if (!event) return null;
+  const eventId = event.id || event._id;
 
   return (
     <div className="event-item card-border-interactive">
@@ -12,20 +14,33 @@ const EventItem = ({ event, onRegister, onManage }) => {
       </div>
 
       <div className="event-item__actions">
-        {onRegister && (
+        {userRole !== 'organizer' && onRegister && (
           <button 
+            type="button"
             className="event-item__btn-register"
-            onClick={() => onRegister(event.id)}
+            onClick={() => onRegister(eventId)}
           >
-            Inscribirme
+            Inscribirse 🎟️
           </button>
         )}
-        {onManage && (
+
+        {userRole === 'organizer' && onManage && (
           <button 
+            type="button"
             className="event-item__btn-manage"
-            onClick={() => onManage(event.id)}
+            onClick={() => onManage(eventId)}
           >
-            Gestionar
+            Gestionar 🛠️
+          </button>
+        )}
+
+        {userRole === 'organizer' && onDelete && (
+          <button 
+            type="button"
+            className="event-item__btn-delete"
+            onClick={() => onDelete(eventId)}
+          >
+            Eliminar 🗑️
           </button>
         )}
       </div>

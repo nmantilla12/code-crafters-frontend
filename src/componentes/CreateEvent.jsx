@@ -13,6 +13,7 @@ const CreateEventForm = () => {
     image: null,
   });
 
+  // Estados para la validación y mensajes de éxito
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -23,6 +24,7 @@ const CreateEventForm = () => {
       [name]: files ? files[0] : value,
     });
 
+    // Limpiamos el error del campo correspondiente al escribir
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -49,10 +51,7 @@ const CreateEventForm = () => {
   };
 
   const handleSubmit = (e, status = 'Publicado') => {
-    if (e && typeof e.preventDefault === 'function') {
-      e.preventDefault();
-    }
-    
+    e.preventDefault();
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length > 0) {
@@ -63,6 +62,7 @@ const CreateEventForm = () => {
 
     setErrors({});
 
+    // Mapeo adaptado a la estructura de tu events.json
     const newEvent = {
       id: Date.now().toString(),
       title: formData.title,
@@ -77,6 +77,7 @@ const CreateEventForm = () => {
       registeredUsers: []
     };
 
+    // Sincronización automática con localStorage para mantener el flujo sin errores
     const savedEvents = JSON.parse(localStorage.getItem('codeCraftersEvents')) || [];
     const updatedEvents = [newEvent, ...savedEvents];
     localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
@@ -87,6 +88,7 @@ const CreateEventForm = () => {
         : '¡Evento guardado como borrador correctamente!'
     );
 
+    // Limpiamos el formulario tras el éxito
     setFormData({
       title: '',
       date: '',
@@ -218,7 +220,7 @@ const CreateEventForm = () => {
             className="event-form__btn-next"
             onClick={() => navigate('/events')}
           >
-            Ver eventos →
+            Siguiente →
           </button>
         </div>
       </form>

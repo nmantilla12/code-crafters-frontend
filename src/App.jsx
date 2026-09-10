@@ -5,7 +5,6 @@ import LandingPage from './pages/LandingPage';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import OrganizerLayout from './layouts/OrganizerLayout';
-import Dashboard from './pages/Dashboard';
 import OrganizerDashboard from './pages/OrganizerDashboard';
 import CreateEventForm from './componentes/CreateEventForm';
 import ExploreEvents from './pages/ExploreEvents';
@@ -22,6 +21,8 @@ function App() {
 
         {/* Rutas de Autenticación */}
         <Route path="/register" element={<Register />} />
+        <Route path="/register/organizer" element={<Register />} />
+        <Route path="/register/viewer" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
         {/* Vistas principales de la aplicación */}
@@ -43,15 +44,16 @@ function App() {
           </div>
         } />
 
-        {/* Ruta directa para el OrganizerDashboard por si el login la requiere */}
+        {/* Ruta directa para el OrganizerDashboard */}
         <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
 
         {/* Rutas del Panel de Organizador bajo un layout dedicado */}
         <Route path="/organizer" element={<OrganizerLayout />}>
           <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<OrganizerDashboard />} />
           <Route path="create-event" element={<CreateEventForm />} />
-          <Route path="manage-event/:id" element={<Dashboard />} />
+          <Route path="manage-event/:id" element={<CreateEventForm />} />
+          <Route path="edit-event/:id" element={<CreateEventForm />} />
         </Route>
 
         {/* Ruta comodín por si escriben cualquier otra URL, redirige al inicio */}

@@ -1,161 +1,100 @@
-.event-form-page-container {
-  width: 100%;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0f172a;
-  color: #ffffff;
-  font-size: 1rem;
-}
+// ==========================================
+// Estilos para EventItem (Tarjetas y Botones)
+// ==========================================
 
-.event-form {
+.event-item {
   background-color: #0f172a;
-  color: #ffffff;
-  padding: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  border: 2px solid #334155;
-  width: 100%;
-  max-width: 850px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, sans-serif;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
-  &__title {
-    margin: 0 0 1.75rem 0;
-    font-size: 2rem;
-    font-weight: 800;
-    background-color: transparent;
-    color: #ffffff;
-    border-bottom: 2px solid #334155;
-    padding-bottom: 1rem;
+  &:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+    transform: translateY(-3px);
   }
 
-  &__success {
-    background-color: rgba(16, 185, 129, 0.2);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.4);
-    padding: 1rem;
-    border-radius: 8px;
+  &__info {
     margin-bottom: 1.5rem;
-    font-size: 1rem;
-    font-weight: 700;
-    text-align: center;
-  }
 
-  &__group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    background-color: transparent;
-    color: #ffffff;
-  }
-
-  &__label {
-    font-size: 1.1rem;
-    font-weight: 700;
-    background-color: transparent;
-    color: #ffffff;
-  }
-
-  &__required {
-    background-color: transparent;
-    color: #f87171;
-  }
-
-  &__input,
-  &__select {
-    background-color: #0b0f19;
-    border: 2px solid #64748b;
-    color: #ffffff;
-    padding: 0.85rem 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
-
-    &:focus {
-      outline: none;
-      border-color: #0284c7;
+    .event-item__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.5rem;
     }
 
-    &--error {
-      border-color: #ef4444;
+    .event-item__description {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .event-item__date {
+      color: #38bdf8;
+      font-size: 0.9rem;
+      font-weight: 500;
     }
   }
 
-  &__error-text {
-    background-color: transparent;
-    color: #ff8b8b;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  &__input-file {
-    background-color: #0b0f19;
-    border: 2px dashed #64748b;
-    padding: 1rem;
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
+  // Botones de acción dentro de la tarjeta
   &__actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    background-color: transparent;
-  }
+    gap: 0.75rem;
+    flex-wrap: wrap;
 
-  &__btn-draft,
-  &__submit-btn {
-    flex: 1;
-    padding: 0.85rem 1rem;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
+    button {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
 
-  &__btn-draft {
-    background-color: #334155;
-    color: #ffffff;
-    border: 1px solid #475569;
-
-    &:hover {
-      background-color: #475569;
+      &:hover {
+        transform: translateY(-2px);
+      }
     }
-  }
 
-  &__submit-btn {
-    background-color: #0284c7;
-    color: #ffffff;
-    border: none;
+    // Botón Inscribirme (Espectador)
+    .event-item__btn-register {
+      background-color: #10b981;
+      color: #ffffff;
 
-    &:hover {
-      background-color: #0369a1;
+      &:hover {
+        background-color: #059669;
+      }
     }
-  }
-}
 
-@media (max-width: 640px) {
-  .event-form-page-container {
-    padding: 1rem 0.5rem;
-  }
+    // Botón Gestionar (Organizador)
+    .event-item__btn-manage {
+      background-color: #3b82f6;
+      color: #ffffff;
 
-  .event-form {
-    padding: 1.5rem 1rem;
-    
-    &__actions {
-      flex-direction: column;
+      &:hover {
+        background-color: #2563eb;
+      }
+    }
+
+    // Botón Eliminar (Organizador)
+    .event-item__btn-delete {
+      background-color: #3b82f6;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #2363eb;
+      }
     }
   }
 }

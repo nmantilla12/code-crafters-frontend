@@ -1,0 +1,21 @@
+.dashboard-footer-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+  align-items: stretch;
+  box-sizing: border-box;
+
+  .dashboard-large-btn {
+    flex: 1 1 220px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+}

@@ -1,127 +1,58 @@
-// ==========================================
-// Componente: Support Form (Modo Oscuro)
-// ==========================================
+// src/componentes/SupportSection.scss (o tu archivo de estilos correspondiente)
 
-.support-form-container {
-  // Hereda la clase global para el fondo oscuro de tarjeta y borde interactivo
-  @extend .card-border-interactive;
+.support-section {
+  // ... tus estilos existentes de la sección de soporte ...
 
-  max-width: 650px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: $bg-card !important;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  width: 100%;
-
-  &__title {
-    font-size: $font-xxl;
-    font-weight: 800;
-    color: $text-main;
-    margin: 0 0 0.5rem 0;
+  &__header {
+    // ...
   }
 
-  &__desc {
-    font-size: $font-md;
-    color: $text-muted;
-    line-height: 1.5;
-    margin: 0 0 1.5rem 0;
+  &__content-grid {
+    // ...
   }
 
-  &__success {
-    background-color: #064e3b; // Verde oscuro sólido de alto contraste
-    border: 1px solid #059669;
-    color: #34d399;           // Verde brillante legible
-    padding: 1rem;
-    border-radius: 6px;
-    font-size: $font-base;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    text-align: center;
+  &__block {
+    // ...
   }
 }
 
+// Estilos para el formulario y el select que solucionan el desplegable blanco
 .support-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-
   &__group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    // ...
   }
 
-  &__label {
-    font-size: $font-base;
-    font-weight: 700;
-    color: $text-main;
-  }
-
-  &__required {
-    color: #f87171; // Rojo brillante adaptado a fondo oscuro
-  }
-
-  &__input,
-  &__select,
-  &__textarea {
-    padding: 0.85rem;
-    font-size: $font-base;
-    border: 1px solid $border-color;
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.03);
-    color: $text-main;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    box-sizing: border-box;
-    width: 100%;
-
-    // Placeholder con buen contraste
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.4);
+  &__select {
+    background-color: #111827; // Fondo oscuro integrado con tu diseño
+    color: #ffffff;            // Texto visible en blanco
+    border: 1px solid #374151; // Borde acorde al tema oscuro
+    
+    // Solución para las opciones flotantes al desplegar y hacer scroll
+    option {
+      background-color: #111827; // Fondo oscuro para cada opción
+      color: #ffffff;            // Texto legible
+      padding: 8px 12px;         // Espaciado cómodo
     }
 
     &:focus {
       outline: none;
-      border-color: $primary-cyan;
-      box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2);
-    }
-
-    &--error {
-      border-color: #f87171;
-
-      &:focus {
-        box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.25);
-      }
+      border-color: #06b6d4;     // Color de foco (ej. cian/turquesa de tu botón)
     }
   }
 
+  &__input,
   &__textarea {
-    resize: vertical;
-  }
+    background-color: #111827;
+    color: #ffffff;
+    border: 1px solid #374151;
 
-  &__error-text {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #f87171; // Rojo claro visible sobre fondo oscuro
-    margin-top: 0.25rem;
+    &:focus {
+      outline: none;
+      border-color: #06b6d4;
+    }
   }
 
   &__submit-btn {
-    background-color: $primary-cyan;
-    color: $bg-dark;
-    font-weight: 700;
-    padding: 0.85rem 1.75rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: $font-md;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    margin-top: 0.5rem;
-
-    &:hover {
-      background-color: $primary-cyan-hover;
-      transform: translateY(-1px);
-    }
+    // ... tus estilos de botón ...
   }
 }

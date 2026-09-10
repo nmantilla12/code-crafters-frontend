@@ -1,9 +1,12 @@
 // src/pages/Register.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [role, setRole] = useState('organizer'); // Por defecto para este flujo de gestión
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,6 +16,21 @@ const Register = () => {
   const [successMessage, setSuccessMessage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    // Detectamos el rol según la ruta o recuperamos el almacenado
+    if (location.pathname.includes('organizer')) {
+      setRole('organizer');
+      localStorage.setItem('userRole', 'organizer');
+    } else {
+      const savedRole = localStorage.getItem('userRole');
+      if (savedRole) {
+        setRole(savedRole);
+      } else {
+        localStorage.setItem('userRole', 'organizer');
+      }
+    }
+  }, [location.pathname]);
 
   const handleChange = (e) => {
     setFormData({
@@ -33,7 +51,7 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, role }),
       });
 
       if (!response.ok) {
@@ -57,12 +75,15 @@ const Register = () => {
 
   const handleRegisterSuccess = () => {
     setSuccessMessage(true);
-    // Guardamos la sesión y los datos del usuario registrado en localStorage
+    
+    // Guardamos la sesión y aseguramos que el rol de organizador quede grabado
     localStorage.setItem('codeCraftersUser', JSON.stringify({ 
       name: formData.name, 
       email: formData.email, 
+      role: role,
       loggedIn: true 
     }));
+    localStorage.setItem('userRole', role);
 
     // Redirigimos al panel de organización tras un breve instante
     setTimeout(() => {
@@ -82,8 +103,8 @@ const Register = () => {
           ← Volver al inicio
         </button>
 
-        <h1 style={{ marginBottom: '0.5rem', fontSize: '1.75rem', fontWeight: 'bold', color: '#fff' }}>Crear Cuenta</h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>Regístrate para empezar a gestionar tus eventos en Code Crafters.</p>
+        <h1 style={{ marginBottom: '0.5rem', fontSize: '1.75rem', fontWeight: 'bold', color: '#fff' }}>Registro de Organizador</h1>
+        <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>Regístrate para administrar la infraestructura y crear eventos en Code Crafters.</p>
 
         {errorMessage && (
           <p style={{ background: '#7f1d1d', color: '#fca5a5', padding: '0.75rem', borderRadius: '6px', fontSize: '0.85rem', textAlign: 'center', margin: '0 0 1rem 0' }}>
@@ -93,13 +114,13 @@ const Register = () => {
 
         {successMessage ? (
           <p style={{ background: '#065f46', color: '#ecfdf5', padding: '1rem', borderRadius: '6px', textAlign: 'center', fontWeight: 'bold', margin: '0 0 1rem 0' }}>
-            ¡Usuario registrado con éxito! Redirigiendo al panel... 🎉
+            ¡Organizador registrado con éxito! Redirigiendo al panel... 🎉
           </p>
         ) : (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <label htmlFor="registerName" style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.4rem', color: '#cbd5e1', fontWeight: '500' }}>
-                Nombre
+                Nombre u Organización
               </label>
               <input 
                 id="registerName"
@@ -146,11 +167,12 @@ const Register = () => {
             </div>
 
             <button 
-              type="submit" 
+              type="button"
               disabled={loading}
+              onClick={handleSubmit}
               style={{ background: '#06b6d4', color: '#0f172a', border: 'none', padding: '0.85rem', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', marginTop: '0.5rem', opacity: loading ? 0.7 : 1, fontSize: '0.95rem', transition: 'background 0.2s' }}
             >
-              {loading ? 'Registrando...' : 'Registrarse'}
+              {loading ? 'Registrando...' : 'Registrarse como Organizador'}
             </button>
           </form>
         )}

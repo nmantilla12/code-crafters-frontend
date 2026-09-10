@@ -1,54 +1,116 @@
 // ==========================================
-// Componente: Support Section (Modo Oscuro)
+// Componente: Support Section (Ancho Completo y Responsive)
 // ==========================================
 
 .support-section {
-  // Hereda la clase global para el fondo oscuro de tarjeta y borde interactivo
-  @extend .card-border-interactive;
-
-  max-width: 950px;
-  margin: 2rem auto;
-  padding: 2rem;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 3rem 2rem;
   background-color: $bg-card !important;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  width: 100%;
+  border-radius: 0; // Se extiende de borde a borde horizontalmente
 
   &__header {
     text-align: center;
-    margin-bottom: 2rem;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
   }
 
   &__title {
-    font-size: $font-xxl;
+    font-size: 2.5rem;
     font-weight: 800;
     color: $text-main;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
   }
 
   &__subtitle {
-    font-size: $font-md;
+    font-size: 1.15rem;
     color: $text-muted;
-    margin: 0;
     line-height: 1.5;
+    margin: 0;
   }
 
-  &__grid {
+  // Grid adaptable: en ordenadores se divide en dos columnas amplias; en móvil pasa a una sola columna.
+  &__content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    width: 100%;
+    margin-bottom: 3rem;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__block {
+    background-color: rgba(255, 255, 255, 0.015);
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__block-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__emoji {
+    font-size: 1.8rem;
+  }
+
+  &__block-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-main;
+    margin: 0;
+  }
+
+  &__block-desc {
+    font-size: 1.05rem;
+    color: $text-muted;
+    margin: 0 0 1.75rem 0;
+    line-height: 1.5;
   }
 
   &__footer-links {
     border-top: 1px solid $border-color;
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     text-align: center;
+    width: 100%;
+  }
+
+  &__back-wrapper {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  &__back-btn {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $primary-cyan;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $primary-cyan-hover;
+      text-decoration: underline;
+    }
   }
 
   &__footer-title {
-    font-size: $font-base;
+    font-size: 1rem;
     font-weight: 700;
     color: $text-main;
     margin: 0 0 0.75rem 0;
@@ -68,7 +130,7 @@
   }
 
   &__legal-link {
-    font-size: $font-base;
+    font-size: 1rem;
     color: $primary-cyan;
     font-weight: 700;
     text-decoration: none;
@@ -82,58 +144,145 @@
 
   &__separator {
     color: $text-muted;
-    font-size: $font-base;
     font-weight: 700;
   }
 }
 
-.support-card {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid $border-color;
-  border-radius: 6px;
-  padding: 1.75rem;
+// ==========================================
+// Estilos del Acordeón (Preguntas Frecuentes)
+// ==========================================
+.support-accordion {
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  box-sizing: border-box;
+  gap: 0.85rem;
+  width: 100%;
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    border-color: $primary-cyan;
-  }
-
-  &__icon {
-    font-size: 2.25rem;
-    margin-bottom: 0.75rem;
-  }
-
-  &__title {
-    font-size: $font-md;
-    font-weight: 700;
-    color: $text-main;
-    margin: 0 0 0.5rem 0;
-  }
-
-  &__text {
-    font-size: $font-base;
-    color: $text-muted;
-    margin: 0 0 1.25rem 0;
-    line-height: 1.5;
-    flex: 1;
-  }
-
-  &__link {
-    font-size: $font-base;
-    font-weight: 700;
-    color: $primary-cyan;
-    text-decoration: none;
-    align-self: flex-start;
-    transition: color 0.2s ease;
+  &__item {
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.01);
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
 
     &:hover {
-      color: $primary-cyan-hover;
-      text-decoration: underline;
+      border-color: $primary-cyan;
+    }
+  }
+
+  &__trigger {
+    font-size: 1.05rem;
+    font-weight: 600;
+    width: 100%;
+    padding: 1.15rem 1.25rem;
+    background: transparent !important;
+    border: none;
+    color: $text-main;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.03) !important;
+    }
+  }
+
+  &__question-text {
+    flex: 1;
+    padding-right: 1rem;
+    text-align: left;
+  }
+
+  &__icon-toggle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $primary-cyan;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    font-size: 1rem;
+    padding: 1.15rem 1.25rem;
+    color: $text-muted;
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba(0, 0, 0, 0.15);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+}
+
+// ==========================================
+// Estilos del Formulario de Soporte (Ancho Completo)
+// ==========================================
+.support-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-sizing: border-box;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $text-main;
+  }
+
+  &__select,
+  &__input,
+  &__textarea {
+    font-size: 1.05rem;
+    padding: 0.85rem 1rem;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    color: $text-main;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-cyan;
+    }
+  }
+
+  &__textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  &__submit-btn {
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    background-color: $primary-cyan;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+
+    &:hover {
+      background-color: $primary-cyan-hover;
     }
   }
 }

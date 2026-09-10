@@ -11,3 +11,12 @@ body {
   color: #0f172a;
   line-height: 1.6;
 }
+
+/* Ocultar la barra inferior fija de navegación móvil en pantallas de ordenador */
+@media (min-width: 769px) {
+  .mobile-bottom-nav,
+  .mobile-nav,
+  nav[class*="mobile"] {
+    display: none !important;
+  }
+}

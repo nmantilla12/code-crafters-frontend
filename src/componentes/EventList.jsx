@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import EventItem from './EventItem';
 import { eventsData } from '../data/eventsData';
 
-const EventList = ({ events: propEvents, onDelete, userRole }) => {
+const EventList = ({ events: propEvents, onManage, onDelete, userRole }) => {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
 
@@ -31,7 +31,6 @@ const EventList = ({ events: propEvents, onDelete, userRole }) => {
     localStorage.setItem('codeCraftersEvents', JSON.stringify(eventsData));
   }, [propEvents]);
 
-  // Función local para eliminar un evento y actualizar localStorage de inmediato
   const handleDeleteEvent = (id) => {
     const updatedEvents = events.filter(event => (event.id || event._id) !== id);
     setEvents(updatedEvents);
@@ -39,23 +38,18 @@ const EventList = ({ events: propEvents, onDelete, userRole }) => {
     if (onDelete) onDelete(id);
   };
 
+  const handleManageEvent = (id) => {
+    if (onManage) {
+      onManage(id);
+    } else {
+      navigate(`/organizer/edit-event/${id}`);
+    }
+  };
+
   return (
     <section className="event-list-section">
       <div className="event-list__wrapper">
         
-        {/* Acciones principales del organizador en la parte superior */}
-        <div className="event-list__top-actions">
-          {userRole === 'organizer' && (
-            <button 
-              type="button" 
-              onClick={() => navigate('/organizer/create-event')} 
-              className="event-list__btn event-list__btn--create"
-            >
-              ➕ Crear Evento
-            </button>
-          )}
-        </div>
-
         {events.length === 0 ? (
           <p className="event-list__empty">
             No hay eventos disponibles en este momento.
@@ -69,7 +63,8 @@ const EventList = ({ events: propEvents, onDelete, userRole }) => {
                 <EventItem 
                   key={eventId}
                   event={event}
-                  onDelete={userRole === 'organizer' ? () => handleDeleteEvent(eventId) : null}
+                  onManage={() => handleManageEvent(eventId)}
+                  onDelete={() => handleDeleteEvent(eventId)}
                   userRole={userRole}
                 />
               );
@@ -77,20 +72,68 @@ const EventList = ({ events: propEvents, onDelete, userRole }) => {
           </div>
         )}
 
-        {/* Barra inferior: Volver al inicio y "Siguiente" directo a Soporte */}
-        <div className="event-list__actions-bar">
+        {/* Barra inferior con los tres botones grandes, en línea y en color cian */}
+        <div 
+          className="event-list__actions-bar" 
+          style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            marginTop: '40px', 
+            flexWrap: 'wrap', 
+            gap: '15px' 
+          }}
+        >
           <button 
             type="button" 
             onClick={() => navigate('/')} 
-            className="event-list__btn event-list__btn--back"
+            style={{
+              backgroundColor: '#06b6d4',
+              color: '#0b0f19',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
           >
             ← Volver al inicio
           </button>
 
           <button 
+            type="button"
+            onClick={() => navigate('/organizer/create-event')}
+            style={{
+              backgroundColor: '#06b6d4',
+              color: '#0b0f19',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            + Crear Evento ⚙️
+          </button>
+
+          <button 
             type="button" 
             onClick={() => navigate('/support')} 
-            className="event-list__btn event-list__btn--next"
+            style={{
+              backgroundColor: '#06b6d4',
+              color: '#0b0f19',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
           >
             Siguiente (Soporte) →
           </button>

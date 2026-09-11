@@ -1,58 +1,90 @@
-// src/componentes/SupportSection.scss (o tu archivo de estilos correspondiente)
+@use 'variables' as v;
 
-.support-section {
-  // ... tus estilos existentes de la sección de soporte ...
+.support-form-container {
+  background-color: v.$bg-card;
+  border: 1px solid v.$border-color;
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 
-  &__header {
-    // ...
+  &__title {
+    font-size: 1.75rem;
+    color: v.$text-main;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
   }
 
-  &__content-grid {
-    // ...
-  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
 
-  &__block {
-    // ...
-  }
-}
-
-// Estilos para el formulario y el select que solucionan el desplegable blanco
-.support-form {
-  &__group {
-    // ...
-  }
-
-  &__select {
-    background-color: #111827; // Fondo oscuro integrado con tu diseño
-    color: #ffffff;            // Texto visible en blanco
-    border: 1px solid #374151; // Borde acorde al tema oscuro
-    
-    // Solución para las opciones flotantes al desplegar y hacer scroll
-    option {
-      background-color: #111827; // Fondo oscuro para cada opción
-      color: #ffffff;            // Texto legible
-      padding: 8px 12px;         // Espaciado cómodo
+    label {
+      color: v.$text-main;
+      font-size: 1.125rem; // Accesibilidad AAA (>16px)
+      font-weight: 600;
     }
 
-    &:focus {
-      outline: none;
-      border-color: #06b6d4;     // Color de foco (ej. cian/turquesa de tu botón)
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background-color: rgba(255, 255, 255, 0.04);
+      border: 1px solid v.$border-color;
+      border-radius: 10px;
+      color: v.$text-main;
+      font-size: 1.125rem; // Accesibilidad AAA (>16px)
+      box-sizing: border-box;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &::placeholder {
+        color: v.$text-muted;
+        opacity: 0.8;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: v.$primary-cyan;
+        box-shadow: 0 0 0 4px rgba(v.$primary-cyan, 0.2);
+      }
+    }
+
+    /* Estilo específico para las opciones dentro del select en modo oscuro */
+    select option {
+      background-color: v.$bg-dark;
+      color: v.$text-main;
+      font-size: 1.1rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 140px;
     }
   }
 
-  &__input,
-  &__textarea {
-    background-color: #111827;
-    color: #ffffff;
-    border: 1px solid #374151;
+  &__btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    font-size: 1.15rem; // Letra grande, visible y accesible
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background-color: v.$primary-cyan;
+    color: v.$bg-dark;
+    transition: background 0.2s ease, transform 0.1s ease;
 
-    &:focus {
-      outline: none;
-      border-color: #06b6d4;
+    &:hover {
+      background-color: v.$primary-cyan-hover;
     }
-  }
 
-  &__submit-btn {
-    // ... tus estilos de botón ...
+    &:active {
+      transform: scale(0.98);
+    }
   }
 }

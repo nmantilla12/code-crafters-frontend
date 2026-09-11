@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventList from '../componentes/EventList';
+import MetricCard from '../componentes/MetricCard'; // <--- 1. Importamos el componente de métricas
 // Importamos tu JSON por defecto por si el localStorage está vacío
 import initialData from '../data/events.json';
 
@@ -10,27 +11,43 @@ const Dashboard = () => {
   
   // Estado local para los eventos sincronizados con localStorage
   const [events, setEvents] = useState([]);
+  const [totalAttendees, setTotalAttendees] = useState(0); // <--- 2. Estado para los asistentes
   const [loading, setLoading] = useState(true);
 
   // --- CARGAR EVENTOS DESDE LOCALSTORAGE O JSON LOCAL ---
   useEffect(() => {
     const savedEvents = localStorage.getItem('codeCraftersEvents');
+    let eventsList = [];
     
     if (savedEvents) {
-      setEvents(JSON.parse(savedEvents));
+      eventsList = JSON.parse(savedEvents);
+      setEvents(eventsList);
     } else {
       // Si es la primera vez, cargamos el JSON y lo guardamos en localStorage
-      setEvents(initialData.events);
+      eventsList = initialData.events;
+      setEvents(eventsList);
       localStorage.setItem('codeCraftersEvents', JSON.stringify(initialData.events));
     }
+
+    // Calculamos el total de asistentes para la tarjeta de métrica
+    const attendeesSum = eventsList.reduce((acc, ev) => {
+      return acc + Number.parseInt(ev.attendees || 0, 10);
+    }, 0);
+    setTotalAttendees(attendeesSum);
+
     setLoading(false);
   }, []);
 
-  // Función para eliminar un evento y actualizar el almacenamiento local al instante
+  // Función para eliminar un evento, actualizar el almacenamiento local y recalcular métricas al instante
   const handleDeleteEvent = (id) => {
-    const updatedEvents = events.filter(event => event.id !== id);
+    const updatedEvents = events.filter(event => (event.id || event._id) !== id);
     setEvents(updatedEvents);
     localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
+
+    const newAttendeesSum = updatedEvents.reduce((acc, ev) => {
+      return acc + Number.parseInt(ev.attendees || 0, 10);
+    }, 0);
+    setTotalAttendees(newAttendeesSum);
   };
 
   return (
@@ -88,7 +105,31 @@ const Dashboard = () => {
         )}
       </main>
 
-      {/* 3. Footer */}
+      {/* 3. ¡CUADRÍCULA DE MÉTRICAS MODERNA ANTES DEL FOOTER! */}
+      <section style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto', padding: '0 1.5rem', boxSizing: 'border-box' }}>
+        <div className="dashboard-metrics-grid">
+          <MetricCard 
+            title="Eventos Totales" 
+            value={events.length} 
+            change="+12%" 
+            isPositive={true} 
+          />
+          <MetricCard 
+            title="Asistentes Inscritos" 
+            value={totalAttendees} 
+            change="0%" 
+            isPositive={true} 
+          />
+          <MetricCard 
+            title="Estado del Almacenamiento" 
+            value="Sincronizado" 
+            change="100%" 
+            isPositive={true} 
+          />
+        </div>
+      </section>
+
+      {/* 4. Footer */}
       <footer className="dashboard-page__footer">
         <p>© 2026 Code Crafters. Todos los derechos reservados.</p>
         <div className="footer-links">

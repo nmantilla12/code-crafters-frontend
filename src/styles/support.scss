@@ -1,121 +1,119 @@
-// ==========================================
-// Componente: Support Section (Ancho Completo y Responsive)
-// ==========================================
+@use 'variables' as v;
 
 .support-section {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   padding: 3rem 2rem;
-  background-color: $bg-card !important;
   box-sizing: border-box;
-  border-radius: 0; // Se extiende de borde a borde horizontalmente
+  font-size: 1.125rem; // Accesibilidad AAA (>16px)
+  color: v.$text-main;
+
+  &__header-top {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  &__back-btn {
+    background: transparent;
+    border: 1px solid v.$border-color;
+    color: v.$text-main;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: v.$primary-cyan;
+      color: v.$primary-cyan;
+    }
+  }
 
   &__header {
     text-align: center;
-    max-width: 800px;
-    margin: 0 auto 3rem auto;
+    margin-bottom: 3rem;
   }
 
   &__title {
     font-size: 2.5rem;
-    font-weight: 800;
-    color: $text-main;
-    margin: 0 0 0.75rem 0;
+    color: v.$text-main;
+    margin-bottom: 1rem;
+    font-weight: 700;
   }
 
   &__subtitle {
-    font-size: 1.15rem;
-    color: $text-muted;
-    line-height: 1.5;
-    margin: 0;
+    font-size: 1.2rem;
+    color: v.$text-muted;
   }
 
-  // Grid adaptable: en ordenadores se divide en dos columnas amplias; en móvil pasa a una sola columna.
   &__content-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 2.5rem;
     width: 100%;
-    margin-bottom: 3rem;
-    box-sizing: border-box;
 
-    @media (max-width: 1024px) {
-      grid-template-columns: 1fr;
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr; // Dos columnas simétricas
+      align-items: start;
     }
   }
 
   &__block {
-    background-color: rgba(255, 255, 255, 0.015);
-    border: 1px solid $border-color;
-    border-radius: 8px;
-    padding: 2.25rem;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    background-color: v.$bg-card;
+    border: 1px solid v.$border-color;
+    border-radius: 16px;
+    padding: 2.5rem;
     box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   }
 
   &__block-header {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   &__emoji {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 
   &__block-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    color: v.$text-main;
     font-weight: 700;
-    color: $text-main;
     margin: 0;
   }
 
   &__block-desc {
-    font-size: 1.05rem;
-    color: $text-muted;
-    margin: 0 0 1.75rem 0;
-    line-height: 1.5;
+    font-size: 1.125rem; // Accesibilidad AAA (>16px)
+    color: v.$text-muted;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
   }
 
   &__footer-links {
-    border-top: 1px solid $border-color;
-    padding-top: 2rem;
-    text-align: center;
-    width: 100%;
-  }
-
-  &__back-wrapper {
-    margin-bottom: 1.5rem;
-    text-align: left;
-  }
-
-  &__back-btn {
-    font-size: 1rem;
-    font-weight: 700;
-    color: $primary-cyan;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: $primary-cyan-hover;
-      text-decoration: underline;
-    }
+    margin-top: 4rem;
+    padding: 2rem;
+    background-color: v.$bg-card;
+    border: 1px solid v.$border-color;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   }
 
   &__footer-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: $text-main;
-    margin: 0 0 0.75rem 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 1.25rem;
+    color: v.$text-main;
+    font-weight: 600;
+    margin: 0;
   }
 
   &__legal-list {
@@ -123,109 +121,93 @@
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+    justify-content: center;
     align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__legal-item {
+    display: inline;
   }
 
   &__legal-link {
-    font-size: 1rem;
-    color: $primary-cyan;
-    font-weight: 700;
+    color: v.$text-muted;
     text-decoration: none;
+    font-size: 1.1rem;
     transition: color 0.2s ease;
 
     &:hover {
-      color: $primary-cyan-hover;
+      color: v.$primary-cyan;
       text-decoration: underline;
     }
   }
 
   &__separator {
-    color: $text-muted;
-    font-weight: 700;
+    color: v.$text-muted;
+    opacity: 0.5;
   }
 }
 
-// ==========================================
-// Estilos del Acordeón (Preguntas Frecuentes)
-// ==========================================
+// Estilos del Acordeón BEM para las Preguntas Frecuentes
 .support-accordion {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  width: 100%;
+  gap: 1rem;
 
   &__item {
-    border: 1px solid $border-color;
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid v.$border-color;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.02);
     overflow: hidden;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
-
-    &:hover {
-      border-color: $primary-cyan;
-    }
   }
 
   &__trigger {
-    font-size: 1.05rem;
-    font-weight: 600;
     width: 100%;
-    padding: 1.15rem 1.25rem;
-    background: transparent !important;
+    padding: 1.25rem;
+    background: transparent;
     border: none;
-    color: $text-main;
+    color: v.$text-main;
+    font-size: 1.125rem; // Accesibilidad AAA (>16px)
+    font-weight: 600;
     text-align: left;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    cursor: pointer;
+    gap: 1rem;
     box-sizing: border-box;
-    transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.03) !important;
+      background-color: rgba(255, 255, 255, 0.04);
     }
   }
 
   &__question-text {
-    flex: 1;
-    padding-right: 1rem;
-    text-align: left;
+    color: v.$text-main;
   }
 
   &__icon-toggle {
     font-size: 1.25rem;
-    font-weight: 700;
-    color: $primary-cyan;
-    flex-shrink: 0;
+    color: v.$primary-cyan;
+    font-weight: bold;
   }
 
   &__content {
-    font-size: 1rem;
-    padding: 1.15rem 1.25rem;
-    color: $text-muted;
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    color: v.$text-muted;
+    font-size: 1.125rem; // Accesibilidad AAA (>16px)
     line-height: 1.6;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background-color: rgba(0, 0, 0, 0.15);
-    width: 100%;
-    box-sizing: border-box;
-    text-align: left;
   }
 }
 
-// ==========================================
-// Estilos del Formulario de Soporte (Ancho Completo)
-// ==========================================
+// Estilos del Formulario de Soporte (.support-form)
 .support-form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
   box-sizing: border-box;
 
   &__group {
@@ -236,53 +218,78 @@
   }
 
   &__label {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: $text-main;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: v.$text-main;
   }
 
-  &__select,
   &__input,
+  &__select,
   &__textarea {
-    font-size: 1.05rem;
-    padding: 0.85rem 1rem;
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid $border-color;
-    border-radius: 6px;
-    color: $text-main;
     width: 100%;
+    padding: 0.85rem 1rem;
+    background-color: rgba(0, 0, 0, 0.4); 
+    border: 1px solid v.$border-color;
+    border-radius: 8px;
+    color: v.$text-main; 
+    font-family: inherit;
+    font-size: 1.125rem;
     box-sizing: border-box;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
 
     &:focus {
       outline: none;
-      border-color: $primary-cyan;
+      border-color: v.$primary-cyan;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &::placeholder {
+      color: v.$text-muted;
+      opacity: 0.7;
+    }
+  }
+
+  &__select {
+    cursor: pointer;
+    
+    option {
+      background-color: #0f172a;
+      color: v.$text-main;
     }
   }
 
   &__textarea {
-    min-height: 110px;
     resize: vertical;
+    min-height: 130px;
   }
 
   &__submit-btn {
-    font-size: 1.05rem;
-    font-weight: 700;
-    padding: 1rem 1.5rem;
-    background-color: $primary-cyan;
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    text-align: center;
-    text-decoration: none;
-    display: block;
     width: 100%;
+    padding: 1rem;
+    background-color: v.$primary-cyan;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 1.125rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease, transform 0.1s ease;
     margin-top: 0.5rem;
 
     &:hover {
-      background-color: $primary-cyan-hover;
+      opacity: 0.9;
     }
+
+    &:active {
+      transform: scale(0.99);
+    }
+  }
+
+  &__success-msg {
+    color: v.$primary-cyan;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 0.5rem;
   }
 }

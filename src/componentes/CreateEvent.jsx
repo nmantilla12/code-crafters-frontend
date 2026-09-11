@@ -62,7 +62,7 @@ const CreateEventForm = () => {
 
     setErrors({});
 
-    // Mapeo adaptado a la estructura de tu events.json
+    // Mapeo adaptado a la estructura de tus eventos
     const newEvent = {
       id: Date.now().toString(),
       title: formData.title,
@@ -77,18 +77,18 @@ const CreateEventForm = () => {
       registeredUsers: []
     };
 
-    // Sincronización automática con localStorage para mantener el flujo sin errores
+    // Sincronización automática con localStorage
     const savedEvents = JSON.parse(localStorage.getItem('codeCraftersEvents')) || [];
     const updatedEvents = [newEvent, ...savedEvents];
     localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
 
-    setSuccessMessage(
-      status === 'Publicado' 
-        ? '¡Evento publicado con éxito y añadido al catálogo!' 
-        : '¡Evento guardado como borrador correctamente!'
-    );
+    const msg = status === 'Publicado' 
+      ? '¡Evento publicado con éxito y añadido al catálogo!' 
+      : '¡Evento guardado como borrador correctamente!';
+      
+    setSuccessMessage(msg);
 
-    // Limpiamos el formulario tras el éxito
+    // Limpiamos el formulario
     setFormData({
       title: '',
       date: '',
@@ -96,6 +96,11 @@ const CreateEventForm = () => {
       locationOrLink: '',
       image: null,
     });
+
+    // Redirección automática tras 1.5 segundos para que alcance a leerse el mensaje de éxito
+    setTimeout(() => {
+      navigate('/events'); // O la ruta donde muestras tu lista de eventos
+    }, 1500);
   };
 
   return (
@@ -104,7 +109,7 @@ const CreateEventForm = () => {
         <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
         {successMessage && (
-          <div className="event-form__success" role="alert">
+          <div className="event-form__success" role="alert" style={{ background: 'rgba(6, 182, 212, 0.1)', color: '#22d3ee', padding: '12px', borderRadius: '6px', marginBottom: '20px', border: '1px solid #06b6d4', fontWeight: 'bold' }}>
             {successMessage}
           </div>
         )}

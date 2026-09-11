@@ -14,8 +14,8 @@ const SupportSection = () => {
     },
     {
       id: 2,
-      question: "¿Qué tipos de perfiles existen en la plataforma?",
-      answer: "Puedes participar como Asistente / Usuario registrado para inscribirte a eventos, o como Organizador para crear y gestionar tus propias convocatorias y aforos."
+      question: "¿Qué tipos de consultas puedo realizar?",
+      answer: "Puedes resolver dudas relacionadas con las inscripciones y accesos a eventos, reportar incidencias técnicas de la plataforma o enviar cualquier otra consulta de carácter general."
     },
     {
       id: 3,
@@ -44,17 +44,17 @@ const SupportSection = () => {
         </p>
       </div>
 
-      {/* Contenedor principal adaptable para ordenador y móvil */}
+      {/* Contenedor principal adaptable */}
       <div className="support-section__content-grid">
         
-        {/* Columna / Bloque Izquierdo: Preguntas Frecuentes */}
+        {/* Columna Izquierda: Preguntas Frecuentes */}
         <div className="support-section__block">
           <div className="support-section__block-header">
             <span className="support-section__emoji" aria-hidden="true">💡</span>
             <h3 className="support-section__block-title">Preguntas Frecuentes</h3>
           </div>
           <p className="support-section__block-desc">
-            Resuelve tus dudas sobre accesos, inscripciones, perfiles y funcionamiento general.
+            Resuelve tus dudas sobre accesos, inscripciones y funcionamiento general.
           </p>
 
           <div className="support-accordion">
@@ -82,14 +82,14 @@ const SupportSection = () => {
           </div>
         </div>
 
-        {/* Columna / Bloque Derecho: Formulario de Soporte */}
+        {/* Columna Derecha: Formulario de Soporte */}
         <div className="support-section__block">
           <div className="support-section__block-header">
             <span className="support-section__emoji" aria-hidden="true">✉️</span>
             <h3 className="support-section__block-title">Centro de Soporte y Gestión</h3>
           </div>
           <p className="support-section__block-desc">
-            Completa el formulario indicando tu perfil. Al enviar, se abrirá tu aplicación de correo.
+            Completa el formulario con tu consulta. Al enviar, se abrirá tu aplicación de correo.
           </p>
           
           <SupportForm />
@@ -97,19 +97,19 @@ const SupportSection = () => {
 
       </div>
 
-      {/* Footer Legal */}
-      <div className="support-section__footer-links">
-        <div className="support-section__back-wrapper">
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="support-section__back-btn"
-          >
-            &larr; Volver
-          </button>
-        </div>
+      {/* Botón Volver abajo */}
+      <div className="support-section__action-bar">
+        <button
+          type="button"
+          onClick={() => window.history.back()}
+          className="support-section__back-btn"
+        >
+          &larr; Volver
+        </button>
+      </div>
 
-        <h4 className="support-section__footer-title">Información Legal</h4>
+      {/* Footer plano y limpio con los enlaces legales */}
+      <footer className="support-section__footer">
         <ul className="support-section__legal-list">
           {LEGAL_LINKS.map((link, index) => (
             <React.Fragment key={link.id}>
@@ -124,7 +124,7 @@ const SupportSection = () => {
             </React.Fragment>
           ))}
         </ul>
-      </div>
+      </footer>
 
     </div>
   );

@@ -1,57 +1,18 @@
 import React from 'react';
-import MetricCard from './MetricCard';
 
-const OrganizerDashboard = () => {
+const MetricCard = ({ title, value, change, isPositive }) => {
   return (
-    <div className="dashboard-container">
-      {/* Cuadrícula de Métricas */}
-      <div className="dashboard-metrics-grid">
-        <MetricCard 
-          title="Eventos Totales" 
-          value="2" 
-          change="+12%" 
-          isPositive={true} 
-        />
-        <MetricCard 
-          title="Asistentes Inscritos" 
-          value="0" 
-          change="0%" 
-          isPositive={true} 
-        />
-        <MetricCard 
-          title="Estado del Almacenamiento" 
-          value="Sincronizado" 
-          change="100%" 
-          isPositive={true} 
-        />
+    <div className="metric-card card-border-interactive">
+      <div className="metric-card__header">
+        <span className="metric-card__title">{title}</span>
+        <span className="metric-card__icon">📊</span>
       </div>
-
-      {/* Panel de Acciones e Infraestructura */}
-      <div className="dashboard-panel">
-        <p className="dashboard-panel__description">
-          Control total sobre la infraestructura del evento y telemetría en tiempo real.
-        </p>
-        
-        <div className="dashboard-panel__actions">
-          <button type="button" className="dashboard-btn dashboard-btn--primary">
-            + Crear Evento ⚙️
-          </button>
-          
-          <button type="button" className="dashboard-btn dashboard-btn--secondary">
-            ← Volver a la Landing Page
-          </button>
-          
-          <button type="button" className="dashboard-btn dashboard-btn--secondary">
-            Siguiente (Explorar Eventos) →
-          </button>
-          
-          <button type="button" className="dashboard-btn dashboard-btn--danger">
-            Cerrar Sesión 🚪
-          </button>
-        </div>
+      <div className="metric-card__value">{value}</div>
+      <div className={`metric-card__trend ${isPositive ? 'metric-card__trend--positive' : 'metric-card__trend--negative'}`}>
+        {change}
       </div>
     </div>
   );
 };
 
-export default OrganizerDashboard;
+export default MetricCard;

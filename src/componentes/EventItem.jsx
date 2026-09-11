@@ -7,42 +7,48 @@ const EventItem = ({ event, onRegister, onManage, onDelete, userRole }) => {
 
   return (
     <div className="event-item card-border-interactive">
-      <div className="event-item__info">
-        <h3 className="event-item__title">{event.title}</h3>
-        <p className="event-item__description">{event.description}</p>
-        <p className="event-item__date">📅 {event.date}</p>
+      
+      {/* Cabecera del título del evento */}
+      <div className="event-item__header">
+        <h3 className="event-item__title">
+          {event.title}
+        </h3>
       </div>
 
+      <div className="event-item__info">
+        <p className="event-item__description">
+          {event.description}
+        </p>
+        <p className="event-item__date">
+          📅 {event.date}
+        </p>
+      </div>
+
+      {/* Botones de acción unificados */}
       <div className="event-item__actions">
-        {userRole !== 'organizer' && onRegister && (
-          <button 
-            type="button"
-            className="event-item__btn-register"
-            onClick={() => onRegister(eventId)}
-          >
-            Inscribirse 🎟️
-          </button>
-        )}
+        <button 
+          type="button"
+          className="event-item__btn event-item__btn-manage"
+          onClick={() => {
+            if (onManage) {
+              onManage(eventId);
+            }
+          }}
+        >
+          Gestionar 🛠️
+        </button>
 
-        {userRole === 'organizer' && onManage && (
-          <button 
-            type="button"
-            className="event-item__btn-manage"
-            onClick={() => onManage(eventId)}
-          >
-            Gestionar 🛠️
-          </button>
-        )}
-
-        {userRole === 'organizer' && onDelete && (
-          <button 
-            type="button"
-            className="event-item__btn-delete"
-            onClick={() => onDelete(eventId)}
-          >
-            Eliminar 🗑️
-          </button>
-        )}
+        <button 
+          type="button"
+          className="event-item__btn event-item__btn-delete"
+          onClick={() => {
+            if (onDelete) {
+              onDelete(eventId);
+            }
+          }}
+        >
+          Eliminar 🗑️
+        </button>
       </div>
     </div>
   );

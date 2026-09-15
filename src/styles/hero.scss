@@ -1,20 +1,18 @@
-// ==========================================
-// Estilos del Componente: Hero
-// ==========================================
+@use '../styles/variables' as *;
 
 .hero {
   padding: 3rem 1.25rem;
   text-align: center;
   background: linear-gradient(180deg, #0b0f19 0%, #1e293b 100%);
   border-radius: 16px;
-  margin: 1.5rem auto;
+  margin: 5rem auto 2.5rem auto; // Margen inferior optimizado al ya no haber botones
   max-width: 1200px;
   border: 1px solid #334155;
   box-sizing: border-box;
 
   @media (min-width: 768px) {
     padding: 4rem 2rem;
-    margin: 2rem auto;
+    margin: 6rem auto 3rem auto;
   }
 
   &__content {
@@ -28,7 +26,7 @@
     color: #f8fafc;
     padding: 0.4rem 1.1rem;
     border-radius: 50px;
-    font-size: 0.9rem; // > 16px equivalente o legible óptimo accesible
+    font-size: 0.9rem;
     font-weight: 700;
     margin-bottom: 1.25rem;
     letter-spacing: 0.05em;
@@ -49,53 +47,13 @@
   }
 
   &__subtitle {
-    font-size: 1.125rem; // 18px -> Cumple estrictamente > 16px para accesibilidad
+    font-size: 1.125rem;
     color: #94a3b8;
-    margin-bottom: 2.5rem;
+    margin-bottom: 0; // Sin margen inferior extra al ser el último elemento de la tarjeta
     line-height: 1.6;
 
     @media (min-width: 768px) {
-      font-size: 1.25rem; // 20px en escritorio
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  &__btn {
-    padding: 0.9rem 2rem;
-    font-size: 1.05rem; // > 16px accesible en botones
-    font-weight: 800;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
-
-    &:active {
-      transform: scale(0.98);
-    }
-
-    &--primary {
-      background-color: #38bdf8;
-      color: #0b0f19;
-      border: none;
-
-      &:hover {
-        background-color: #0ea5e9;
-      }
-    }
-
-    &--secondary {
-      background-color: transparent;
-      color: #38bdf8;
-      border: 2px solid #38bdf8;
-
-      &:hover {
-        background-color: rgba(56, 189, 248, 0.1);
-      }
+      font-size: 1.25rem;
     }
   }
 }

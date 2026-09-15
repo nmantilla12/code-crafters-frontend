@@ -1,31 +1,23 @@
+@use 'variables' as v;
+
 .spectator-page {
   padding: 20px;
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: v.$text-main;
+  font-family: v.$font-primary;
   min-height: 100vh;
-  background-color: #0b0f19;
+  background-color: v.$bg-dark;
 }
 
-/* =========================================================
-   CONTENEDOR GLOBAL DE CENTRADO ABSOLUTO (Flexbox Perfecto)
-   ========================================================= */
 .spectator-fullscreen-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
-/* =========================================================
-   ESTILOS DE TARJETAS PRINCIPALES Y PASARELA DE PAGO
-   ========================================================= */
 .spectator-box-card {
-  background: #151c28;
-  border: 1px solid #253348;
+  background: v.$bg-card;
+  border: 1px solid v.$border-color;
   border-radius: 16px;
   padding: 45px;
   width: 100%;
@@ -38,26 +30,23 @@
   &__title {
     font-size: 2.2rem;
     margin-bottom: 15px;
-    color: #fff;
+    color: v.$text-main;
     text-align: center;
   }
 
   &__desc {
-    color: #94a3b8;
+    color: v.$text-muted;
     font-size: 1.15rem;
     margin-bottom: 35px;
     text-align: center;
 
     .spectator-highlight {
-      color: #00f2fe;
+      color: v.$primary-cyan;
       font-weight: bold;
     }
   }
 }
 
-/* =========================================================
-   FORMULARIOS PROFESIONALES Y BOTONES CIAN
-   ========================================================= */
 .spectator-form {
   display: flex;
   flex-direction: column;
@@ -80,27 +69,32 @@
   }
 
   &__label {
-    color: #cbd5e1;
+    color: v.$color-text-label;
     font-size: 1.05rem;
     font-weight: 600;
   }
 
   &__input {
-    background: #0b0f19;
-    border: 1px solid #334155;
+    background: v.$bg-dark;
+    border: 1px solid v.$color-border-input;
     border-radius: 10px;
-    padding: 14px 18px;
-    color: #fff;
+    padding: 12px 18px;
+    color: v.$text-main;
     font-size: 1.1rem;
-    transition: all 0.3s ease;
     width: 100%;
     box-sizing: border-box;
+    transition: all 0.3s ease;
 
     &:focus {
       outline: none;
-      border-color: #00f2fe;
+      border-color: v.$primary-cyan;
       box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
     }
+  }
+
+  textarea.spectator-form__input {
+    resize: vertical;
+    min-height: 110px;
   }
 
   &__actions {
@@ -115,7 +109,6 @@
   }
 }
 
-/* Estilos de Botones Modernos */
 .spectator-btn {
   padding: 14px 28px;
   border-radius: 10px;
@@ -132,114 +125,106 @@
   }
 
   &--primary {
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-    color: #0b0f19;
+    background: linear-gradient(135deg, v.$primary-cyan 0%, v.$color-accent-blue 100%);
+    color: v.$bg-dark;
     flex-grow: 1;
     box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
   }
 
   &--secondary {
-    background: #334155;
-    color: #fff;
+    background: v.$color-bg-secondary;
+    color: v.$text-main;
   }
 
   &--whatsapp {
-    background: #25d366;
-    color: #fff;
+    background: v.$color-whatsapp;
+    color: v.$text-main;
     box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
   }
 }
 
-/* =========================================================
-   RECIBO Y TICKET DE ÉXITO CON QR
-   ========================================================= */
 .spectator-ticket-receipt {
-  background: #0b0f19;
-  border: 2px dashed #334155;
+  background: v.$bg-dark;
+  border: 2px dashed v.$color-border-input;
   border-radius: 12px;
   padding: 30px;
   margin-bottom: 30px;
+}
 
-  .spectator-ticket-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #1e293b;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+.spectator-ticket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid v.$color-border-dark;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
 
-    .spectator-ticket-label {
-      color: #64748b;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+  .spectator-ticket-label {
+    color: v.$color-text-subtle;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 
-    h3 {
-      color: #00f2fe;
-      font-size: 1.8rem;
-      margin-top: 4px;
-    }
+  h3 {
+    color: v.$primary-cyan;
+    font-size: 1.8rem;
+    margin-top: 4px;
+  }
 
-    .spectator-ticket-holder {
-      color: #cbd5e1;
-      font-size: 1.15rem;
+  .spectator-ticket-holder {
+    color: v.$color-text-label;
+    font-size: 1.15rem;
+  }
+}
+
+.spectator-ticket-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  h4 {
+    color: v.$text-main;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+    color: v.$text-muted;
+    font-size: 1.05rem;
+
+    li {
+      margin-bottom: 8px;
     }
   }
 
-  .spectator-ticket-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
+  .spectator-ticket-total {
+    font-size: 1.3rem;
+    color: v.$color-text-label;
 
-    @media (max-width: 600px) {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .spectator-ticket-details {
-      flex-grow: 1;
-
-      h4 {
-        color: #fff;
-        margin-bottom: 10px;
-        font-size: 1.2rem;
-      }
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 15px 0;
-        color: #94a3b8;
-        font-size: 1.05rem;
-
-        li {
-          margin-bottom: 8px;
-        }
-      }
-
-      .spectator-ticket-total {
-        font-size: 1.3rem;
-        color: #cbd5e1;
-
-        span {
-          color: #00f2fe;
-          font-weight: bold;
-        }
-      }
-    }
-
-    .spectator-ticket-qr {
-      background: #fff;
-      padding: 15px;
-      border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    span {
+      color: v.$primary-cyan;
+      font-weight: bold;
     }
   }
+}
+
+.spectator-ticket-qr {
+  background: v.$text-main;
+  padding: 15px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .spectator-success-header {
@@ -253,13 +238,13 @@
   }
 
   h2 {
-    color: #00f2fe;
+    color: v.$primary-cyan;
     font-size: 2.2rem;
     margin-bottom: 8px;
   }
 
   p {
-    color: #94a3b8;
+    color: v.$text-muted;
     font-size: 1.1rem;
   }
 }
@@ -275,79 +260,81 @@
   }
 }
 
-/* =========================================================
-   CENTRO DE SOPORTE Y AYUDA (DOS COLUMNAS PROFESIONALES)
-   ========================================================= */
+/* === SOPORTE Y FAQ (CORREGIDO PARA ANCHO Y RESPONSIVE) === */
 .spectator-support-container {
-  background: #151c28;
-  border: 1px solid #253348;
-  border-radius: 20px;
-  padding: 50px;
   width: 100%;
-  max-width: 1100px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  max-width: 1200px; // Ampliado para aprovechar el espacio en PC
+  margin: 0 auto;
+  padding: 20px;
   box-sizing: border-box;
-  margin: 20px auto;
 }
 
 .spectator-support-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 
   h2 {
-    font-size: 2.5rem;
-    color: #fff;
+    font-size: 2.4rem;
+    color: v.$text-main;
     margin-bottom: 10px;
   }
 
   p {
-    color: #94a3b8;
-    font-size: 1.2rem;
+    color: v.$text-muted;
+    font-size: 1.15rem;
   }
 }
 
 .spectator-support-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; // Dos columnas fluidas para FAQ y Formulario
   gap: 30px;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
+  width: 100%;
+  box-sizing: border-box;
 
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr; // Columna única automática en móviles
   }
 }
 
 .spectator-support-card {
-  background: #0b0f19;
-  border: 1px solid #253348;
-  border-radius: 14px;
+  background: v.$bg-card;
+  border: 1px solid v.$border-color;
+  border-radius: 16px;
   padding: 30px;
   box-sizing: border-box;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 
   h3 {
-    color: #00f2fe;
-    font-size: 1.4rem;
-    margin-bottom: 25px;
-    border-bottom: 1px solid #1e293b;
+    color: v.$primary-cyan;
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid v.$color-border-dark;
     padding-bottom: 12px;
   }
 }
 
 .spectator-faq-box {
-  background: #151c28;
-  border: 1px solid #1e293b;
+  background: v.$bg-dark;
+  border: 1px solid v.$color-border-dark;
   border-radius: 10px;
-  padding: 18px;
+  padding: 16px 20px;
   margin-bottom: 15px;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   h4 {
-    color: #fff;
+    color: v.$text-main;
     font-size: 1.05rem;
     margin-bottom: 6px;
   }
 
   p {
-    color: #94a3b8;
+    color: v.$text-muted;
     font-size: 0.95rem;
     margin: 0;
     line-height: 1.5;
@@ -357,7 +344,7 @@
 .spectator-form-pro {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 
   .spectator-form-group {
     display: flex;
@@ -365,62 +352,60 @@
     gap: 8px;
 
     label {
-      color: #cbd5e1;
+      color: v.$color-text-label;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     input, textarea {
-      background: #151c28;
-      border: 1px solid #334155;
+      background: v.$bg-dark;
+      border: 1px solid v.$color-border-input;
       border-radius: 10px;
-      padding: 14px 18px;
-      color: #fff;
-      font-size: 1.05rem;
+      padding: 12px 16px;
+      color: v.$text-main;
+      font-size: 1rem;
       width: 100%;
       box-sizing: border-box;
       transition: all 0.3s ease;
 
       &:focus {
         outline: none;
-        border-color: #00f2fe;
+        border-color: v.$primary-cyan;
         box-shadow: 0 0 10px rgba(0, 242, 254, 0.25);
       }
     }
 
     textarea {
       resize: vertical;
+      min-height: 110px;
     }
   }
 }
 
 .spectator-success-msg {
-  background: #064e3b;
-  color: #34d399;
-  padding: 20px;
+  background: v.$color-success-bg;
+  color: v.$color-success-text;
+  padding: 16px;
   border-radius: 10px;
   text-align: center;
   font-weight: bold;
-  font-size: 1.1rem;
-  border: 1px solid #059669;
-  margin-top: 20px;
+  font-size: 1rem;
+  border: 1px solid v.$color-success-border;
+  margin-top: 15px;
 }
 
 .spectator-support-footer-action {
   display: flex;
   justify-content: center;
-  border-top: 1px solid #253348;
-  padding-top: 25px;
+  padding-top: 10px;
 
   button {
     max-width: 350px;
     width: 100%;
   }
 }
+/* ==================================================== */
 
-/* =========================================================
-   NAVEGACIÓN INFERIOR Y CATÁLOGO GRID
-   ========================================================= */
 .spectator-catalog-layout {
   display: grid;
   grid-template-columns: 1fr 360px;
@@ -441,19 +426,19 @@
 
   &__title {
     font-size: 2.2rem;
-    color: #fff;
+    color: v.$text-main;
     margin-bottom: 5px;
   }
 
   &__subtitle {
-    color: #94a3b8;
+    color: v.$text-muted;
     font-size: 1.1rem;
   }
 }
 
 .spectator-cart-badge {
-  background: #151c28;
-  border: 1px solid #253348;
+  background: v.$bg-card;
+  border: 1px solid v.$border-color;
   padding: 12px 24px;
   border-radius: 12px;
   display: flex;
@@ -463,7 +448,7 @@
   font-size: 1.1rem;
 
   &__total {
-    color: #00f2fe;
+    color: v.$primary-cyan;
   }
 }
 
@@ -474,8 +459,8 @@
 }
 
 .spectator-card {
-  background: #151c28;
-  border: 1px solid #253348;
+  background: v.$bg-card;
+  border: 1px solid v.$border-color;
   border-radius: 16px;
   padding: 25px;
   display: flex;
@@ -485,7 +470,7 @@
 
   &__header-tag {
     background: rgba(0, 242, 254, 0.1);
-    color: #00f2fe;
+    color: v.$primary-cyan;
     padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -495,7 +480,7 @@
 
   &__title {
     font-size: 1.4rem;
-    color: #fff;
+    color: v.$text-main;
     margin: 15px 0 10px 0;
   }
 
@@ -503,13 +488,13 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    color: #94a3b8;
+    color: v.$text-muted;
     font-size: 0.95rem;
     margin-bottom: 15px;
   }
 
   &__desc {
-    color: #cbd5e1;
+    color: v.$color-text-label;
     font-size: 0.95rem;
     line-height: 1.5;
     margin-bottom: 20px;
@@ -519,20 +504,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #253348;
+    border-top: 1px solid v.$border-color;
     padding-top: 15px;
+    gap: 12px;
   }
 
   &__price {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #00f2fe;
+    color: v.$primary-cyan;
+    white-space: nowrap;
+  }
+
+  .spectator-btn--primary {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    flex-grow: 0;
+    width: auto;
   }
 }
 
 .spectator-cart-sidebar {
-  background: #151c28;
-  border: 1px solid #253348;
+  background: v.$bg-card;
+  border: 1px solid v.$border-color;
   border-radius: 16px;
   padding: 25px;
   height: fit-content;
@@ -541,14 +535,14 @@
 
   &__title {
     font-size: 1.4rem;
-    color: #fff;
+    color: v.$text-main;
     margin-bottom: 20px;
-    border-bottom: 1px solid #253348;
+    border-bottom: 1px solid v.$border-color;
     padding-bottom: 10px;
   }
 
   &__empty {
-    color: #94a3b8;
+    color: v.$text-muted;
     text-align: center;
     padding: 20px 0;
   }
@@ -563,8 +557,14 @@
   }
 
   &__summary {
-    border-top: 1px solid #253348;
+    border-top: 1px solid v.$border-color;
     padding-top: 20px;
+
+    .spectator-btn--primary {
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      width: 100%;
+    }
   }
 
   &__total-row {
@@ -573,18 +573,18 @@
     align-items: center;
     font-size: 1.2rem;
     margin-bottom: 15px;
-    color: #cbd5e1;
+    color: v.$color-text-label;
   }
 
   &__total-value {
-    color: #00f2fe;
+    color: v.$primary-cyan;
     font-weight: bold;
   }
 }
 
 .spectator-cart-item {
-  background: #0b0f19;
-  border: 1px solid #253348;
+  background: v.$bg-dark;
+  border: 1px solid v.$border-color;
   border-radius: 10px;
   padding: 12px;
   display: flex;
@@ -592,13 +592,13 @@
   align-items: center;
 
   &__title {
-    color: #fff;
+    color: v.$text-main;
     font-size: 0.95rem;
     margin-bottom: 4px;
   }
 
   &__price {
-    color: #00f2fe;
+    color: v.$primary-cyan;
     font-size: 0.9rem;
     font-weight: bold;
   }
@@ -606,7 +606,7 @@
   &__remove {
     background: none;
     border: none;
-    color: #ef4444;
+    color: v.$color-danger;
     cursor: pointer;
     font-size: 1.1rem;
     padding: 4px 8px;
@@ -624,9 +624,9 @@
   margin-top: 40px;
 
   .spectator-nav-btn {
-    background: #151c28;
-    color: #00f2fe;
-    border: 1px solid #253348;
+    background: v.$bg-card;
+    color: v.$primary-cyan;
+    border: 1px solid v.$border-color;
     padding: 12px 24px;
     border-radius: 10px;
     font-weight: bold;
@@ -634,7 +634,7 @@
     transition: background 0.2s;
 
     &:hover {
-      background: #1e293b;
+      background: v.$color-border-dark;
     }
   }
 }

@@ -1,75 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/navbar.scss';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userRole, setUserRole] = useState('attendee'); // 'attendee' o 'organizer'
-
-  const handleNavClick = (path) => {
-    setMobileMenuOpen(false);
-    navigate(path);
-  };
 
   return (
     <header className="navbar-container">
-      {/* Logotipo / Marca principal */}
+      {/* Logotipo / Marca principal centrada */}
       <button 
         type="button" 
-        onClick={() => handleNavClick('/')}
+        onClick={() => navigate('/')}
         className="navbar-brand"
       >
         Code Crafters <span className="navbar-brand__highlight">2026</span>
       </button>
-
-      {/* Botón de Menú Hamburguesa para Móviles */}
-      <button
-        type="button"
-        className="navbar-mobile-toggle"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        aria-label="Abrir menú de navegación"
-      >
-        {mobileMenuOpen ? '✕' : '☰'}
-      </button>
-
-      {/* Navegación Principal (Escritorio y Móvil) */}
-      <nav className={`navbar-nav ${mobileMenuOpen ? 'open' : ''}`}>
-        <button 
-          type="button" 
-          onClick={() => handleNavClick('/')} 
-          className="navbar-link"
-        >
-          Discovery
-        </button>
-        <button 
-          type="button" 
-          onClick={() => handleNavClick(userRole === 'organizer' ? '/dashboard' : '/events')} 
-          className="navbar-link"
-        >
-          {userRole === 'organizer' ? 'Gestionar Eventos' : 'Mis Entradas (QR)'}
-        </button>
-        <button 
-          type="button" 
-          onClick={() => handleNavClick('/support')} 
-          className="navbar-link"
-        >
-          Soporte
-        </button>
-      </nav>
-
-      {/* Acciones de Usuario (Avatar) */}
-      <div className="navbar-actions">
-        <button 
-          type="button"
-          className="navbar-avatar"
-          onClick={() => handleNavClick('/profile')}
-          title={`Perfil activo (${userRole}): Ver cuenta`}
-          aria-label="Ver perfil de usuario"
-        >
-          👤
-        </button>
-      </div>
     </header>
   );
 };

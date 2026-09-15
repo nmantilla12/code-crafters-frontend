@@ -1,30 +1,30 @@
 .event-form-page-container {
   width: 100%;
-  padding: 2rem 1rem;
+  padding: 2.5rem 1.5rem;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  font-size: 1rem; // 16px base
+  font-size: 1rem;
 }
 
 .event-form {
   background-color: #0f172a;
   color: #ffffff;
-  padding: 2.5rem;
+  padding: 3.5rem 4rem;
   border-radius: 12px;
   border: 2px solid #334155;
   width: 100%;
-  max-width: 850px;
+  max-width: 1250px; // Ancho máximo ampliado a 1250px
   margin: 0 auto;
   box-sizing: border-box;
   font-family: system-ui, -apple-system, sans-serif;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 
   &__title {
-    margin: 0 0 1.75rem 0;
-    font-size: 2rem; // 32px para jerarquía clara
+    margin: 0 0 2rem 0;
+    font-size: 2.5rem;
     font-weight: 800;
     color: #ffffff;
     border-bottom: 2px solid #334155;
@@ -32,69 +32,69 @@
   }
 
   &__success {
-    background: rgba(16, 185, 129, 0.2);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.4);
+    background: #064e3b;
+    color: #6ee7b7;
+    border: 1px solid #10b981;
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1.5rem;
-    font-size: 1rem; // 16px mínimo
+    font-size: 1rem;
     font-weight: 700;
     text-align: center;
   }
 
   &__group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
 
   &__label {
-    font-size: 1.1rem; // 17.6px para destacar sobre el mínimo exigido
+    font-size: 1.15rem;
     font-weight: 700;
     color: #ffffff;
   }
 
   &__required {
-    color: #f87171;
+    color: #fca5a5;
   }
 
   &__input,
   &__select {
     background-color: #0b0f19;
-    border: 2px solid #64748b;
+    border: 2px solid #94a3b8;
     color: #ffffff;
-    padding: 0.85rem 1rem;
+    padding: 0.95rem 1.15rem;
     border-radius: 8px;
-    font-size: 1rem; // Forzamos 16px exactos para evitar zoom automático en móviles y cumplir WCAG
+    font-size: 1.05rem;
     width: 100%;
     box-sizing: border-box;
     transition: border-color 0.2s ease;
 
     &:focus {
       outline: none;
-      border-color: #0284c7;
+      border-color: #38bdf8;
     }
 
     &--error {
-      border-color: #ef4444;
+      border-color: #f87171;
     }
   }
 
   &__error-text {
-    color: #ff8b8b;
-    font-size: 1rem; // Subido a 16px para cumplir también en mensajes de error
+    color: #fca5a5;
+    font-size: 1rem;
     font-weight: 600;
   }
 
   &__input-file {
     background-color: #0b0f19;
-    border: 2px dashed #64748b;
-    padding: 1rem;
+    border: 2px dashed #94a3b8;
+    padding: 1.15rem;
     border-radius: 8px;
     color: #ffffff;
-    font-size: 1rem; // 16px
+    font-size: 1.05rem;
     cursor: pointer;
     width: 100%;
     box-sizing: border-box;
@@ -103,24 +103,55 @@
   &__actions {
     display: flex;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
   }
 
+  &__btn-back,
+  &__btn-next,
   &__btn-draft,
   &__submit-btn {
     flex: 1;
-    padding: 0.85rem 1rem;
+    min-width: 150px;
+    padding: 0.95rem 1.15rem;
     border-radius: 8px;
-    font-size: 1.1rem; // 17.6px para botones accesibles
+    font-size: 1.15rem;
     font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__btn-back {
+    background-color: #334155;
+    color: #ffffff;
+    border: 1px solid #64748b;
+
+    &:hover {
+      background-color: #475569;
+    }
+  }
+
+  &__btn-next {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+
+    &:hover {
+      background-color: #0369a1;
+    }
   }
 
   &__btn-draft {
     background-color: #334155;
     color: #ffffff;
-    border: 1px solid #475569;
+    border: 1px solid #64748b;
 
     &:hover {
       background-color: #475569;
@@ -138,7 +169,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .event-form-page-container {
     padding: 1rem 0.5rem;
   }

@@ -13,6 +13,7 @@ const CreateEventForm = () => {
     image: null,
   });
 
+  // Estados para la validación y mensajes de éxito
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -23,6 +24,7 @@ const CreateEventForm = () => {
       [name]: files ? files[0] : value,
     });
 
+    // Limpiamos el error del campo correspondiente al escribir
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -49,10 +51,7 @@ const CreateEventForm = () => {
   };
 
   const handleSubmit = (e, status = 'Publicado') => {
-    if (e && typeof e.preventDefault === 'function') {
-      e.preventDefault();
-    }
-    
+    e.preventDefault();
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length > 0) {
@@ -63,6 +62,7 @@ const CreateEventForm = () => {
 
     setErrors({});
 
+    // Mapeo adaptado a la estructura de tus eventos
     const newEvent = {
       id: Date.now().toString(),
       title: formData.title,
@@ -77,16 +77,18 @@ const CreateEventForm = () => {
       registeredUsers: []
     };
 
+    // Sincronización automática con localStorage
     const savedEvents = JSON.parse(localStorage.getItem('codeCraftersEvents')) || [];
     const updatedEvents = [newEvent, ...savedEvents];
     localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
 
-    setSuccessMessage(
-      status === 'Publicado' 
-        ? '¡Evento publicado con éxito y añadido al catálogo!' 
-        : '¡Evento guardado como borrador correctamente!'
-    );
+    const msg = status === 'Publicado' 
+      ? '¡Evento publicado con éxito y añadido al catálogo!' 
+      : '¡Evento guardado como borrador correctamente!';
+      
+    setSuccessMessage(msg);
 
+    // Limpiamos el formulario
     setFormData({
       title: '',
       date: '',
@@ -94,6 +96,11 @@ const CreateEventForm = () => {
       locationOrLink: '',
       image: null,
     });
+
+    // Redirección automática tras 1.5 segundos para que alcance a leerse el mensaje de éxito
+    setTimeout(() => {
+      navigate('/events'); // O la ruta donde muestras tu lista de eventos
+    }, 1500);
   };
 
   return (
@@ -102,7 +109,7 @@ const CreateEventForm = () => {
         <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
         {successMessage && (
-          <div className="event-form__success" role="alert">
+          <div className="event-form__success" role="alert" style={{ background: 'rgba(6, 182, 212, 0.1)', color: '#22d3ee', padding: '12px', borderRadius: '6px', marginBottom: '20px', border: '1px solid #06b6d4', fontWeight: 'bold' }}>
             {successMessage}
           </div>
         )}
@@ -218,7 +225,7 @@ const CreateEventForm = () => {
             className="event-form__btn-next"
             onClick={() => navigate('/events')}
           >
-            Ver eventos →
+            Siguiente →
           </button>
         </div>
       </form>

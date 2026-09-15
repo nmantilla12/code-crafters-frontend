@@ -1,6 +1,4 @@
-// ==========================================
-// Componente: Bottom Navigation (Modo Oscuro)
-// ==========================================
+@use 'variables' as v;
 
 .bottom-nav {
   position: fixed;
@@ -8,10 +6,8 @@
   left: 0;
   width: 100%;
   height: 72px;
-  // Usamos los colores oscuros de tus variables globales
-  background-color: $bg-card; 
-  // Usamos el borde fino y elegante definido en el main
-  border-top: 1px solid $border-color; 
+  background-color: v.$bg-card; 
+  border-top: 1px solid v.$border-color; 
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -24,20 +20,18 @@
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    // Texto secundario claro para legibilidad en modo oscuro
-    color: $text-muted; 
-    font-size: $font-base;
+    color: v.$text-muted; 
+    font-size: v.$font-base;
     font-weight: 600;
     gap: 4px;
     transition: color 0.2s ease;
 
     &:hover {
-      color: $text-main;
+      color: v.$text-main;
     }
 
     &--active {
-      // Usamos tu color cian principal para el elemento activo
-      color: $primary-cyan; 
+      color: v.$primary-cyan; 
       font-weight: 700;
     }
   }
@@ -49,9 +43,8 @@
   &__action-btn {
     width: 52px;
     height: 52px;
-    // Usamos el cian principal para destacar la acción central
-    background-color: $primary-cyan; 
-    color: $bg-dark; // Contraste óptimo oscuro sobre el botón brillante
+    background-color: v.$primary-cyan; 
+    color: v.$bg-dark;
     border: none;
     border-radius: 50%;
     display: flex;
@@ -63,7 +56,7 @@
     transition: background-color 0.2s ease, transform 0.2s ease;
 
     &:hover {
-      background-color: $primary-cyan-hover;
+      background-color: v.$primary-cyan-hover;
       transform: scale(1.05);
     }
   }

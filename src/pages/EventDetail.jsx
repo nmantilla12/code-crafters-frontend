@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../componentes/Navbar';
 import Footer from '../componentes/Footer';
-import TicketQR from '../componentes/TicketQR'; // <--- Importamos tu componente de QR
+import TicketQR from '../componentes/TicketQR';
 import initialData from '../data/events.json';
 
 const EventDetail = () => {
@@ -24,9 +24,9 @@ const EventDetail = () => {
 
   if (!event) {
     return (
-      <div className="event-detail-page" style={{ background: '#0b1120', color: '#fff', minHeight: '100vh', padding: '2rem' }}>
+      <div className="event-detail-page">
         <Navbar />
-        <div style={{ color: '#fff', padding: '4rem 2rem', textAlign: 'center' }}>Evento no encontrado.</div>
+        <div className="event-detail-page__not-found">Evento no encontrado.</div>
         <Footer />
       </div>
     );
@@ -60,40 +60,39 @@ const EventDetail = () => {
   };
 
   return (
-    <div className="event-detail-page" style={{ background: '#0b1120', color: '#fff', minHeight: '100vh', padding: '2rem' }}>
+    <div className="event-detail-page">
       <Navbar />
       
-      <div className="event-detail__container" style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '3rem', alignItems: 'start', maxWidth: '1200px', margin: '2rem auto' }}>
+      <div className="event-detail__container">
         
         {/* Columna Izquierda: Datos dinámicos del evento */}
         <div>
-          <div style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', border: '1px solid #334155', borderRadius: '12px', padding: '2.5rem', marginBottom: '3rem' }}>
-            <span style={{ background: '#334155', color: '#38bdf8', padding: '0.25rem 0.75rem', fontSize: '0.75rem', fontWeight: 'bold', borderRadius: '4px', display: 'inline-block', marginBottom: '1rem' }}>
+          <div className="event-detail__card">
+            <span className="event-detail__category">
               {event.category}
             </span>
-            <h1 style={{ fontSize: '2.25rem', fontWeight: 'bold', color: '#fff', marginBottom: '1rem' }}>
+            <h1 className="event-detail__title">
               {event.title}
             </h1>
-            <div style={{ display: 'flex', gap: '1.5rem', color: '#94a3b8', fontSize: '0.875rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+            <div className="event-detail__meta">
               <span>📅 {event.date}</span>
               <span>📍 {event.location}</span>
               <span>👥 Asistentes: {event.attendees || 0}</span>
             </div>
-            <p style={{ color: '#cbd5e1', lineHeight: '1.6' }}>{event.description}</p>
+            <p className="event-detail__description">{event.description}</p>
           </div>
         </div>
 
         {/* Columna Derecha: Formulario o Ticket QR generado */}
-        <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '12px', padding: '2rem', position: 'sticky', top: '2rem' }}>
+        <div className="event-detail__sidebar">
           
           {isRegistered ? (
             <div>
-              <div style={{ background: '#065f46', color: '#ecfdf5', padding: '1rem', borderRadius: '8px', textAlign: 'center', marginBottom: '1rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '0.25rem' }}>¡Inscripción Exitosa! 🎉</h3>
-                <p style={{ fontSize: '0.8rem', margin: 0 }}>Tu entrada oficial está lista.</p>
+              <div className="event-detail__success-banner">
+                <h3 className="event-detail__success-title">¡Inscripción Exitosa! 🎉</h3>
+                <p className="event-detail__success-text">Tu entrada oficial está lista.</p>
               </div>
               
-              {/* Renderizamos tu componente TicketQR con los datos de este evento */}
               <TicketQR 
                 eventTitle={event.title}
                 eventDate={event.date}
@@ -104,16 +103,16 @@ const EventDetail = () => {
             </div>
           ) : (
             <>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem' }}>
+              <h2 className="event-detail__form-title">
                 Asegura tu plaza
               </h2>
-              <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
+              <p className="event-detail__form-subtitle">
                 Completa tus datos para registrarte en el evento.
               </p>
 
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                <div>
-                  <label htmlFor="fullNameInput" style={{ display: 'block', color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '0.5rem', fontWeight: '500' }}>
+              <form onSubmit={handleSubmit} className="event-detail__form">
+                <div className="form-group">
+                  <label htmlFor="fullNameInput" className="form-group__label">
                     Nombre Completo
                   </label>
                   <input 
@@ -122,12 +121,13 @@ const EventDetail = () => {
                     placeholder="Ej. Ana García"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', background: '#0f172a', border: '1px solid #334155', borderRadius: '6px', color: '#fff', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                    className="form-group__input"
+                    required
                   />
                 </div>
 
-                <div>
-                  <label htmlFor="emailInput" style={{ display: 'block', color: '#cbd5e1', fontSize: '0.8rem', marginBottom: '0.5rem', fontWeight: '500' }}>
+                <div className="form-group">
+                  <label htmlFor="emailInput" className="form-group__label">
                     Correo Electrónico
                   </label>
                   <input 
@@ -136,26 +136,27 @@ const EventDetail = () => {
                     placeholder="ana@ejemplo.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', background: '#0f172a', border: '1px solid #334155', borderRadius: '6px', color: '#fff', fontSize: '0.9rem', boxSizing: 'border-box' }}
+                    className="form-group__input"
+                    required
                   />
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                <div className="form-group form-group--checkbox">
                   <input 
                     type="checkbox" 
                     id="termsCheckbox"
                     checked={acceptTerms}
                     onChange={(e) => setAcceptTerms(e.target.checked)}
-                    style={{ marginTop: '0.2rem', cursor: 'pointer' }}
+                    required
                   />
-                  <label htmlFor="termsCheckbox" style={{ color: '#94a3b8', fontSize: '0.75rem', lineHeight: '1.4', cursor: 'pointer' }}>
-                    Acepto los <span style={{ color: '#38bdf8' }}>términos y condiciones</span> y la política de privacidad.
+                  <label htmlFor="termsCheckbox" className="form-group__checkbox-label">
+                    Acepto los <span>términos y condiciones</span> y la política de privacidad.
                   </label>
                 </div>
 
                 <button 
                   type="submit"
-                  style={{ width: '100%', background: '#06b6d4', color: '#0f172a', border: 'none', padding: '0.75rem', borderRadius: '6px', fontWeight: 'bold', fontSize: '0.95rem', cursor: 'pointer', marginTop: '0.5rem' }}
+                  className="event-detail__btn-submit"
                 >
                   Inscribirse ahora
                 </button>

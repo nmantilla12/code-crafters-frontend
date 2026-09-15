@@ -1,22 +1,18 @@
-// src/componentes/EventList.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventItem from './EventItem';
 import { eventsData } from '../data/eventsData';
 
-const EventList = ({ events: propEvents }) => {
+const EventList = ({ events: propEvents, onManage, onDelete, userRole }) => {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
-  const [registeredEvents, setRegisteredEvents] = useState([]);
 
   useEffect(() => {
-    // 1. Si el componente padre pasa eventos válidos, los usamos
     if (propEvents && Array.isArray(propEvents) && propEvents.length > 0) {
       setEvents(propEvents);
       return;
     }
 
-    // 2. Si hay datos guardados en el localStorage, los comprobamos
     const savedEvents = localStorage.getItem('codeCraftersEvents');
     if (savedEvents) {
       try {
@@ -30,40 +26,22 @@ const EventList = ({ events: propEvents }) => {
       }
     }
 
-    // 3. Por defecto absoluto: cargamos tus datos reales
     setEvents(eventsData);
     localStorage.setItem('codeCraftersEvents', JSON.stringify(eventsData));
   }, [propEvents]);
 
-  const handleCreateRedirect = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigate('/organizer/create-event');
+  const handleDeleteEvent = (id) => {
+    const updatedEvents = events.filter(event => (event.id || event._id) !== id);
+    setEvents(updatedEvents);
+    localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
+    if (onDelete) onDelete(id);
   };
 
-  const handleBack = (e) => {
-    e.preventDefault();
-    navigate(-1);
-  };
-
-  // Botón Gestionar: Redirige a la vista de edición o gestión del evento
-  const handleManage = (id) => {
-    console.log('Gestionar evento:', id);
-    navigate(`/organizer/edit-event/${id}`); 
-    // Nota: Si en lugar de editar quieres eliminarlo voluntariamente, 
-    // puedes usar una función de borrado específica aquí o añadir un botón de papelera.
-  };
-
-  // Botón Inscribirme: Da feedback visual al usuario
-  const handleRegister = (id) => {
-    const eventToRegister = events.find(e => (e.id || e._id) === id);
-    const eventTitle = eventToRegister ? eventToRegister.title : 'el evento';
-    
-    if (!registeredEvents.includes(id)) {
-      setRegisteredEvents([...registeredEvents, id]);
-      alert(`¡Te has inscrito exitosamente a "${eventTitle}"!`);
+  const handleManageEvent = (id) => {
+    if (onManage) {
+      onManage(id);
     } else {
-      alert(`Ya estás inscrito en este evento.`);
+      navigate(`/organizer/edit-event/${id}`);
     }
   };
 
@@ -71,37 +49,12 @@ const EventList = ({ events: propEvents }) => {
     <section className="event-list-section">
       <div className="event-list__wrapper">
         
-        {/* Cabecera superior con flujo integrado */}
-        <div className="event-list__header-row">
-          <div className="event-list__nav-group">
-            <button 
-              type="button"
-              className="event-list__btn-back"
-              onClick={handleBack}
-            >
-              ← Volver
-            </button>
-          </div>
-
-          <h3 className="event-list__title">Eventos Disponibles y Gestión</h3>
-          
-          <div className="event-list__actions-group">
-            <button 
-              type="button"
-              className="event-list__btn-create"
-              onClick={handleCreateRedirect}
-            >
-              + Crear Evento
-            </button>
-          </div>
-        </div>
-        
         {events.length === 0 ? (
           <p className="event-list__empty">
-            No hay eventos creados todavía. Explora el catálogo o crea un nuevo evento para comenzar.
+            No hay eventos disponibles en este momento.
           </p>
         ) : (
-          <div className="event-list__container">
+          <div className="dashboard-grid">
             {events.map((event) => {
               const eventId = event.id || event._id;
 
@@ -109,13 +62,42 @@ const EventList = ({ events: propEvents }) => {
                 <EventItem 
                   key={eventId}
                   event={event}
-                  onManage={handleManage}
-                  onRegister={handleRegister}
+                  onManage={() => handleManageEvent(eventId)}
+                  onDelete={() => handleDeleteEvent(eventId)}
+                  userRole={userRole}
                 />
               );
             })}
           </div>
         )}
+
+        {/* Barra inferior con clases puras, sin estilos en línea */}
+        <div className="event-list__actions-bar">
+          <button 
+            type="button" 
+            onClick={() => navigate('/')} 
+            className="event-list__btn event-list__btn--secondary"
+          >
+            ← Volver al inicio
+          </button>
+
+          <button 
+            type="button"
+            onClick={() => navigate('/organizer/create-event')}
+            className="event-list__btn event-list__btn--primary"
+          >
+            + Crear Evento ⚙️
+          </button>
+
+          <button 
+            type="button" 
+            onClick={() => navigate('/organizer/buzon-quejas')} 
+            className="event-list__btn event-list__btn--secondary"
+          >
+            Buzón de Quejas o Sugerencias →
+          </button>
+        </div>
+
       </div>
     </section>
   );

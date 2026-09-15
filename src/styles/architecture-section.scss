@@ -1,0 +1,142 @@
+@use 'variables' as v;
+
+.architecture-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  &__title {
+    font-size: v.$font-xxl;
+    color: v.$text-main;
+    margin-bottom: 1rem;
+  }
+
+  &__subtitle {
+    color: v.$text-muted;
+    font-size: v.$font-md;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    gap: 2.5rem;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.architecture-error-message {
+  grid-column: 1 / -1;
+  color: #ff6b6b;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.architecture-card {
+  background-color: v.$bg-card;
+  border: 1px solid v.$border-color;
+  border-radius: 12px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    border-color: v.$border-color-hover;
+    transform: translateY(-4px);
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background: rgba(v.$primary-cyan, 0.1);
+    color: v.$primary-cyan;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+    width: fit-content;
+  }
+
+  &__heading {
+    font-size: v.$font-lg;
+    color: v.$text-main;
+    margin-bottom: 1.5rem;
+  }
+
+  .architecture-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        color: v.$text-main;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid v.$border-color;
+        border-radius: 8px;
+        color: v.$text-main;
+        font-size: 1rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &::placeholder {
+          color: v.$text-muted;
+          opacity: 0.7;
+        }
+
+        &:focus {
+          outline: none;
+          border-color: v.$primary-cyan;
+          box-shadow: 0 0 0 3px rgba(v.$primary-cyan, 0.15);
+        }
+      }
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background-color: v.$primary-cyan;
+    color: v.$bg-dark;
+    transition: background 0.2s ease, transform 0.1s ease;
+    text-align: center;
+    display: block;
+
+    &:hover {
+      background-color: v.$primary-cyan-hover;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}

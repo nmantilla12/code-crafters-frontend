@@ -30,20 +30,10 @@ const ExploreEvents = () => {
   };
 
   return (
-    <div style={{ 
-      backgroundColor: '#0f172a', 
-      minHeight: '100vh', 
-      width: '100%', 
-      padding: '2rem 1.5rem', 
-      boxSizing: 'border-box',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      zIndex: 10
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        {loading && <p className="event-list__loading" style={{ color: '#94a3b8' }}>Cargando eventos...</p>}
-        {error && <p style={{ color: '#f87171', textAlign: 'center' }}>Error al cargar: {error}</p>}
+    <div className="explore-events-page">
+      <div className="explore-events__container">
+        {loading && <p className="event-list__loading">Cargando eventos...</p>}
+        {error && <p className="explore-events__error">Error al cargar: {error}</p>}
         
         {!loading && !error && (
           <EventList events={events} />

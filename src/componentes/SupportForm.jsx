@@ -1,315 +1,138 @@
-// src/components/SupportForm.jsx
+// src/componentes/SupportForm.jsx
 import React, { useState } from 'react';
+import '../styles/spectatorcatalog.scss';
 
 const SupportForm = () => {
   const [formData, setFormData] = useState({
-    userRole: 'attendee', // 'attendee' (usuario/asistente) o 'organizer' (organizador)
-    queryType: '',
+    consultaType: '',
     subject: '',
     message: ''
   });
 
-  const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value
-    });
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: ''
-      });
-    }
-  };
-
-  const validate = () => {
-    let newErrors = {};
-    if (!formData.userRole) {
-      newErrors.userRole = 'Por favor, selecciona tu rol en la plataforma.';
-    }
-    if (!formData.queryType) {
-      newErrors.queryType = 'Por favor, selecciona un tipo de consulta.';
-    }
-    if (!formData.subject.trim()) {
-      newErrors.subject = 'El asunto es obligatorio.';
-    } else if (formData.subject.trim().length < 5) {
-      newErrors.subject = 'El asunto debe tener al menos 5 caracteres.';
-    }
-    if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje no puede estar vacío.';
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'El mensaje debe tener al menos 10 caracteres.';
-    }
-    return newErrors;
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
     
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      setIsSubmitted(false);
-    } else {
-      setErrors({});
-      setIsSubmitted(true);
-      console.log('Consulta de soporte enviada con éxito:', formData);
-    }
-  };
+    const recipientEmail = "nnnmantillam@gmail.com";
+    const emailSubject = encodeURIComponent(`[Soporte] ${formData.consultaType}: ${formData.subject}`);
+    const emailBody = encodeURIComponent(
+      `Tipo de consulta: ${formData.consultaType}\nAsunto: ${formData.subject}\n\nMensaje:\n${formData.message}`
+    );
 
-  const handleReset = () => {
-    setFormData({ userRole: 'attendee', queryType: '', subject: '', message: '' });
-    setIsSubmitted(false);
+    window.location.href = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
+    setSubmitted(true);
   };
 
   return (
-    <div 
-      className="support-page-wrapper"
-      style={{
-        width: '100%',
-        backgroundColor: '#0b1120',
-        padding: '1rem 0 3.5rem 0', // Espacio inferior generoso para que no peguen los botones de abajo
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        overflowX: 'hidden'
-      }}
-    >
-      {/* Contenedor central expandido y adaptable */}
-      <div 
-        className="support-form-container"
-        style={{
-          width: '100%',
-          maxWidth: '800px',
-          margin: '0 auto 2.5rem auto', // Margen inferior para separar la tarjeta de los botones de navegación
-          padding: '2rem 1.5rem',
-          backgroundColor: '#0f172a',
-          border: '2px solid #334155',
-          borderRadius: '12px',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
-          boxSizing: 'border-box',
-          color: '#ffffff',
-          fontFamily: 'system-ui, -apple-system, sans-serif'
-        }}
-      >
-        <h3 
-          className="support-form-container__title"
-          style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '0.5rem', color: '#f8fafc' }}
-        >
-          Centro de Soporte y Gestión
-        </h3>
-        <p 
-          className="support-form-container__desc"
-          style={{ color: '#cbd5e1', fontSize: '1.05rem', lineHeight: '1.5', marginBottom: '1.75rem', fontWeight: '500' }}
-        >
-          Completa el formulario indicando tu perfil de usuario u organizador. Te atenderemos de forma prioritaria.
-        </p>
-
-        {isSubmitted ? (
-          <div 
-            className="support-form-success-box" 
-            style={{ 
-              background: '#1e293b', 
-              border: '2px solid #334155', 
-              borderRadius: '8px', 
-              padding: '2rem 1rem', 
-              textAlign: 'center', 
-              marginTop: '1.5rem',
-              boxSizing: 'border-box',
-              width: '100%'
-            }}
-          >
-            <div 
-              className="support-form-container__success" 
-              role="alert" 
-              style={{ color: '#38bdf8', marginBottom: '1.5rem', fontSize: '1.15rem', fontWeight: '700', lineHeight: '1.5' }}
-            >
-              ¡Consulta enviada correctamente como {formData.userRole === 'organizer' ? 'Organizador' : 'Asistente'}! Nuestro equipo te responderá pronto.
+    <div className="spectator-support-container">
+      <div className="spectator-support-stack">
+        
+        {/* TARJETA 1: PREGUNTAS FRECUENTES A TODO ANCHO */}
+        <div className="spectator-support-card">
+          <h2 className="spectator-support-card__title">Preguntas Frecuentes</h2>
+          <div className="spectator-faq-grid">
+            <div className="spectator-faq-item">
+              <h3 className="spectator-faq-item__title">¿Cómo descargo mis entradas compradas?</h3>
+              <p className="spectator-faq-item__text">Una vez finalizada la reserva, pulsa el botón de descarga para guardar tu comprobante oficial en PDF.</p>
             </div>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button 
-                type="button" 
-                onClick={handleReset}
-                style={{ 
-                  background: '#38bdf8', 
-                  color: '#0f172a', 
-                  border: 'none', 
-                  padding: '0.85rem 1.5rem', 
-                  borderRadius: '6px', 
-                  fontWeight: '700', 
-                  cursor: 'pointer',
-                  fontSize: '1rem' 
-                }}
-              >
-                Enviar otra consulta
-              </button>
+            <div className="spectator-faq-item">
+              <h3 className="spectator-faq-item__title">¿Puedo compartir mis accesos por WhatsApp?</h3>
+              <p className="spectator-faq-item__text">Sí, dispones de un botón directo en la pantalla de éxito para enviar los detalles de manera inmediata.</p>
+            </div>
+            <div className="spectator-faq-item">
+              <h3 className="spectator-faq-item__title">¿Cómo contactar con el equipo de soporte?</h3>
+              <p className="spectator-faq-item__text">Rellena el formulario inferior con tu incidencia y se abrirá tu cliente de correo hacia nuestro buzón oficial.</p>
             </div>
           </div>
-        ) : (
-          <form className="support-form" onSubmit={handleSubmit} noValidate style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%', boxSizing: 'border-box' }}>
+        </div>
+
+        {/* TARJETA 2: CENTRO DE SOPORTE Y FORMULARIO A TODO ANCHO */}
+        <div className="spectator-support-card">
+          <h2 className="spectator-support-card__title">Centro de Soporte y Ayuda</h2>
+          <p className="spectator-support-card__subtitle">
+            ¿Tienes alguna incidencia? Envíanos una consulta detallada y te responderemos con la mayor brevedad posible.
+          </p>
+
+          <form onSubmit={handleSubmit} className="spectator-support-form">
             
-            {/* Selector de Rol */}
-            <div className="support-form__group" style={{ width: '100%', boxSizing: 'border-box' }}>
-              <label htmlFor="userRole" className="support-form__label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '1rem', fontWeight: '700', color: '#f8fafc' }}>
-                Perfil de usuario <span className="support-form__required" style={{ color: '#f87171' }} aria-hidden="true">*</span>
+            {/* Campo: Tipo de consulta */}
+            <div className="spectator-support-form__group">
+              <label htmlFor="consultaType" className="spectator-support-form__label">
+                Tipo de consulta *
               </label>
               <select
-                id="userRole"
-                name="userRole"
-                className={`support-form__select ${errors.userRole ? 'support-form__select--error' : ''}`}
-                value={formData.userRole}
+                id="consultaType"
+                name="consultaType"
+                value={formData.consultaType}
                 onChange={handleChange}
-                style={{ 
-                  width: '100%', 
-                  maxWidth: '100%',
-                  padding: '0.85rem', 
-                  background: '#1e293b', 
-                  border: '2px solid #475569', 
-                  borderRadius: '6px', 
-                  color: '#ffffff',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  boxSizing: 'border-box'
-                }}
+                className="spectator-support-form__select"
+                required
               >
-                <option value="attendee">Asistente / Usuario registrado</option>
-                <option value="organizer">Organizador de eventos</option>
+                <option value="" disabled>-- Selecciona una opción --</option>
+                <option value="Inscripciones y Accesos">Inscripciones y accesos a eventos</option>
+                <option value="Incidencia Técnica">Incidencia técnica en la plataforma</option>
+                <option value="Consulta General">Consulta de carácter general</option>
               </select>
-              {errors.userRole && <span className="support-form__error-text" style={{ color: '#f87171', fontSize: '0.9rem', display: 'block', marginTop: '0.35rem', fontWeight: '600' }}>{errors.userRole}</span>}
             </div>
 
-            {/* Tipo de consulta */}
-            <div className="support-form__group" style={{ width: '100%', boxSizing: 'border-box' }}>
-              <label htmlFor="queryType" className="support-form__label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '1rem', fontWeight: '700', color: '#f8fafc' }}>
-                Tipo de consulta <span className="support-form__required" style={{ color: '#f87171' }} aria-hidden="true">*</span>
-              </label>
-              <select
-                id="queryType"
-                name="queryType"
-                className={`support-form__select ${errors.queryType ? 'support-form__select--error' : ''}`}
-                value={formData.queryType}
-                onChange={handleChange}
-                style={{ 
-                  width: '100%', 
-                  maxWidth: '100%',
-                  padding: '0.85rem', 
-                  background: '#1e293b', 
-                  border: '2px solid #475569', 
-                  borderRadius: '6px', 
-                  color: '#ffffff',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  boxSizing: 'border-box'
-                }}
-              >
-                <option value="">-- Selecciona una opción --</option>
-                {formData.userRole === 'organizer' ? (
-                  <>
-                    <option value="create-event">Creación y publicación de eventos</option>
-                    <option value="manage-attendees">Gestión de aforo y asistentes</option>
-                    <option value="room-assignment">Cambio de sala o recursos técnicos</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="registration">Dudas sobre inscripción y código QR</option>
-                    <option value="download-ticket">Problemas al descargar la entrada</option>
-                    <option value="technical">Incidencia de acceso / plataforma</option>
-                  </>
-                )}
-                <option value="other">Otro asunto general</option>
-              </select>
-              {errors.queryType && <span className="support-form__error-text" style={{ color: '#f87171', fontSize: '0.9rem', display: 'block', marginTop: '0.35rem', fontWeight: '600' }}>{errors.queryType}</span>}
-            </div>
-
-            {/* Asunto */}
-            <div className="support-form__group" style={{ width: '100%', boxSizing: 'border-box' }}>
-              <label htmlFor="subject" className="support-form__label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '1rem', fontWeight: '700', color: '#f8fafc' }}>
-                Asunto <span className="support-form__required" style={{ color: '#f87171' }} aria-hidden="true">*</span>
+            {/* Campo: Asunto */}
+            <div className="spectator-support-form__group">
+              <label htmlFor="subject" className="spectator-support-form__label">
+                Asunto *
               </label>
               <input
                 type="text"
                 id="subject"
                 name="subject"
-                className={`support-form__input ${errors.subject ? 'support-form__input--error' : ''}`}
-                placeholder="Breve resumen de tu consulta (mín. 5 caracteres)"
                 value={formData.subject}
                 onChange={handleChange}
-                style={{ 
-                  width: '100%', 
-                  maxWidth: '100%',
-                  padding: '0.85rem', 
-                  background: '#1e293b', 
-                  border: '2px solid #475569', 
-                  borderRadius: '6px', 
-                  color: '#ffffff',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  boxSizing: 'border-box'
-                }}
+                placeholder="Breve resumen de tu consulta (mín. 5 caracteres)"
+                minLength={5}
+                className="spectator-support-form__input"
+                required
               />
-              {errors.subject && <span className="support-form__error-text" style={{ color: '#f87171', fontSize: '0.9rem', display: 'block', marginTop: '0.35rem', fontWeight: '600' }}>{errors.subject}</span>}
             </div>
 
-            {/* Mensaje */}
-            <div className="support-form__group" style={{ width: '100%', boxSizing: 'border-box' }}>
-              <label htmlFor="message" className="support-form__label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '1rem', fontWeight: '700', color: '#f8fafc' }}>
-                Mensaje <span className="support-form__required" style={{ color: '#f87171' }} aria-hidden="true">*</span>
+            {/* Campo: Mensaje */}
+            <div className="spectator-support-form__group">
+              <label htmlFor="message" className="spectator-support-form__label">
+                Mensaje *
               </label>
               <textarea
                 id="message"
                 name="message"
-                rows="4"
-                className={`support-form__textarea ${errors.message ? 'support-form__textarea--error' : ''}`}
-                placeholder="Escribe los detalles completos de tu consulta o incidencia (mínimo 10 caracteres)..."
                 value={formData.message}
                 onChange={handleChange}
-                style={{ 
-                  width: '100%', 
-                  maxWidth: '100%',
-                  padding: '0.85rem', 
-                  background: '#1e293b', 
-                  border: '2px solid #475569', 
-                  borderRadius: '6px', 
-                  color: '#ffffff', 
-                  resize: 'vertical',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  boxSizing: 'border-box'
-                }}
-              ></textarea>
-              {errors.message && <span className="support-form__error-text" style={{ color: '#f87171', fontSize: '0.9rem', display: 'block', marginTop: '0.35rem', fontWeight: '600' }}>{errors.message}</span>}
+                rows="5"
+                placeholder="Escribe los detalles completos de tu consulta o incidencia..."
+                className="spectator-support-form__textarea"
+                required
+              />
             </div>
 
-            {/* Botón de envío */}
-            <button 
-              type="submit" 
-              className="support-form__submit-btn" 
-              style={{ 
-                background: '#0284c7', 
-                color: '#ffffff', 
-                border: 'none', 
-                padding: '0.95rem 1.5rem', 
-                borderRadius: '6px', 
-                fontWeight: '700', 
-                cursor: 'pointer', 
-                width: '100%',
-                maxWidth: '100%',
-                fontSize: '1.05rem',
-                marginTop: '0.5rem',
-                boxSizing: 'border-box',
-                transition: 'background-color 0.2s'
-              }}
-            >
-              Enviar consulta de soporte
+            {/* Botón de Envío con Color Cian Profesional */}
+            <button type="submit" className="spectator-btn spectator-btn--cyan spectator-btn--full">
+              Enviar consulta por correo electrónico
             </button>
+
+            {submitted && (
+              <p className="spectator-notice-msg">
+                ¡Formulario preparado! Se ha abierto tu aplicación de correo hacia nnnmantillam@gmail.com.
+              </p>
+            )}
+
           </form>
-        )}
+        </div>
+
       </div>
     </div>
   );

@@ -12,10 +12,6 @@ const Navbar = () => {
     navigate(path);
   };
 
-  const handleRoleSwitch = () => {
-    setUserRole(prev => (prev === 'attendee' ? 'organizer' : 'attendee'));
-  };
-
   return (
     <header className="navbar-container">
       {/* Logotipo / Marca principal */}
@@ -62,25 +58,8 @@ const Navbar = () => {
         </button>
       </nav>
 
-      {/* Acciones de Usuario, Perfil y Selector de Flujos (Escritorio) */}
+      {/* Acciones de Usuario (Avatar) */}
       <div className="navbar-actions">
-        <button
-          type="button"
-          onClick={handleRoleSwitch}
-          className="navbar-role-btn"
-          title="Cambiar rol entre Asistente y Organizador"
-        >
-          Rol: {userRole === 'organizer' ? 'Organizador' : 'Asistente'}
-        </button>
-
-        <button 
-          type="button" 
-          onClick={() => handleNavClick('/register')} 
-          className="navbar-register-btn"
-        >
-          Registro
-        </button>
-
         <button 
           type="button"
           className="navbar-avatar"

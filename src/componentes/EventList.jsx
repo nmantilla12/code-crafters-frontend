@@ -1,4 +1,3 @@
-// src/componentes/EventList.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventItem from './EventItem';
@@ -72,32 +71,12 @@ const EventList = ({ events: propEvents, onManage, onDelete, userRole }) => {
           </div>
         )}
 
-        {/* Barra inferior con los tres botones grandes, en línea y en color cian */}
-        <div 
-          className="event-list__actions-bar" 
-          style={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center', 
-            marginTop: '40px', 
-            flexWrap: 'wrap', 
-            gap: '15px' 
-          }}
-        >
+        {/* Barra inferior con clases puras, sin estilos en línea */}
+        <div className="event-list__actions-bar">
           <button 
             type="button" 
             onClick={() => navigate('/')} 
-            style={{
-              backgroundColor: '#06b6d4',
-              color: '#0b0f19',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              padding: '12px 24px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className="event-list__btn event-list__btn--secondary"
           >
             ← Volver al inicio
           </button>
@@ -105,37 +84,17 @@ const EventList = ({ events: propEvents, onManage, onDelete, userRole }) => {
           <button 
             type="button"
             onClick={() => navigate('/organizer/create-event')}
-            style={{
-              backgroundColor: '#06b6d4',
-              color: '#0b0f19',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              padding: '12px 24px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className="event-list__btn event-list__btn--primary"
           >
             + Crear Evento ⚙️
           </button>
 
           <button 
             type="button" 
-            onClick={() => navigate('/support')} 
-            style={{
-              backgroundColor: '#06b6d4',
-              color: '#0b0f19',
-              fontSize: '1rem',
-              fontWeight: 'bold',
-              padding: '12px 24px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            onClick={() => navigate('/organizer/buzon-quejas')} 
+            className="event-list__btn event-list__btn--secondary"
           >
-            Siguiente (Soporte) →
+            Buzón de Quejas o Sugerencias →
           </button>
         </div>
 

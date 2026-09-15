@@ -1,6 +1,23 @@
 @use 'variables' as v;
 
+/* CONTENEDOR PRINCIPAL DE MÉTRICAS EN LÍNEA (HORIZONTAL) */
+.dashboard-metrics-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 2.5rem;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
 .metric-card {
+  flex: 1;
+  min-width: 0;
   background-color: v.$bg-card;
   border: 1px solid v.$border-color;
   border-radius: 12px;

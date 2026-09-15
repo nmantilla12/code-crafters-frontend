@@ -10,7 +10,6 @@ const OrganizerDashboard = () => {
   const [userRole, setUserRole] = useState('viewer');
 
   useEffect(() => {
-    // Sincronizamos el rol de forma segura desde el almacenamiento local
     const currentRole = localStorage.getItem('userRole') || 'viewer';
     setUserRole(currentRole);
 
@@ -26,7 +25,6 @@ const OrganizerDashboard = () => {
     setEvents(eventsList);
   }, []);
 
-  // Cálculo automático y seguro de asistentes en tiempo real
   const totalAttendees = events.reduce((acc, ev) => {
     return acc + Number.parseInt(ev.attendees || 0, 10);
   }, 0);
@@ -46,26 +44,28 @@ const OrganizerDashboard = () => {
   return (
     <div className="dashboard-container">
       
-      {/* SECCIÓN DE MÉTRICAS */}
-      <div className="dashboard-metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '30px' }}>
-        <MetricCard 
-          title="Eventos Totales" 
-          value={events.length} 
-          change="+12%" 
-          isPositive={true} 
-        />
-        <MetricCard 
-          title="Asistentes Inscritos" 
-          value={totalAttendees} 
-          change="0%" 
-          isPositive={true} 
-        />
-        <MetricCard 
-          title="Estado del Almacenamiento" 
-          value="Sincronizado" 
-          change="100%" 
-          isPositive={true} 
-        />
+      {/* CONTENEDOR ESPECÍFICO PARA LAS MÉTRICAS */}
+      <div className="dashboard-metrics-wrapper">
+        <div className="dashboard-metrics-grid">
+          <MetricCard 
+            title="Eventos Totales" 
+            value={events.length} 
+            change="+12%" 
+            isPositive={true} 
+          />
+          <MetricCard 
+            title="Asistentes Inscritos" 
+            value={totalAttendees} 
+            change="0%" 
+            isPositive={true} 
+          />
+          <MetricCard 
+            title="Estado del Almacenamiento" 
+            value="Sincronizado" 
+            change="100%" 
+            isPositive={true} 
+          />
+        </div>
       </div>
 
       {/* SECCIÓN PRINCIPAL */}

@@ -1,4 +1,3 @@
-// src/pages/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -44,25 +43,13 @@ const Register = () => {
   };
 
   return (
-    <main className="register-page">
-      <div className="register-container">
-        
-        <button 
-          type="button" 
-          onClick={() => navigate('/')} 
-          className="register-back-btn"
-        >
-          ← Volver al inicio
-        </button>
-
-        <h1 className="register-title">
+    <main className="register-container">
+      <div className="register-card">
+        <h2 className="register-title">
           {role === 'organizer' ? 'Registro de Organizador' : 'Registro de Espectador'}
-        </h1>
-        
+        </h2>
         <p className="register-subtitle">
-          {role === 'organizer' 
-            ? 'Regístrate para administrar la infraestructura y crear eventos en Code Crafters.' 
-            : 'Regístrate para explorar la cartelera, comprar entradas y obtener tus tickets QR.'}
+          Crea tu cuenta para comenzar en Code Crafters.
         </p>
 
         {errorMessage && (
@@ -76,11 +63,11 @@ const Register = () => {
             <label htmlFor="registerName">
               {role === 'organizer' ? 'Nombre u Organización' : 'Nombre y Apellidos'}
             </label>
-            <input 
+            <input
               id="registerName"
-              type="text" 
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Tu nombre"
               autoComplete="off"
             />
@@ -88,11 +75,11 @@ const Register = () => {
 
           <div className="form-group">
             <label htmlFor="registerEmail">Correo electrónico</label>
-            <input 
+            <input
               id="registerEmail"
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="tu@email.com"
               autoComplete="off"
             />
@@ -100,25 +87,24 @@ const Register = () => {
 
           <div className="form-group">
             <label htmlFor="registerPassword">Contraseña</label>
-            <input 
+            <input
               id="registerPassword"
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               autoComplete="new-password"
             />
           </div>
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={handleRegister}
             className="register-submit-btn dashboard-large-btn dashboard-large-btn--primary"
           >
             {role === 'organizer' ? 'Registrarse como Organizador' : 'Registrarse como Espectador'}
           </button>
         </div>
-
       </div>
     </main>
   );

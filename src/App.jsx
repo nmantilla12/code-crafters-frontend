@@ -9,14 +9,14 @@ import OrganizerDashboard from './pages/OrganizerDashboard';
 import CreateEventForm from './componentes/CreateEventForm';
 import ExploreEvents from './pages/ExploreEvents';
 import EventDetail from './pages/EventDetail';
-import SupportSection from './componentes/SupportSection';
 import NotificationsCenter from './componentes/NotificationsCenter';
+import SpectatorCatalog from './componentes/SpectatorCatalog';
+import OrganizerBuzon from './componentes/OrganizerBuzon';
 
 function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        {/* Ruta principal: Muestra la Landing Page */}
         <Route path="/" element={<LandingPage />} />
 
         {/* Rutas de Autenticación */}
@@ -25,38 +25,37 @@ function App() {
         <Route path="/register/viewer" element={<Register />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Vistas principales de la aplicación */}
+        {/* Vistas principales */}
         <Route path="/events" element={<ExploreEvents />} />
+        
+        {/* Flujo exclusivo del Espectador y su sección de soporte integrada */}
+        <Route path="/spectator/catalog" element={<SpectatorCatalog />} />
+        <Route path="/spectator/support" element={<SpectatorCatalog />} />
+
         <Route path="/event-detail" element={<EventDetail />} />
         <Route path="/event/:id" element={<EventDetail />} />
         
-        {/* Ruta dedicada para el Centro de Notificaciones con clase SCSS */}
+        {/* Centro de Notificaciones */}
         <Route path="/notifications" element={
           <div className="app-container app-container--notifications">
             <NotificationsCenter />
           </div>
         } />
 
-        {/* Ruta de Support con clase SCSS */}
-        <Route path="/support" element={
-          <div className="app-container app-container--support">
-            <SupportSection />
-          </div>
-        } />
+        {/* Soporte general dirigido al catálogo */}
+        <Route path="/support" element={<SpectatorCatalog />} />
 
-        {/* Ruta directa para el OrganizerDashboard */}
+        {/* Panel del Organizador y su Buzón exclusivo */}
         <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
-
-        {/* Rutas del Panel de Organizador bajo un layout dedicado */}
         <Route path="/organizer" element={<OrganizerLayout />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<OrganizerDashboard />} />
           <Route path="create-event" element={<CreateEventForm />} />
           <Route path="manage-event/:id" element={<CreateEventForm />} />
           <Route path="edit-event/:id" element={<CreateEventForm />} />
+          <Route path="buzon-quejas" element={<OrganizerBuzon />} />
         </Route>
 
-        {/* Ruta comodín por si escriben cualquier otra URL, redirige al inicio */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

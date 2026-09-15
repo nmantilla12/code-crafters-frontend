@@ -1,0 +1,118 @@
+// ==========================================
+// BUZÓN DE QUEJAS Y SUGERENCIAS - STYLES
+// ==========================================
+@use 'variables' as v;
+
+.buzon-page, 
+.organizer-buzon-container {
+  background-color: v.$bg-dark;
+  color: v.$text-main;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &__content {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+.buzon-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid v.$border-color;
+  padding-bottom: 1.5rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: v.$text-main;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+    color: v.$text-muted;
+  }
+}
+
+.buzon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.buzon-card {
+  background: v.$bg-card;
+  border: 2px solid v.$border-color;
+  border-radius: 16px;
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: v.$border-color-hover;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: v.$text-muted;
+
+    .author {
+      font-weight: 700;
+      color: v.$primary-cyan;
+    }
+  }
+
+  &__message {
+    font-size: 1.15rem;
+    color: v.$text-main;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+.buzon-footer-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.buzon-back-btn {
+  background: v.$bg-card;
+  color: v.$text-main;
+  border: 2px solid v.$border-color;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background: v.$bg-dark;
+    border-color: v.$primary-cyan;
+  }
+}
+
+.buzon-footer {
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  border-top: 1px solid v.$border-color;
+  padding-top: 1.5rem;
+  color: v.$text-muted;
+  font-size: 0.95rem;
+}

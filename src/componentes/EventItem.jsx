@@ -1,9 +1,12 @@
 // src/componentes/EventItem.jsx
 import React from 'react';
 
-const EventItem = ({ event, onRegister, onManage, onDelete, userRole }) => {
+const EventItem = ({ event, onAddToCart, onManage, onDelete, userRole }) => {
   if (!event) return null;
   const eventId = event.id || event._id;
+
+  // Determinamos si estamos en modo espectador
+  const isSpectator = userRole === 'spectator' || Boolean(onAddToCart);
 
   return (
     <div className="event-item card-border-interactive">
@@ -24,31 +27,49 @@ const EventItem = ({ event, onRegister, onManage, onDelete, userRole }) => {
         </p>
       </div>
 
-      {/* Botones de acción unificados */}
+      {/* Botones de acción dinámicos según el rol */}
       <div className="event-item__actions">
-        <button 
-          type="button"
-          className="event-item__btn event-item__btn-manage"
-          onClick={() => {
-            if (onManage) {
-              onManage(eventId);
-            }
-          }}
-        >
-          Gestionar 🛠️
-        </button>
+        {isSpectator ? (
+          /* Si es espectador: Solo ve el botón de añadir al carrito */
+          <button 
+            type="button"
+            className="spectator-btn spectator-btn--primary"
+            onClick={() => {
+              if (onAddToCart) {
+                onAddToCart(event);
+              }
+            }}
+          >
+            Añadir al Carrito 🛒
+          </button>
+        ) : (
+          /* Si es organizador: Ve los botones de gestión y eliminación */
+          <>
+            <button 
+              type="button"
+              className="event-item__btn event-item__btn-manage"
+              onClick={() => {
+                if (onManage) {
+                  onManage(eventId);
+                }
+              }}
+            >
+              Gestionar 🛠️
+            </button>
 
-        <button 
-          type="button"
-          className="event-item__btn event-item__btn-delete"
-          onClick={() => {
-            if (onDelete) {
-              onDelete(eventId);
-            }
-          }}
-        >
-          Eliminar 🗑️
-        </button>
+            <button 
+              type="button"
+              className="event-item__btn event-item__btn-delete"
+              onClick={() => {
+                if (onDelete) {
+                  onDelete(eventId);
+                }
+              }}
+            >
+              Eliminar 🗑️
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

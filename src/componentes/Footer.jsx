@@ -14,22 +14,27 @@ const Footer = () => {
         </p>
       </div>
       <ul className="footer__links">
-        {COMMUNITY_LINKS.map((link) => (
-          <li key={link.id}>
-            <a 
-              href={link.href} 
-              className="footer__link"
-              onClick={(e) => {
-                if (link.label === 'Discord') {
-                  e.preventDefault();
-                  alert('Usuario de Discord: mantilla0624');
-                }
-              }}
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
+        {COMMUNITY_LINKS.map((link) => {
+          const isGitHub = link.label.toLowerCase() === 'github';
+          const isDiscord = link.label.toLowerCase() === 'discord';
+          
+          let href = link.href;
+          if (isGitHub) href = 'https://github.com/nmantilla12';
+          if (isDiscord) href = 'https://discord.com'; // O cambia esto por el link de invitación de tu servidor
+
+          return (
+            <li key={link.id}>
+              <a 
+                href={href} 
+                className="footer__link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {link.label}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </footer>
   );

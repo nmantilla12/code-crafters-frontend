@@ -1,17 +1,54 @@
-// src/componentes/EventItem.jsx
 import React from 'react';
+import '../styles/eventitem.scss';
 
 const EventItem = ({ event, onAddToCart, onManage, onDelete, userRole }) => {
   if (!event) return null;
-  const eventId = event.id || event._id;
+  const eventId = String(event.id || event._id || '');
 
-  // Determinamos si estamos en modo espectador
   const isSpectator = userRole === 'spectator' || Boolean(onAddToCart);
+
+  // 🛡️ Mapeo actualizado con tus nuevas imágenes favoritas
+  const getImageById = (id) => {
+    switch (id) {
+      case '1':
+        return '/images/tungnguy-technology.jpg';
+      case '2':
+        return '/images/developer-word.jpg';
+      case '3':
+        return '/images/code-laptop.jpg';
+      case '4':
+        return '/images/team-collaboration.jpg';
+      default:
+        const numericId = parseInt(id, 10);
+        if (!isNaN(numericId)) {
+          const images = [
+            '/images/tungnguy-technology.jpg',
+            '/images/developer-word.jpg',
+            '/images/code-laptop.jpg',
+            '/images/team-collaboration.jpg'
+          ];
+          return images[numericId % images.length];
+        }
+        return '/images/tungnguy-technology.jpg';
+    }
+  };
+
+  const eventImage = getImageById(eventId);
 
   return (
     <div className="event-item card-border-interactive">
       
-      {/* Cabecera del título del evento */}
+      <div className="event-item__image-container">
+        <img 
+          src={eventImage} 
+          alt={event.title || 'Evento'} 
+          className="event-item__image" 
+          onError={(e) => {
+            e.target.src = '/images/tungnguy-technology.jpg';
+          }}
+        />
+      </div>
+
       <div className="event-item__header">
         <h3 className="event-item__title">
           {event.title}
@@ -27,10 +64,8 @@ const EventItem = ({ event, onAddToCart, onManage, onDelete, userRole }) => {
         </p>
       </div>
 
-      {/* Botones de acción dinámicos según el rol */}
       <div className="event-item__actions">
         {isSpectator ? (
-          /* Si es espectador: Solo ve el botón de añadir al carrito */
           <button 
             type="button"
             className="spectator-btn spectator-btn--primary"
@@ -43,14 +78,13 @@ const EventItem = ({ event, onAddToCart, onManage, onDelete, userRole }) => {
             Añadir al Carrito 🛒
           </button>
         ) : (
-          /* Si es organizador: Ve los botones de gestión y eliminación */
           <>
             <button 
               type="button"
               className="event-item__btn event-item__btn-manage"
               onClick={() => {
                 if (onManage) {
-                  onManage(eventId);
+                  onManage(event.id || event._id);
                 }
               }}
             >
@@ -62,7 +96,7 @@ const EventItem = ({ event, onAddToCart, onManage, onDelete, userRole }) => {
               className="event-item__btn event-item__btn-delete"
               onClick={() => {
                 if (onDelete) {
-                  onDelete(eventId);
+                  onDelete(event.id || event._id);
                 }
               }}
             >

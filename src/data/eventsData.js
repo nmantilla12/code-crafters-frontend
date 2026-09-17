@@ -1,4 +1,5 @@
 // src/data/eventsData.js
+
 export const eventsData = [
   {
     id: "1",
@@ -6,7 +7,8 @@ export const eventsData = [
     category: "Conferencia Técnica",
     date: "15-16 Octubre, 2026",
     location: "Tech Hub, Madrid",
-    description: "Únete a nosotros para una exploración profunda de los flujos de usuarios, arquitectura de sistemas y diseño de interfaces avanzadas. Analizaremos casos de estudio reales, incluyendo la optimización del panel de control para organizadores y la implementación de dashboards de alto rendimiento.",
+    image: "/images/ai-technology.jpg",
+    description: "Únete a nosotros para una exploración profunda de los flujos de usuarios, arquitectura de sistemas y diseño de interfaces avanzadas...",
     agenda: [
       {
         day: "Día 1: Fundamentos",
@@ -50,7 +52,8 @@ export const eventsData = [
     category: "Taller Práctico",
     date: "20 Noviembre, 2026",
     location: "Online / Streaming",
-    description: "Un taller totalmente enfocado en buenas prácticas de desarrollo frontend, optimización de hooks, manejo de estados complejos y renderizado eficiente en aplicaciones web de gran escala.",
+    image: "/images/code-laptop.jpg", // 👈 Cambiado para usar otra foto única
+    description: "Un taller totalmente enfocado en buenas prácticas de desarrollo frontend, optimización de hooks, manejo de estados complejos...",
     agenda: [
       {
         day: "Jornada Única",
@@ -72,6 +75,60 @@ export const eventsData = [
       {
         q: "¿Necesito conocimientos previos?",
         a: "Se recomienda tener bases sólidas en JavaScript moderno y React básico."
+      }
+    ]
+  },
+  {
+    id: "3",
+    title: "Desarrollo Full-Stack y Buenas Prácticas",
+    category: "Masterclass",
+    date: "05 Diciembre, 2026",
+    location: "Campus Central",
+    image: "/images/developer-workspace.jpg", // 👈 Imagen única
+    description: "Aprende a conectar bases de datos robustas con interfaces modernas de forma eficiente.",
+    agenda: [
+      {
+        day: "Sesión Intensiva",
+        date: "Dic 05",
+        sessions: [
+          { time: "10:00", title: "APIs y Conexión", desc: "Estrategias de comunicación cliente-servidor." }
+        ]
+      }
+    ],
+    speakers: [
+      { initials: "JG", name: "Javier G.", role: "Full-Stack Lead" }
+    ],
+    faqs: [
+      {
+        q: "¿Incluye certificado?",
+        a: "Sí, se entregará un certificado de asistencia digital al finalizar la masterclass."
+      }
+    ]
+  },
+  {
+    id: "4",
+    title: "Seguridad y Colaboración en Equipos Ágiles",
+    category: "Seminario",
+    date: "12 Enero, 2027",
+    location: "Online",
+    image: "/images/team-collaboration.jpg", // 👈 Imagen única
+    description: "Claves para mantener flujos de trabajo seguros y colaborativos en grandes equipos de desarrollo.",
+    agenda: [
+      {
+        day: "Jornada Única",
+        date: "Ene 12",
+        sessions: [
+          { time: "11:00", title: "Git Avanzado", desc: "Estrategias de ramas y resolución de conflictos en equipo." }
+        ]
+      }
+    ],
+    speakers: [
+      { initials: "AL", name: "Ana L.", role: "DevOps Engineer" }
+    ],
+    faqs: [
+      {
+        q: "¿Hay espacio para preguntas?",
+        a: "Tendremos una ronda de preguntas y respuestas al finalizar la sesión."
       }
     ]
   }

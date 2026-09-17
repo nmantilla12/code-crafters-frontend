@@ -10,17 +10,17 @@ const CreateEventForm = () => {
     date: '',
     modality: '',
     locationOrLink: '',
-    image: null,
+    image: '',
   });
 
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: files ? files[0] : value,
+      [name]: value,
     });
 
     if (errors[name]) {
@@ -63,12 +63,14 @@ const CreateEventForm = () => {
 
     setErrors({});
 
+    // Guardamos el evento con la ruta de la imagen seleccionada de forma persistente
     const newEvent = {
       id: Date.now().toString(),
       title: formData.title,
       category: formData.modality === 'online' ? 'Online' : 'General',
       date: formData.date,
       location: formData.locationOrLink,
+      image: formData.image || '/images/react-code.jpg', // Imagen seleccionada o por defecto
       attendees: "0",
       status: status === 'Publicado' ? 'Publicado' : 'Borrador',
       icon: formData.modality === 'online' ? '🌐' : '📍',
@@ -92,7 +94,7 @@ const CreateEventForm = () => {
       date: '',
       modality: '',
       locationOrLink: '',
-      image: null,
+      image: '',
     });
   };
 
@@ -177,16 +179,23 @@ const CreateEventForm = () => {
           {errors.locationOrLink && <span className="event-form__error-text">{errors.locationOrLink}</span>}
         </div>
 
+        {/* Desplegable de selección de imagen basado en los archivos locales disponibles */}
         <div className="event-form__group">
-          <label className="event-form__label" htmlFor="image">Carga de Imagen o Ícono</label>
-          <input 
-            className="event-form__input-file"
-            type="file" 
+          <label className="event-form__label" htmlFor="image">Imagen del Evento</label>
+          <select 
+            className="event-form__select"
             id="image" 
             name="image" 
-            accept="image/*"
-            onChange={handleChange} 
-          />
+            value={formData.image} 
+            onChange={handleChange}
+          >
+            <option value="">Selecciona una imagen</option>
+            <option value="/images/react-code.jpg">React Code (Por defecto)</option>
+            <option value="/images/ai-technology.jpg">AI Technology</option>
+            <option value="/images/code-laptop.jpg">Code Laptop</option>
+            <option value="/images/developer-web.jpg">Developer Web</option>
+            <option value="/images/team-collaboration.jpg">Team Collaboration</option>
+          </select>
         </div>
 
         <div className="event-form__actions">

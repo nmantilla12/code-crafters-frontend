@@ -22,7 +22,15 @@ const OrganizerDashboard = () => {
       eventsList = initialData.events;
     }
     
-    setEvents(eventsList);
+    // 🛡️ Blindaje: Aseguramos que cada evento tenga siempre una imagen válida
+    const sanitizedEvents = eventsList.map(event => ({
+      ...event,
+      image: (event.image && event.image.trim() !== '') 
+        ? (event.image.startsWith('/') ? event.image : `/${event.image}`) 
+        : '/images/react-code.jpg'
+    }));
+
+    setEvents(sanitizedEvents);
   }, []);
 
   const totalAttendees = events.reduce((acc, ev) => {

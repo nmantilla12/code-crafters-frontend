@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EventList from './EventList';
 import '../styles/spectatorcatalog.scss';
 
@@ -12,6 +12,20 @@ export default function SpectatorCatalogView({
   onNavigateHome,
   onOpenSupport
 }) {
+  // 1. Estados locales para el buscador y los filtros
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // 2. Lógica de filtrado en tiempo real sobre la prop `events`
+  const filteredEvents = events.filter((event) => {
+    const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          event.description.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
   return (
     <div className="spectator-page">
       <header className="spectator-header">
@@ -27,10 +41,33 @@ export default function SpectatorCatalogView({
         </div>
       </header>
 
+      {/* 3. Barra de Filtros y Búsqueda añadida visualmente */}
+      <div className="spectator-filters-bar" style={{ marginBottom: '20px', display: 'flex', gap: '15px' }}>
+        <input 
+          type="text"
+          placeholder="Buscar eventos tecnológicos..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ padding: '10px', borderRadius: '6px', border: '1px solid #ccc', flex: 1 }}
+        />
+        
+        <select 
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          style={{ padding: '10px', borderRadius: '6px', border: '1px solid #ccc' }}
+        >
+          <option value="all">Todas las categorías</option>
+          <option value="frontend">Frontend</option>
+          <option value="backend">Backend</option>
+          <option value="ai">Inteligencia Artificial</option>
+        </select>
+      </div>
+
       <div className="spectator-catalog-layout">
         <div className="spectator-events-section">
+          {/* 4. Pasamos los eventos ya filtrados al EventList */}
           <EventList 
-            events={events} 
+            events={filteredEvents} 
             userRole="spectator"
             onAddToCart={onAddToCart} 
           />

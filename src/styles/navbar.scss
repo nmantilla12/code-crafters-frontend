@@ -17,30 +17,34 @@
 }
 
 .navbar-brand {
-  background-color: transparent !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  color: $text-main;
+  // Aplicamos el diseño en caja y todo en cian brillante
+  background: rgba($bg-dark, 0.85) !important;
+  border: 1px solid rgba($primary-cyan, 0.6) !important;
+  box-shadow: 0 0 25px rgba($primary-cyan, 0.25) !important;
+  border-radius: 10px !important;
+  
+  color: $primary-cyan !important;
   font-size: clamp(1.5rem, 4vw, 2.1rem); // Tamaño grande y dominante
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase; // En MAYÚSCULAS
   cursor: pointer;
-  letter-spacing: 0.05em; // Espaciado elegante entre letras
+  letter-spacing: 0.18em; // Espaciado elegante
   text-align: center;
-  padding: 0;
+  padding: 0.6rem 1.6rem !important;
+  text-shadow: 0 0 20px rgba($primary-cyan, 0.5);
+  display: inline-block;
 
-  // Eliminamos cualquier borde o estilo que el navegador intente aplicar al hacer clic
+  // Eliminamos outlines feos al hacer clic pero mantenemos nuestro diseño chulo
   &:focus,
   &:focus-visible,
   &:active {
     outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
+    border: 1px solid rgba($primary-cyan, 0.8) !important;
+    box-shadow: 0 0 30px rgba($primary-cyan, 0.4) !important;
   }
 
-  &__highlight {
-    background-color: transparent !important;
-    color: $primary-cyan;
+  // Por si quedaba algún span antiguo dentro
+  * {
+    color: $primary-cyan !important;
   }
 }

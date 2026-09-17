@@ -13,7 +13,7 @@ const Navbar = () => {
         onClick={() => navigate('/')}
         className="navbar-brand"
       >
-        Code Crafters <span className="navbar-brand__highlight">2026</span>
+        CODE CRAFTERS 2026
       </button>
     </header>
   );

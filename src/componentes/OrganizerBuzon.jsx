@@ -6,6 +6,9 @@ import '../styles/organizerbuzon.scss';
 const OrganizerBuzon = () => {
   const navigate = useNavigate();
   const [complaints, setComplaints] = useState([]);
+  
+  // Estado para controlar qué tarjeta específica muestra el mensaje de éxito actual
+  const [successCardId, setSuccessCardId] = useState(null);
 
   useEffect(() => {
     const savedComplaints = localStorage.getItem('codeCraftersComplaints');
@@ -28,8 +31,16 @@ const OrganizerBuzon = () => {
     }
   }, []);
 
+  // Función para activar el mensaje de éxito en la tarjeta seleccionada (al pulsar en una, se oculta la de las demás automáticamente)
+  const handleReplyClick = (id) => {
+    setSuccessCardId(id);
+  };
+
   // Función para eliminar un mensaje del buzón
   const handleDelete = (id) => {
+    if (successCardId === id) {
+      setSuccessCardId(null);
+    }
     const updated = complaints.filter(item => item.id !== id);
     setComplaints(updated);
     localStorage.setItem('codeCraftersComplaints', JSON.stringify(updated));
@@ -54,32 +65,50 @@ const OrganizerBuzon = () => {
             </div>
           ) : (
             <div className="buzon-list">
-              {complaints.map((item) => (
-                <article key={item.id} className="buzon-card">
-                  <div className="buzon-card__meta">
-                    <span className="buzon-card__author">👤 {item.user}</span>
-                    <span className="buzon-card__date">📅 {item.date}</span>
-                  </div>
-                  <p className="buzon-card__message">"{item.message}"</p>
-                  
-                  {/* Acciones de Organizador: Responder por email y Eliminar */}
-                  <div className="buzon-card__actions">
-                    <a 
-                      href={`mailto:${item.email}?subject=Respuesta a tu sugerencia en CodeCrafters&body=Hola ${item.user}, en relación a tu comentario: "${item.message}"...`}
-                      className="buzon-btn-reply"
-                    >
-                      ✉️ Responder por Correo
-                    </a>
-                    <button 
-                      type="button"
-                      onClick={() => handleDelete(item.id)}
-                      className="buzon-btn-delete"
-                    >
-                      🗑️ Eliminar
-                    </button>
-                  </div>
-                </article>
-              ))}
+              {complaints.map((item) => {
+                // Preparamos la URL web de Gmail apuntando a tu correo oficial y rellenando los datos
+                const recipientEmail = "nnnmantillam@gmail.com";
+                const emailSubject = encodeURIComponent(`Respuesta a tu sugerencia en CodeCrafters (${item.user})`);
+                const emailBody = encodeURIComponent(`Hola ${item.user},\n\nEn relación a tu comentario: "${item.message}"...\n\nAtentamente,\nEquipo CodeCrafters`);
+                const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${emailSubject}&body=${emailBody}`;
+
+                return (
+                  <article key={item.id} className="buzon-card">
+                    <div className="buzon-card__meta">
+                      <span className="buzon-card__author">👤 {item.user}</span>
+                      <span className="buzon-card__date">📅 {item.date}</span>
+                    </div>
+                    <p className="buzon-card__message">"{item.message}"</p>
+                    
+                    {/* Acciones de Organizador: Responder por Gmail web y Eliminar */}
+                    <div className="buzon-card__actions">
+                      <a 
+                        href={gmailWebUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => handleReplyClick(item.id)}
+                        className="buzon-btn-reply"
+                      >
+                        ✉️ Responder por Correo
+                      </a>
+                      <button 
+                        type="button"
+                        onClick={() => handleDelete(item.id)}
+                        className="buzon-btn-delete"
+                      >
+                        🗑️ Eliminar
+                      </button>
+                    </div>
+
+                    {/* Mensaje de éxito que aparece exclusivamente en la tarjeta activa y desaparece al responder otra */}
+                    {successCardId === item.id && (
+                      <div className="buzon-success-alert">
+                        ✨ <strong>¡Borrador generado con éxito!</strong> Se ha abierto Gmail en una pestaña nueva con tu respuesta hacia <strong>nnnmantillam@gmail.com</strong>. Puedes seguir revisando y gestionando más quejas libremente.
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           )}
 

@@ -138,6 +138,23 @@
       }
     }
   }
+
+  // Tarjeta de alerta de éxito profesional integrada en la tarjeta del buzón
+  .buzon-success-alert {
+    margin-top: 0.5rem;
+    padding: 1.1rem 1.25rem;
+    background-color: rgba(v.$primary-cyan, 0.08);
+    border: 1px solid v.$primary-cyan;
+    border-radius: 12px;
+    color: v.$primary-cyan;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    box-sizing: border-box;
+
+    strong {
+      color: v.$text-main;
+    }
+  }
 }
 
 .organizer-buzon__empty {

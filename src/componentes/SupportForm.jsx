@@ -1,8 +1,11 @@
-// src/componentes/SupportForm.jsx
+// src/components/SupportForm.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 import '../styles/spectatorcatalog.scss';
 
 const SupportForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     consultaType: '',
     subject: '',
@@ -13,6 +16,12 @@ const SupportForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    // En cuanto el usuario empieza a escribir o cambiar algo en una nueva incidencia, ocultamos el mensaje anterior
+    if (submitted) {
+      setSubmitted(false);
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value
@@ -22,14 +31,27 @@ const SupportForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
+    // Configuramos los datos para abrir Gmail en una pestaña nueva con tu correo oficial
     const recipientEmail = "nnnmantillam@gmail.com";
-    const emailSubject = encodeURIComponent(`[Soporte] ${formData.consultaType}: ${formData.subject}`);
+    const emailSubject = encodeURIComponent(`[Soporte Spectator] ${formData.consultaType}: ${formData.subject}`);
     const emailBody = encodeURIComponent(
       `Tipo de consulta: ${formData.consultaType}\nAsunto: ${formData.subject}\n\nMensaje:\n${formData.message}`
     );
 
-    window.location.href = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
+    const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipientEmail}&su=${emailSubject}&body=${emailBody}`;
+
+    // Abrimos Gmail en una pestaña nueva sin salir de la landing
+    window.open(gmailWebUrl, '_blank', 'noopener,noreferrer');
+    
+    // 1. Activamos la tarjeta de éxito
     setSubmitted(true);
+    
+    // 2. Limpiamos los campos del formulario por completo
+    setFormData({
+      consultaType: '',
+      subject: '',
+      message: ''
+    });
   };
 
   return (
@@ -124,16 +146,25 @@ const SupportForm = () => {
               Enviar consulta por correo electrónico
             </button>
 
+            {/* Mensaje de éxito que aparece solo al enviar y desaparece al escribir una nueva incidencia */}
             {submitted && (
-              <p className="spectator-notice-msg">
-                ¡Formulario preparado! Se ha abierto tu aplicación de correo hacia nnnmantillam@gmail.com.
-              </p>
+              <div className="spectator-success-alert">
+                ✨ <strong>¡Borrador generado con éxito!</strong> Se ha abierto Gmail en una pestaña nueva con tu mensaje hacia <strong>nnnmantillam@gmail.com</strong>. El formulario ha quedado limpio y listo para nuevas consultas.
+              </div>
             )}
 
           </form>
         </div>
 
       </div>
+
+      <div className="spectator-back-wrapper">
+        <button onClick={() => navigate(-1)} className="spectator-btn-back">
+          ← Volver al catálogo
+        </button>
+      </div>
+
+      <Footer />
     </div>
   );
 };

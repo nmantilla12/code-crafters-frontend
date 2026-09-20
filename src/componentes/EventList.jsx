@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventItem from './EventItem';
-import Footer from './Footer'; // 1. Importa tu componente Footer
+import Footer from './Footer';
 import { eventsData } from '../data/eventsData';
 
 const EventList = ({ events: propEvents, onManage, onDelete, onAddToCart, userRole }) => {
@@ -54,8 +54,8 @@ const EventList = ({ events: propEvents, onManage, onDelete, onAddToCart, userRo
   };
 
   return (
-    <div className="event-page-wrapper" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <section className="event-list-section" style={{ flex: 1 }}>
+    <div className="event-page-wrapper">
+      <section className="event-list-section">
         <div className="event-list__wrapper">
           
           {events.length === 0 ? (
@@ -72,7 +72,6 @@ const EventList = ({ events: propEvents, onManage, onDelete, onAddToCart, userRo
                     key={eventId}
                     event={event}
                     userRole={userRole}
-                    // Si es espectador le pasamos la acción de comprar, si es organizador las de gestión
                     onAddToCart={onAddToCart ? () => onAddToCart(event) : undefined}
                     onManage={!isSpectator ? () => handleManageEvent(eventId) : undefined}
                     onDelete={!isSpectator ? () => handleDeleteEvent(eventId) : undefined}
@@ -114,7 +113,6 @@ const EventList = ({ events: propEvents, onManage, onDelete, onAddToCart, userRo
         </div>
       </section>
 
-      {/* 2. El Footer integrado al final de la página del espectador/eventos */}
       <Footer />
     </div>
   );

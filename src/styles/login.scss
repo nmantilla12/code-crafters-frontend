@@ -1,0 +1,146 @@
+@import 'variables';
+
+.login-page {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #0b1120;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+
+  &__card {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    max-width: 100%;
+    background: #1e293b;
+    padding: 2.5rem 1.5rem;
+    border-radius: 0;
+    border: none;
+    box-sizing: border-box;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media (min-width: 768px) {
+      max-width: 520px;
+      height: auto;
+      min-height: auto;
+      border-radius: 16px;
+      border: 2px solid #334155;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      padding: 2.5rem 2rem;
+    }
+  }
+
+  &__back-btn {
+    background: transparent;
+    border: none;
+    color: #38bdf8;
+    cursor: pointer;
+    margin-bottom: 1.75rem;
+    padding: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-align: left;
+  }
+
+  &__title {
+    margin-bottom: 0.6rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+
+  &__subtitle {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  &__error {
+    background: #7f1d1d;
+    color: #fca5a5;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #991b1b;
+  }
+
+  &__success {
+    background: #065f46;
+    color: #ecfdf5;
+    padding: 1.25rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    border: 1px solid #047857;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #f1f5f9;
+    font-weight: 700;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #0f172a;
+    border: 2px solid #475569;
+    color: #ffffff;
+    box-sizing: border-box;
+    font-size: 1rem;
+    outline: none;
+
+    &:focus {
+      border-color: #06b6d4;
+    }
+  }
+
+  &__submit-btn {
+    background: #06b6d4;
+    color: #0f172a;
+    border: none;
+    padding: 1.15rem;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+    width: 100%;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}

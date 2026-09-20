@@ -1,3 +1,5 @@
+// src/componentes/CreateEventForm.scss
+
 .event-form-page-container {
   width: 100%;
   padding: 2.5rem 1.5rem;
@@ -16,7 +18,7 @@
   border-radius: 12px;
   border: 2px solid #334155;
   width: 100%;
-  max-width: 1250px; // Ancho máximo ampliado a 1250px
+  max-width: 1250px;
   margin: 0 auto;
   box-sizing: border-box;
   font-family: system-ui, -apple-system, sans-serif;
@@ -29,6 +31,18 @@
     color: #ffffff;
     border-bottom: 2px solid #334155;
     padding-bottom: 1rem;
+  }
+
+  &__error-banner {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ef4444;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
   }
 
   &__success {
@@ -78,7 +92,7 @@
     }
 
     &--error {
-      border-color: #f87171;
+      border-color: #f87171 !important;
     }
   }
 
@@ -100,11 +114,13 @@
     box-sizing: border-box;
   }
 
+  /* Contenedor de botones mejorado para que no crezcan demasiado */
   &__actions {
     display: flex;
     gap: 1rem;
     margin-top: 2.5rem;
     flex-wrap: wrap;
+    justify-content: flex-start; // Alineados de forma ordenada
     width: 100%;
     box-sizing: border-box;
   }
@@ -113,12 +129,13 @@
   &__btn-next,
   &__btn-draft,
   &__submit-btn {
-    flex: 1;
-    min-width: 150px;
-    padding: 0.95rem 1.15rem;
+    flex: 0 1 auto;             // Evita que se estiren ocupando toda la línea a lo bestia
+    min-width: 140px;           // Tamaño base compacto pero cómodo
+    max-width: 220px;           // Tope máximo para que no se vean gigantes en pantallas grandes
+    padding: 0.7rem 1rem;       // Altura y grosor más estilizados y pequeños
     border-radius: 8px;
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-size: 0.95rem;         // Letra un punto más fina y proporcionada
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease;
     box-sizing: border-box;
@@ -169,6 +186,7 @@
   }
 }
 
+/* RESPONSIVE PARA MÓVILES */
 @media (max-width: 768px) {
   .event-form-page-container {
     padding: 1rem 0.5rem;
@@ -177,7 +195,17 @@
     padding: 1.5rem 1rem;
     
     &__actions {
-      flex-direction: column;
+      flex-direction: column; // En móvil se colocan en columna uno debajo del otro
+      align-items: stretch;   // Para que ocupen de lado a lado con elegancia en pantallas estrechas
+    }
+
+    &__btn-back,
+    &__btn-next,
+    &__btn-draft,
+    &__submit-btn {
+      max-width: 100%;        // En móvil aprovechan el ancho disponible pero con padding compacto
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
     }
   }
 }

@@ -32,7 +32,6 @@ El proyecto aborda retos clave de desarrollo frontend moderno: enrutamiento din�
 | **React Router** | Enrutamiento dinámico y navegación fluida entre vistas. |
 | **SASS (SCSS) + BEM** | Estilado avanzado modular con una arquitectura limpia de clases (*Block__Element--Modifier*). |
 | **JavaScript (ES6+)** | Lógica de aplicación, gestión de estados interactivos y controladores. |
-| **Spring Boot & PostgreSQL** | Conexión e integración con el backend para la persistencia de datos y gestión de eventos. |
 | **localStorage** | Persistencia local complementaria para sesiones, autenticación y estados de usuario. |
 
 ---

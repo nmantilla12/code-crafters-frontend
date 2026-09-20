@@ -12,6 +12,7 @@ import EventDetail from './pages/EventDetail';
 import NotificationsCenter from './componentes/NotificationsCenter';
 import SpectatorCatalog from './componentes/SpectatorCatalog';
 import OrganizerBuzon from './componentes/OrganizerBuzon';
+import ProtectedRoute from './componentes/ProtectedRoute'; // Importamos el guardián de rutas
 
 function App() {
   return (
@@ -45,9 +46,18 @@ function App() {
         {/* Soporte general dirigido al catálogo */}
         <Route path="/support" element={<SpectatorCatalog />} />
 
-        {/* Panel del Organizador y su Buzón exclusivo */}
-        <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
-        <Route path="/organizer" element={<OrganizerLayout />}>
+        {/* Panel del Organizador protegido estrictamente por rol */}
+        <Route path="/organizer/dashboard" element={
+          <ProtectedRoute requiredRole="organizer">
+            <OrganizerDashboard />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/organizer" element={
+          <ProtectedRoute requiredRole="organizer">
+            <OrganizerLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<OrganizerDashboard />} />
           <Route path="create-event" element={<CreateEventForm />} />

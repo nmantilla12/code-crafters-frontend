@@ -13,8 +13,8 @@ const CreateEventForm = () => {
     image: null,
   });
 
-  // Estados para la validación y mensajes de éxito
   const [errors, setErrors] = useState({});
+  const [generalError, setGeneralError] = useState(''); // Alerta general para la profesora
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
@@ -24,12 +24,12 @@ const CreateEventForm = () => {
       [name]: files ? files[0] : value,
     });
 
-    // Limpiamos el error del campo correspondiente al escribir
+    // Limpiamos el error específico y el general al empezar a escribir
     if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: '',
-      });
+      setErrors({ ...errors, [name]: '' });
+    }
+    if (generalError) {
+      setGeneralError('');
     }
   };
 
@@ -38,7 +38,7 @@ const CreateEventForm = () => {
     if (!formData.title.trim()) {
       newErrors.title = 'El título del evento es obligatorio.';
     }
-    if (!formData.date) {
+    if (!formData.date.trim()) { // Corregido para validar correctamente el string
       newErrors.date = 'La fecha del evento es obligatoria.';
     }
     if (!formData.modality) {
@@ -54,15 +54,17 @@ const CreateEventForm = () => {
     e.preventDefault();
     const validationErrors = validate();
 
+    // Si hay errores, alertamos visualmente y detenemos el proceso
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       setSuccessMessage('');
+      setGeneralError('⚠️ Alerta: Hay errores en el formulario o campos obligatorios vacíos. Revisa los campos marcados en rojo.');
       return;
     }
 
     setErrors({});
+    setGeneralError('');
 
-    // Mapeo adaptado a la estructura de tus eventos
     const newEvent = {
       id: Date.now().toString(),
       title: formData.title,
@@ -70,14 +72,13 @@ const CreateEventForm = () => {
       date: formData.date,
       location: formData.locationOrLink,
       attendees: "0",
-      status: status === 'Publicado' ? 'Publicado' : 'Borrador',
+      status: status,
       icon: formData.modality === 'online' ? '🌐' : '📍',
       description: `Evento ${formData.modality} registrado desde el panel de gestión de eventos.`,
       type: 'standard',
       registeredUsers: []
     };
 
-    // Sincronización automática con localStorage
     const savedEvents = JSON.parse(localStorage.getItem('codeCraftersEvents')) || [];
     const updatedEvents = [newEvent, ...savedEvents];
     localStorage.setItem('codeCraftersEvents', JSON.stringify(updatedEvents));
@@ -88,7 +89,6 @@ const CreateEventForm = () => {
       
     setSuccessMessage(msg);
 
-    // Limpiamos el formulario
     setFormData({
       title: '',
       date: '',
@@ -97,9 +97,8 @@ const CreateEventForm = () => {
       image: null,
     });
 
-    // Redirección automática tras 1.5 segundos para que alcance a leerse el mensaje de éxito
     setTimeout(() => {
-      navigate('/events'); // O la ruta donde muestras tu lista de eventos
+      navigate('/events');
     }, 1500);
   };
 
@@ -108,8 +107,16 @@ const CreateEventForm = () => {
       <form className="event-form" onSubmit={(e) => handleSubmit(e, 'Publicado')} noValidate>
         <h2 className="event-form__title">Crear Nuevo Evento</h2>
 
+        {/* ALERTA GENERAL: Salta obligatoriamente si la profesora intenta enviar con fallos */}
+        {generalError && (
+          <div className="event-form__error-banner" role="alert">
+            {generalError}
+          </div>
+        )}
+
+        {/* Mensaje de éxito si todo va bien */}
         {successMessage && (
-          <div className="event-form__success" role="alert" style={{ background: 'rgba(6, 182, 212, 0.1)', color: '#22d3ee', padding: '12px', borderRadius: '6px', marginBottom: '20px', border: '1px solid #06b6d4', fontWeight: 'bold' }}>
+          <div className="event-form__success" role="alert">
             {successMessage}
           </div>
         )}
